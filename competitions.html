@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Competitions - Admin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beeone Digital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+              <div class="dropdown-menu dropdown-menu-right" style="background: rgba(15,19,36,0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                <a href="admin.html" class="dropdown-item" style="color: #fff;">Dashboard</a>
+                <a href="registration.html" class="dropdown-item" style="color: #fff;">Registration</a>
+                <a href="calling-list.html" class="dropdown-item" style="color: #fff;">Calling List</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="mark-entry.html" class="dropdown-item" style="color: #fff;">Mark Entry</a>
+                <a href="judge-mark-entry.html" class="dropdown-item" style="color: #fff;">Judge Mark Entry</a>
+                <a href="green-room.html" class="dropdown-item" style="color: #fff;">Green Room</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="results.html" class="dropdown-item" style="color: #fff;">Results</a>
+                <a href="team-badge.html" class="dropdown-item" style="color: #fff;">Team Badge</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="admin-blog.html" class="dropdown-item" style="color: #fff;">Manage Blog</a>
+                <a href="admin-schedule.html" class="dropdown-item" style="color: #fff;">Manage Schedule</a>
+                <a href="admin-team-points.html" class="dropdown-item" style="color: #fff;">Manage Team Points</a>
+                <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="#" id="logoutLink" class="nav-link">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section class="ftco-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">Competitions</span>
+            <h2 class="mb-4"><span>Manage</span> Competitions</h2>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card p-4 mb-4">
+                  <div class="card-body">
+                    <h3 class="mb-4">Competition Setup</h3>
+                    <div class="form-group">
+                      <label for="competition-team">Team</label>
+                      <select id="competition-team" class="form-control">
+                        <option value="" disabled selected>Select team</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="competition-category">Category</label>
+                      <select id="competition-category" class="form-control" disabled>
+                        <option value="" disabled selected>Select category</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="competition-participant">Participant</label>
+                      <select id="competition-participant" class="form-control" disabled>
+                        <option value="" disabled selected>Select registered participant</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card p-4">
+                  <div class="card-body">
+                    <h3 class="mb-4">Select Programs</h3>
+                    <div id="program-select-container"></div>
+                    <button id="add-program-button" type="button" class="btn btn-outline-secondary btn-sm mb-3">Add Program</button>
+                    <button id="add-competition-button" type="button" class="btn btn-primary btn-lg float-right">Add Competition</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+          <div class="col-md-10">
+            <div class="bg-white shadow-sm rounded p-4">
+              <h4 class="mb-3">Saved Competitions</h4>
+              <ul id="competition-list" class="list-group"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Beeone Digital</h2>
+              <p>Manage your event with a single dashboard interface.</p>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Useful Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="admin.html" class="py-2 d-block">Admin</a></li>
+                <li><a href="registration.html" class="py-2 d-block">Registration</a></li>
+                <li><a href="programs.html" class="py-2 d-block">Programs</a></li>
+                <li><a href="competitions.html" class="py-2 d-block">Competitions</a></li>
+                <li><a href="results.html" class="py-2 d-block">Results</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Contact</h2>
+              <div class="block-23 mb-3">
+                <ul>
+                  <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                  <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by Colorlib</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function(handler){
+      function runIfReady(){
+        var domReady = document.readyState === 'interactive' || document.readyState === 'complete';
+        var hydrated = !!window._localstorageHydrated;
+        if(domReady && hydrated){ handler(); return; }
+        function domHandler(){ domReady = true; if(hydrated){ cleanup(); handler(); } }
+        function hydHandler(){ hydrated = true; if(domReady){ cleanup(); handler(); } }
+        function cleanup(){ document.removeEventListener('DOMContentLoaded', domHandler); window.removeEventListener('localstorage-hydrated', hydHandler); }
+        document.addEventListener('DOMContentLoaded', domHandler);
+        window.addEventListener('localstorage-hydrated', hydHandler);
+      }
+      runIfReady();
+    })(function () {
+      var categorySelect = document.getElementById('competition-category');
+      var teamSelect = document.getElementById('competition-team');
+      var participantSelect = document.getElementById('competition-participant');
+      var addProgramButton = document.getElementById('add-program-button');
+      var addCompetitionButton = document.getElementById('add-competition-button');
+      var programSelectContainer = document.getElementById('program-select-container');
+      var competitionList = document.getElementById('competition-list');
+      var currentEditItem = null;
+      var STORAGE_KEY_COMPETITIONS = 'eventalk_competitions';
+      var STORAGE_KEY_PARTICIPANTS = 'eventalk_participants';
+      var MAX_PROGRAM_SELECTS = 5;
+      var programSelects = [];
+
+      function loadOptionsFromStorage(key) {
+        try {
+          var raw = localStorage.getItem(key);
+          if (!raw) return [];
+          var data = JSON.parse(raw);
+          return Array.isArray(data) ? data : [];
+        } catch (e) { return []; }
+      }
+
+      function populateSelect(selectEl, values, placeholder) {
+        selectEl.innerHTML = '';
+        var defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        defaultOption.textContent = placeholder;
+        selectEl.appendChild(defaultOption);
+        values.forEach(function (value) {
+          if (!value) return;
+          var option = document.createElement('option');
+          option.value = value;
+          option.textContent = value;
+          selectEl.appendChild(option);
+        });
+      }
+
+      function loadCategories() {
+        var cats = loadOptionsFromStorage('eventalk_categories');
+        populateSelect(categorySelect, cats, 'Select category');
+        return cats;
+      }
+
+      function loadTeams() {
+        var teams = loadOptionsFromStorage('eventalk_teams');
+        populateSelect(teamSelect, teams, 'Select team');
+        return teams;
+      }
+
+      function loadPrograms() {
+        var programs = loadOptionsFromStorage('eventalk_programs');
+        return programs;
+      }
+
+      function createProgramSelect(index) {
+        var select = document.createElement('select');
+        select.className = 'form-control mb-3 competition-program-select';
+        select.dataset.index = index;
+        select.disabled = true;
+        var defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        defaultOption.textContent = 'Select program';
+        select.appendChild(defaultOption);
+        programSelectContainer.appendChild(select);
+        return select;
+      }
+
+      function loadParticipants() {
+        var participants = loadOptionsFromStorage('eventalk_participants');
+        return participants;
+      }
+
+      function populateParticipantSelect(data) {
+        participantSelect.innerHTML = '';
+        var defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        defaultOption.textContent = 'Select registered participant';
+        participantSelect.appendChild(defaultOption);
+        data.forEach(function (item) {
+          var option = document.createElement('option');
+          option.value = item.chest || '';
+          option.textContent = item.name + ' (' + item.chest + ')';
+          option.dataset.team = item.team || '';
+          option.dataset.category = item.category || '';
+          option.dataset.name = item.name || '';
+          participantSelect.appendChild(option);
+        });
+      }
+
+      function filterParticipants() {
+        var selectedTeam = teamSelect.value;
+        var selectedCategory = categorySelect.value;
+        if (!selectedTeam || !selectedCategory) {
+          populateParticipantSelect([]);
+          participantSelect.disabled = true;
+          return;
+        }
+        var all = loadParticipants();
+        var filtered = all.filter(function (item) {
+          return item.team.toLowerCase() === selectedTeam.toLowerCase() && item.category.toLowerCase() === selectedCategory.toLowerCase();
+        });
+        populateParticipantSelect(filtered);
+        participantSelect.disabled = filtered.length === 0;
+      }
+
+      function updateProgramSelects() {
+        var selectedCategory = categorySelect.value;
+        var programs = loadPrograms().filter(function (item) {
+          return selectedCategory && item && item.category && item.category.toLowerCase() === selectedCategory.toLowerCase();
+        });
+        var values = programs.map(function (item) { return item.name; });
+        programSelects.forEach(function (select) {
+          populateSelect(select, values, 'Select program');
+          select.disabled = values.length === 0;
+        });
+      }
+
+      function createCompetitionItem(participantName, participantChest, programs, category, team) {
+        var li = document.createElement('li');
+        li.className = 'list-group-item d-flex justify-content-between align-items-center';
+        if (participantChest) {
+          li.dataset.chest = participantChest;
+        }
+        // render program names as links that open mark-entry for that program
+        var programLinks = (programs || []).map(function(p) {
+          return '<a href="#" class="open-mark" data-program="' + p.replace(/"/g, '&quot;') + '" data-category="' + (category || '').replace(/"/g, '&quot;') + '">' + p + '</a>';
+        }).join(', ');
+        li.innerHTML = '<div>'
+          + '<strong>' + participantName + '</strong>'
+          + '<div class="small text-muted">Chest: <span class="competition-chest">' + (participantChest || '') + '</span>'
+          + ' • Programs: <span class="competition-program">' + programLinks + '</span>'
+          + ' • Category: <span class="competition-category">' + category + '</span>'
+          + (team ? ' • Team: <span class="competition-team">' + team + '</span>' : '')
+          + '</div>'
+          + '</div>'
+          + '<div>'
+            + '<button type="button" class="btn btn-sm btn-outline-warning mr-2 edit-competition-button" title="Edit"><span class="icon-pencil"></span></button>'
+            + '<button type="button" class="btn btn-sm btn-outline-danger delete-competition-button" title="Delete"><span class="icon-trash"></span></button>'
+          + '</div>';
+        return li;
+      }
+
+      function saveCompetitionsToStorage() {
+        var competitions = Array.from(competitionList.querySelectorAll('li')).map(function (li) {
+          return {
+            participant: li.querySelector('strong').textContent,
+            chest: li.dataset.chest || '',
+            programs: li.querySelector('.competition-program').textContent.split(', ').filter(function (value) { return value; }),
+            category: li.querySelector('.competition-category').textContent,
+            team: li.querySelector('.competition-team') ? li.querySelector('.competition-team').textContent : ''
+          };
+        });
+        try { localStorage.setItem(STORAGE_KEY_COMPETITIONS, JSON.stringify(competitions)); } catch (e) { }
+      }
+
+      function loadCompetitionsFromStorage() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY_COMPETITIONS);
+          if (!raw) return;
+          var competitions = JSON.parse(raw);
+          if (!Array.isArray(competitions)) return;
+          competitions.forEach(function (item) {
+            competitionList.appendChild(createCompetitionItem(item.participant, item.chest || '', item.programs || [], item.category, item.team));
+          });
+        } catch (e) { }
+      }
+
+      function setProgramSelects(count) {
+        programSelectContainer.innerHTML = '';
+        programSelects = [];
+        for (var i = 0; i < count; i++) {
+          programSelects.push(createProgramSelect(i));
+        }
+      }
+
+      function refreshOptions() {
+        loadTeams();
+        loadCategories();
+        setProgramSelects(1);
+        updateProgramSelects();
+        categorySelect.disabled = true;
+        programSelects.forEach(function (select) { select.disabled = true; });
+        participantSelect.disabled = true;
+        filterParticipants();
+      }
+
+      teamSelect.addEventListener('change', function () {
+        categorySelect.disabled = !teamSelect.value;
+        filterParticipants();
+      });
+      categorySelect.addEventListener('change', function () {
+        updateProgramSelects();
+        filterParticipants();
+      });
+
+      addProgramButton.addEventListener('click', function () {
+        if (programSelects.length >= MAX_PROGRAM_SELECTS) return;
+        programSelects.push(createProgramSelect(programSelects.length));
+        updateProgramSelects();
+      });
+
+      addCompetitionButton.addEventListener('click', function () {
+        var selectedOption = participantSelect.options[participantSelect.selectedIndex];
+        var participantChest = selectedOption ? selectedOption.value : '';
+        var participantName = selectedOption ? selectedOption.dataset.name : '';
+        var participantTeam = selectedOption ? selectedOption.dataset.team : '';
+        var participantCategory = selectedOption ? selectedOption.dataset.category : '';
+        var category = categorySelect.value;
+        var team = teamSelect.value;
+        var selectedPrograms = programSelects.map(function (select) { return select.value; }).filter(function (value) { return value; });
+
+        if (!participantName || !participantChest || !category || !team || selectedPrograms.length === 0) {
+          alert('Please select team, category, at least one program, and a registered participant.');
+          return;
+        }
+        if (participantCategory.toLowerCase() !== category.toLowerCase()) {
+          alert('Selected participant does not belong to the chosen category.');
+          return;
+        }
+        if (participantTeam.toLowerCase() !== team.toLowerCase()) {
+          alert('Selected participant does not belong to the chosen team.');
+          return;
+        }
+
+        competitionList.appendChild(createCompetitionItem(participantName, participantChest, selectedPrograms, category, team));
+        participantSelect.selectedIndex = 0;
+        setProgramSelects(1);
+        updateProgramSelects();
+        categorySelect.selectedIndex = 0;
+        teamSelect.selectedIndex = 0;
+        participantSelect.disabled = true;
+        categorySelect.disabled = true;
+        saveCompetitionsToStorage();
+      });
+
+      competitionList.addEventListener('click', function (event) {
+        var button = event.target.closest('button');
+        if (!button) return;
+        var li = button.closest('li');
+        if (!li) return;
+        if (button.classList.contains('delete-competition-button')) {
+          li.remove();
+          saveCompetitionsToStorage();
+          return;
+        }
+        if (button.classList.contains('edit-competition-button')) {
+          var participant = li.querySelector('strong').textContent;
+          var participantChest = li.dataset.chest || '';
+          var programs = li.querySelector('.competition-program').textContent.split(', ').filter(function (value) { return value; });
+          var category = li.querySelector('.competition-category').textContent;
+          var team = li.querySelector('.competition-team') ? li.querySelector('.competition-team').textContent : '';
+          participantSelect.value = participantChest;
+          categorySelect.value = category;
+          if (team) {
+            if (!Array.from(teamSelect.options).some(function (o) { return o.value.toLowerCase() === team.toLowerCase(); })) {
+              var opt = document.createElement('option'); opt.value = team; opt.textContent = team; teamSelect.appendChild(opt);
+            }
+            teamSelect.value = team;
+          } else {
+            teamSelect.selectedIndex = 0;
+          }
+          filterParticipants();
+          setProgramSelects(programs.length || 1);
+          updateProgramSelects();
+          programSelects.forEach(function (select, index) {
+            if (programs[index]) {
+              select.value = programs[index];
+            }
+          });
+          li.remove();
+          saveCompetitionsToStorage();
+          return;
+        }
+      });
+
+      // open mark-entry when a program link is clicked
+      document.addEventListener('click', function (ev) {
+        var a = ev.target.closest && ev.target.closest('.open-mark');
+        if (!a) return;
+        ev.preventDefault();
+        var program = a.dataset.program;
+        var category = a.dataset.category;
+        if (!program) return;
+        try {
+          localStorage.setItem('eventalk_selected_program', JSON.stringify({ category: category || '', name: program }));
+        } catch (e) {}
+        window.location.href = 'mark-entry.html';
+      });
+
+      refreshOptions();
+      loadCompetitionsFromStorage();
+    });
+  </script>
+  </body>
+</html>
+
+

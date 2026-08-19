@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Event Title - Admin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beeone Digital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="#ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+              <div class="dropdown-menu dropdown-menu-right" style="background: rgba(15,19,36,0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                <a href="admin.html" class="dropdown-item" style="color: #fff;">Dashboard</a>
+                <a href="registration.html" class="dropdown-item" style="color: #fff;">Registration</a>
+                <a href="calling-list.html" class="dropdown-item" style="color: #fff;">Calling List</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="mark-entry.html" class="dropdown-item" style="color: #fff;">Mark Entry</a>
+                <a href="judge-mark-entry.html" class="dropdown-item" style="color: #fff;">Judge Mark Entry</a>
+                <a href="green-room.html" class="dropdown-item" style="color: #fff;">Green Room</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="results.html" class="dropdown-item" style="color: #fff;">Results</a>
+                <a href="team-badge.html" class="dropdown-item" style="color: #fff;">Team Badge</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="admin-blog.html" class="dropdown-item" style="color: #fff;">Manage Blog</a>
+                <a href="admin-schedule.html" class="dropdown-item" style="color: #fff;">Manage Schedule</a>
+                <a href="admin-team-points.html" class="dropdown-item" style="color: #fff;">Manage Team Points</a>
+                <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="#" id="logoutLink" class="nav-link">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- END nav -->
+
+    <section class="ftco-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">Admin Section</span>
+            <h2 class="mb-4"><span>Event</span> Title</h2>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-9">
+            <div class="card schedule-admin-card">
+              <div class="card-body schedule-admin-card-body">
+                <h3 class="card-title">Event Title</h3>
+                <p class="card-text">Update the event title, date, location and upload the event artwork used across the site.</p>
+                <form id="event-title-form">
+                  <div class="form-group">
+                    <label for="program-subheading">Hero Subheading</label>
+                    <input type="text" class="form-control" id="program-subheading" placeholder="Enter hero subheading">
+                  </div>
+                  <div class="form-group">
+                    <label for="program-name">Program Name</label>
+                    <input type="text" class="form-control" id="program-name" placeholder="Enter program name">
+                  </div>
+                  <div class="form-group">
+                    <label for="program-place">Place</label>
+                    <input type="text" class="form-control" id="program-place" placeholder="Enter place">
+                  </div>
+                  <div class="form-group">
+                    <label for="program-date">Date</label>
+                    <input type="date" class="form-control" id="program-date">
+                  </div>
+                  <div class="form-group">
+                    <label for="program-logo">Event Logo Image</label>
+                    <input type="file" class="form-control-file" id="program-logo" accept="image/*">
+                    <div class="mt-2"><img id="logo-preview" src="" alt="Logo preview" style="max-height:120px; display:none; border:1px solid #ddd; padding:8px; background:#fff;"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="coordinator-name">Program Coordinator Name</label>
+                    <input type="text" class="form-control" id="coordinator-name" placeholder="Enter coordinator name">
+                  </div>
+                  <div class="form-group">
+                    <label for="coordinator-contact">Coordinator Contact Number</label>
+                    <input type="tel" class="form-control" id="coordinator-contact" placeholder="Enter contact number">
+                  </div>
+                  <div class="form-group">
+                    <label for="upload-sign">Upload Sign</label>
+                    <input type="file" class="form-control-file" id="upload-sign" accept="image/*">
+                    <div class="mt-2"><img id="sign-preview" src="" alt="Sign preview" style="max-height:120px; display:none; border:1px solid #ddd; padding:8px; background:#fff;"></div>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" id="save-event-title" class="btn btn-primary">Save Details</button>
+                    <a href="admin.html" class="btn btn-secondary ml-2">Back to Dashboard</a>
+                  </div>
+                  <div id="event-title-message" class="alert alert-success" role="alert" style="display:none"></div>
+                </form>
+                <div id="saved-event-details" class="mt-4" style="display:none">
+                  <div class="card schedule-admin-card">
+                    <div class="card-body schedule-admin-card-body">
+                      <div style="display:flex;align-items:center;justify-content:space-between">
+                        <div><h5 class="card-title">Saved Event Details</h5></div>
+                        <div>
+                          <button id="edit-saved-event" class="btn btn-outline-primary btn-sm mr-2" title="Edit"><span style="font-size:16px;">✏️</span></button>
+                          <button id="delete-saved-event" class="btn btn-outline-danger btn-sm" title="Delete"><span style="font-size:16px;">🗑️</span></button>
+                        </div>
+                      </div>
+                      <div id="saved-details-content" style="margin-top:16px"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Beeone Digital</h2>
+              <p>Manage your event with a single dashboard interface.</p>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Useful Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="event-title.html" class="py-2 d-block">Event Title</a></li>
+                <li><a href="admin.html" class="py-2 d-block">Admin</a></li>
+                <li><a href="backup.html" class="py-2 d-block">Backup</a></li>
+                <li><a href="import-online-data.html" class="py-2 d-block">Import Online Data</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Contact</h2>
+              <div class="block-23 mb-3">
+                <ul>
+                  <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                  <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by Colorlib</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function(){
+      var storageKey = 'eventalk_event_title';
+      var programSubheading = document.getElementById('program-subheading');
+      var programName = document.getElementById('program-name');
+      var programPlace = document.getElementById('program-place');
+      var programDate = document.getElementById('program-date');
+      var programLogo = document.getElementById('program-logo');
+      var logoPreview = document.getElementById('logo-preview');
+      var coordinatorName = document.getElementById('coordinator-name');
+      var coordinatorContact = document.getElementById('coordinator-contact');
+      var uploadSign = document.getElementById('upload-sign');
+      var signPreview = document.getElementById('sign-preview');
+      var saveButton = document.getElementById('save-event-title');
+      var messageBox = document.getElementById('event-title-message');
+      var savedPanel = document.getElementById('saved-event-details');
+      var savedContent = document.getElementById('saved-details-content');
+      var editButton = document.getElementById('edit-saved-event');
+      var deleteButton = document.getElementById('delete-saved-event');
+
+      function setPreview(imgInput, previewImg) {
+        if (!imgInput || !previewImg) return;
+        imgInput.addEventListener('change', function(){
+          var file = imgInput.files && imgInput.files[0];
+          if (!file) { previewImg.style.display='none'; previewImg.src=''; return; }
+          var reader = new FileReader();
+          reader.onload = function(e){ previewImg.src = e.target.result; previewImg.style.display = 'block'; };
+          reader.readAsDataURL(file);
+        });
+      }
+      setPreview(programLogo, logoPreview);
+      setPreview(uploadSign, signPreview);
+
+      function saveData(data) {
+        localStorage.setItem(storageKey, JSON.stringify(data));
+      }
+      function loadData() {
+        var raw = localStorage.getItem(storageKey);
+        try { return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+      }
+      function renderSaved(data) {
+        if (!data) { savedPanel.style.display = 'none'; savedContent.innerHTML = ''; return; }
+        savedPanel.style.display = 'block';
+        var html = '<div class="row"><div class="col-md-6"><p><strong>Hero Subheading:</strong> ' + (data.programSubheading || '') + '</p>' +
+                   '<p><strong>Program Name:</strong> ' + (data.programName || '') + '</p>' +
+                   '<p><strong>Place:</strong> ' + (data.programPlace || '') + '</p>' +
+                   '<p><strong>Date:</strong> ' + (data.programDate || '') + '</p>' +
+                   '<p><strong>Coordinator:</strong> ' + (data.coordinatorName || '') + '</p>' +
+                   '<p><strong>Contact:</strong> ' + (data.coordinatorContact || '') + '</p></div>' +
+                   '<div class="col-md-6">';
+        if (data.programLogo) {
+          html += '<p><strong>Logo:</strong></p><img src="' + data.programLogo + '" style="max-width:100%;max-height:140px;border:1px solid #ddd;padding:6px;background:#fff;display:block;margin-bottom:10px">';
+        }
+        if (data.uploadSign) {
+          html += '<p><strong>Sign:</strong></p><img src="' + data.uploadSign + '" style="max-width:100%;max-height:140px;border:1px solid #ddd;padding:6px;background:#fff;display:block">';
+        }
+        html += '</div></div>';
+        savedContent.innerHTML = html;
+      }
+      function populateForm(data) {
+        if (!data) return;
+        programSubheading.value = data.programSubheading || '';
+        programName.value = data.programName || '';
+        programPlace.value = data.programPlace || '';
+        programDate.value = data.programDate || '';
+        coordinatorName.value = data.coordinatorName || '';
+        coordinatorContact.value = data.coordinatorContact || '';
+        if (data.programLogo) { logoPreview.src = data.programLogo; logoPreview.style.display = 'block'; }
+        if (data.uploadSign) { signPreview.src = data.uploadSign; signPreview.style.display = 'block'; }
+      }
+      function clearFileInputs() {
+        programLogo.value = '';
+        uploadSign.value = '';
+      }
+      function clearForm() {
+        programSubheading.value = '';
+        programName.value = '';
+        programPlace.value = '';
+        programDate.value = '';
+        coordinatorName.value = '';
+        coordinatorContact.value = '';
+        clearFileInputs();
+        logoPreview.src = ''; logoPreview.style.display = 'none';
+        signPreview.src = ''; signPreview.style.display = 'none';
+      }
+      function showMessage(text, success) {
+        messageBox.textContent = text;
+        messageBox.className = 'alert ' + (success ? 'alert-success' : 'alert-danger');
+        messageBox.style.display = 'block';
+        setTimeout(function(){ messageBox.style.display = 'none'; }, 4000);
+      }
+      function readFileAsDataURL(input, callback) {
+        var file = input.files && input.files[0];
+        if (!file) { callback(null); return; }
+        var reader = new FileReader();
+        reader.onload = function(e){ callback(e.target.result); };
+        reader.readAsDataURL(file);
+      }
+      function saveFormData() {
+        readFileAsDataURL(programLogo, function(logoData) {
+          readFileAsDataURL(uploadSign, function(signData) {
+            var data = {
+              programSubheading: programSubheading.value.trim(),
+              programName: programName.value.trim(),
+              programPlace: programPlace.value.trim(),
+              programDate: programDate.value,
+              coordinatorName: coordinatorName.value.trim(),
+              coordinatorContact: coordinatorContact.value.trim(),
+              programLogo: logoData || logoPreview.src || '',
+              uploadSign: signData || signPreview.src || ''
+            };
+            saveData(data);
+            renderSaved(data);
+            showMessage('Event details saved successfully.', true);
+          });
+        });
+      }
+      saveButton.addEventListener('click', function(){ saveFormData(); });
+      editButton.addEventListener('click', function(){ var data = loadData(); if (!data) return; populateForm(data); showMessage('Loaded saved details for editing.', true); });
+      deleteButton.addEventListener('click', function(){ if (!confirm('Delete saved event title details?')) return; localStorage.removeItem(storageKey); clearForm(); renderSaved(null); showMessage('Saved details deleted.', true); });
+
+      var existing = loadData();
+      if (existing) {
+        renderSaved(existing);
+      }
+    })();
+  </script>
+  </body>
+</html>
+
+

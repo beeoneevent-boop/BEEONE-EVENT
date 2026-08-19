@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Registration - Admin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.0.0/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beeone Digital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+              <div class="dropdown-menu dropdown-menu-right" style="background: rgba(15,19,36,0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                <a href="admin.html" class="dropdown-item" style="color: #fff;">Dashboard</a>
+                <a href="registration.html" class="dropdown-item" style="color: #fff;">Registration</a>
+                <a href="calling-list.html" class="dropdown-item" style="color: #fff;">Calling List</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="mark-entry.html" class="dropdown-item" style="color: #fff;">Mark Entry</a>
+                <a href="judge-mark-entry.html" class="dropdown-item" style="color: #fff;">Judge Mark Entry</a>
+                <a href="green-room.html" class="dropdown-item" style="color: #fff;">Green Room</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="results.html" class="dropdown-item" style="color: #fff;">Results</a>
+                <a href="team-badge.html" class="dropdown-item" style="color: #fff;">Team Badge</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="admin-blog.html" class="dropdown-item" style="color: #fff;">Manage Blog</a>
+                <a href="admin-schedule.html" class="dropdown-item" style="color: #fff;">Manage Schedule</a>
+                <a href="admin-team-points.html" class="dropdown-item" style="color: #fff;">Manage Team Points</a>
+                <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="#" id="logoutLink" class="nav-link">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- END nav -->
+
+    <section class="ftco-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">Admin Section</span>
+            <h2 class="mb-4"><span>REGISTRATION</span></h2>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <div class="bg-dark-panel shadow-sm rounded p-4">
+              <div class="row align-items-start">
+                <div class="col-md-6">
+                  <h3 class="text-danger mb-4">Team</h3>
+                  <div class="form-group mb-3">
+                    <input id="team-name-input" type="text" class="form-control form-control-lg" placeholder="Write team name" aria-label="Team name">
+                  </div>
+                  <button id="save-team-button" type="button" class="btn btn-success btn-lg mb-4">Save Team Name</button>
+                  <div class="mt-4 text-left">
+                    <h4 class="mb-3">Saved Team Names</h4>
+                    <ul id="team-list" class="list-group"></ul>
+                    <small class="text-muted">Use the pencil icon to edit and the trash icon to delete a saved team.</small>
+                  </div>
+                </div>
+                <div class="col-md-6 border-left pl-md-4 pt-4 pt-md-0">
+                  <h3 class="text-danger mb-4">Participant / Competitions</h3>
+                  <div class="form-group mb-3">
+                    <input id="participant-chest-input" type="text" class="form-control form-control-lg" placeholder="Chest No" aria-label="Chest number">
+                  </div>
+                  <div class="form-group mb-3">
+                    <input id="participant-name-input" type="text" class="form-control form-control-lg" placeholder="Participant name" aria-label="Participant name">
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="participant-category">Category</label>
+                    <select id="participant-category" class="form-control">
+                      <option value="" disabled selected>Select category</option>
+                    </select>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="participant-team">Team</label>
+                    <select id="participant-team" class="form-control">
+                      <option value="" disabled selected>Select team (optional)</option>
+                    </select>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label for="participant-photo">Participant Photo (optional)</label>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="participant-photo" accept="image/*">
+                      <label class="custom-file-label" for="participant-photo">Choose photo...</label>
+                    </div>
+                  </div>
+                  <div id="photo-preview-container" class="mb-3" style="display: none;">
+                    <img id="photo-preview" src="" alt="Photo preview" style="max-width: 100%; max-height: 200px; border-radius: 5px;">
+                  </div>
+                  <button id="add-participant-button" type="button" class="btn btn-outline-primary btn-lg mb-3">Add Participant</button>
+                  <div class="mt-4 text-left">
+                    <h4 class="mb-3">Saved Participants</h4>
+                    <ul id="participant-list" class="list-group"></ul>
+                    <small class="text-muted">Use the pencil icon to edit and the trash icon to delete a participant.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Beeone Digital</h2>
+              <p>Manage your event with a single dashboard interface.</p>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Useful Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="registration.html" class="py-2 d-block">Registration</a></li>
+                <li><a href="admin.html" class="py-2 d-block">Admin</a></li>
+                <li><a href="results.html" class="py-2 d-block">Results</a></li>
+                <li><a href="certificate.html" class="py-2 d-block">Certificate</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Contact</h2>
+              <div class="block-23 mb-3">
+                <ul>
+                  <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                  <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by Colorlib</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function(handler){
+      function runIfReady(){
+        var domReady = document.readyState === 'interactive' || document.readyState === 'complete';
+        var hydrated = !!window._localstorageHydrated;
+        if(domReady && hydrated){ handler(); return; }
+        function domHandler(){ domReady = true; if(hydrated){ cleanup(); handler(); } }
+        function hydHandler(){ hydrated = true; if(domReady){ cleanup(); handler(); } }
+        function cleanup(){ document.removeEventListener('DOMContentLoaded', domHandler); window.removeEventListener('localstorage-hydrated', hydHandler); }
+        document.addEventListener('DOMContentLoaded', domHandler);
+        window.addEventListener('localstorage-hydrated', hydHandler);
+      }
+      runIfReady();
+    })(function () {
+      var saveButton = document.getElementById('save-team-button');
+      var teamInput = document.getElementById('team-name-input');
+      var teamList = document.getElementById('team-list');
+      var teamSelect = document.getElementById('participant-team');
+      var editingTeamItem = null;
+      var STORAGE_KEY_TEAMS = 'eventalk_teams';
+      var STORAGE_KEY_PARTICIPANTS = 'eventalk_participants';
+
+      function addTeamOption(name) {
+        if (!name) return;
+        var exists = Array.from(teamSelect.options).some(function (o) { return o.value.toLowerCase() === name.toLowerCase(); });
+        if (!exists) {
+          var opt = document.createElement('option'); opt.value = name; opt.textContent = name; teamSelect.appendChild(opt);
+        }
+      }
+
+      function removeTeamOption(name) {
+        if (!name) return;
+        var opts = Array.from(teamSelect.options);
+        opts.forEach(function (o) { if (o.value.toLowerCase() === name.toLowerCase()) o.remove(); });
+      }
+
+      function updateTeamOption(oldName, newName) {
+        if (!oldName) return addTeamOption(newName);
+        var found = false;
+        Array.from(teamSelect.options).forEach(function (o) {
+          if (o.value.toLowerCase() === oldName.toLowerCase()) {
+            o.value = newName; o.textContent = newName; found = true;
+          }
+        });
+        if (!found) addTeamOption(newName);
+      }
+
+      function createTeamListItem(name) {
+        var li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.innerHTML = '<div class="d-flex justify-content-between align-items-center">'
+          + '<span class="team-name-text">' + name + '</span>'
+          + '<span>'
+            + '<button type="button" class="btn btn-sm btn-outline-warning mr-2 edit-team-button" title="Edit"><span class="icon-pencil"></span></button>'
+            + '<button type="button" class="btn btn-sm btn-outline-danger delete-team-button" title="Delete"><span class="icon-trash"></span></button>'
+          + '</span>'
+        + '</div>';
+        return li;
+      }
+
+      function saveTeamsToStorage() {
+        var teams = Array.from(teamSelect.options).map(function (opt) { return opt.value; }).filter(function (v) { return v && v !== 'Select team (optional)'; });
+        try { localStorage.setItem(STORAGE_KEY_TEAMS, JSON.stringify(teams)); } catch (e) { }
+      }
+
+      function loadTeamsFromStorage() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY_TEAMS);
+          if (!raw) return;
+          var teams = JSON.parse(raw);
+          if (!Array.isArray(teams)) return;
+          teams.forEach(function (team) {
+            teamList.appendChild(createTeamListItem(team));
+            addTeamOption(team);
+          });
+        } catch (e) { }
+      }
+
+      function buildParticipantQrValue(chest, name, category, team) {
+        var parts = ['Beeone Event', 'Chest: ' + (chest || ''), 'Name: ' + (name || ''), 'Category: ' + (category || '')];
+        if (team) parts.push('Team: ' + team);
+        return parts.join(' | ');
+      }
+
+      function generateParticipantQrCode(text) {
+        return new Promise(function (resolve) {
+          if (!text || !window.QRCode) {
+            resolve(null);
+            return;
+          }
+
+          QRCode.toDataURL(String(text), {
+            width: 180,
+            margin: 1,
+            color: { dark: '#111827', light: '#ffffff' },
+            errorCorrectionLevel: 'M'
+          }, function (err, url) {
+            resolve(err ? null : url);
+          });
+        });
+      }
+
+      function saveParticipantsToStorage() {
+        var participants = Array.from(participantList.querySelectorAll('li')).map(function (li) {
+          return {
+            chest: li.querySelector('.participant-chest').textContent,
+            name: li.querySelector('.participant-name').textContent,
+            category: li.querySelector('.participant-category-text').textContent,
+            team: li.querySelector('.participant-team-text') ? li.querySelector('.participant-team-text').textContent : '',
+            photo: li.dataset.photo ? li.dataset.photo : null,
+            qrCode: li.dataset.qrCode ? li.dataset.qrCode : null
+          };
+        });
+        try { localStorage.setItem(STORAGE_KEY_PARTICIPANTS, JSON.stringify(participants)); } catch (e) { }
+      }
+
+      function loadParticipantsFromStorage() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY_PARTICIPANTS);
+          if (!raw) return;
+          var participants = JSON.parse(raw);
+          if (!Array.isArray(participants)) return;
+          participants.forEach(function (item) {
+            participantList.appendChild(createParticipantItem(item.chest, item.name, item.category, item.team, item.photo, item.qrCode));
+          });
+        } catch (e) { }
+      }
+
+      saveButton.addEventListener('click', function () {
+        var teamName = teamInput.value.trim();
+        if (!teamName) {
+          alert('Please enter a team name.');
+          return;
+        }
+
+        if (editingTeamItem) {
+          var oldName = editingTeamItem.querySelector('.team-name-text').textContent;
+          editingTeamItem.querySelector('.team-name-text').textContent = teamName;
+          updateTeamOption(oldName, teamName);
+          saveTeamsToStorage();
+          editingTeamItem = null;
+          saveButton.textContent = 'Save Team Name';
+        } else {
+          var li = document.createElement('li');
+          li.className = 'list-group-item';
+          li.innerHTML = '<div class="d-flex justify-content-between align-items-center">'
+            + '<span class="team-name-text">' + teamName + '</span>'
+            + '<span>'
+              + '<button type="button" class="btn btn-sm btn-outline-warning mr-2 edit-team-button" title="Edit"><span class="icon-pencil"></span></button>'
+              + '<button type="button" class="btn btn-sm btn-outline-danger delete-team-button" title="Delete"><span class="icon-trash"></span></button>'
+            + '</span>'
+          + '</div>';
+
+          teamList.appendChild(li);
+          addTeamOption(teamName);
+          saveTeamsToStorage();
+        }
+
+        teamInput.value = '';
+        teamInput.focus();
+      });
+
+      teamList.addEventListener('click', function (event) {
+        var target = event.target;
+        while (target && target !== teamList && !target.classList.contains('edit-team-button') && !target.classList.contains('delete-team-button')) {
+          target = target.parentNode;
+        }
+
+        if (!target || target === teamList) {
+          return;
+        }
+
+        var listItem = target.closest('li');
+        if (!listItem) {
+          return;
+        }
+
+        if (target.classList.contains('delete-team-button')) {
+          var nameToRemove = listItem.querySelector('.team-name-text') ? listItem.querySelector('.team-name-text').textContent : '';
+          listItem.remove();
+          removeTeamOption(nameToRemove);
+          saveTeamsToStorage();
+          return;
+        }
+
+        if (target.classList.contains('edit-team-button')) {
+          var nameText = listItem.querySelector('.team-name-text');
+          if (nameText) {
+            teamInput.value = nameText.textContent;
+            teamInput.focus();
+            editingTeamItem = listItem;
+            saveButton.textContent = 'Update Team';
+          }
+        }
+      });
+
+      // Participants: wire to program categories
+      var partChest = document.getElementById('participant-chest-input');
+      var partName = document.getElementById('participant-name-input');
+      var partCategory = document.getElementById('participant-category');
+      var addPartBtn = document.getElementById('add-participant-button');
+      var participantList = document.getElementById('participant-list');
+      var editingParticipant = null;
+
+      function ensureCategoryOptions() {
+        // pull categories from programs page storage if present
+        try {
+          var raw = localStorage.getItem('eventalk_categories');
+          if (raw) {
+            var cats = JSON.parse(raw);
+            if (Array.isArray(cats)) {
+              cats.forEach(function (c) {
+                if (!Array.from(partCategory.options).some(function (o) { return o.value.toLowerCase() === c.toLowerCase(); })) {
+                  var opt = document.createElement('option'); opt.value = c; opt.textContent = c; partCategory.appendChild(opt);
+                }
+              });
+            }
+          }
+        } catch (e) {}
+      }
+
+      var partTeam = document.getElementById('participant-team');
+      var partPhoto = document.getElementById('participant-photo');
+      var photoPreviewContainer = document.getElementById('photo-preview-container');
+      var photoPreview = document.getElementById('photo-preview');
+      var currentPhotoData = null;
+
+      // Handle photo upload and preview
+      if (partPhoto) {
+        partPhoto.addEventListener('change', function(e) {
+          var file = e.target.files[0];
+          if (file) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+              currentPhotoData = event.target.result;
+              photoPreview.src = currentPhotoData;
+              photoPreviewContainer.style.display = 'block';
+              // Update custom file label
+              var label = document.querySelector('.custom-file-label');
+              if (label) label.textContent = file.name;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+
+      function createParticipantItem(chest, name, category, team, photo, qrCode) {
+        var li = document.createElement('li');
+        li.className = 'list-group-item d-flex justify-content-between align-items-center';
+        var photoHtml = photo ? '<img src="' + photo + '" alt="' + name + '" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 10px;">' : '';
+        var qrHtml = qrCode ? '<div style="width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #dfe3ea; border-radius: 6px; padding: 4px; margin-left: 12px;"><img src="' + qrCode + '" alt="QR code for ' + (name || 'participant') + '" style="width: 100%; height: 100%; object-fit: contain;"></div>' : '';
+        li.innerHTML = '<div style="display: flex; align-items: center; flex: 1;">'
+          + photoHtml
+          + '<div>'
+            + '<strong class="participant-name">' + (name || '') + '</strong>'
+            + '<div class="small text-muted">Chest: <span class="participant-chest">' + (chest || '') + '</span> • <span class="participant-category-text">' + (category || '') + '</span>'
+            + (team ? ' • Team: <span class="participant-team-text">' + team + '</span>' : '') + '</div>'
+          + '</div>'
+          + '</div>'
+          + qrHtml
+          + '<div>'
+            + '<button type="button" class="btn btn-sm btn-outline-warning mr-2 edit-participant-button" title="Edit"><span class="icon-pencil"></span></button>'
+            + '<button type="button" class="btn btn-sm btn-outline-danger delete-participant-button" title="Delete"><span class="icon-trash"></span></button>'
+          + '</div>';
+        if (photo) {
+          li.dataset.photo = photo;
+        }
+        if (qrCode) {
+          li.dataset.qrCode = qrCode;
+        }
+        return li;
+      }
+
+      addPartBtn.addEventListener('click', function () {
+        var chest = partChest.value.trim();
+        var name = partName.value.trim();
+        var category = partCategory.value;
+        var team = partTeam.value;
+        if (!chest || !name || !category) { alert('Please enter chest, name and select a category.'); return; }
+
+        var qrValue = buildParticipantQrValue(chest, name, category, team);
+        generateParticipantQrCode(qrValue).then(function (qrCode) {
+          var finalQrCode = qrCode || (editingParticipant && editingParticipant.dataset.qrCode) || null;
+
+          if (editingParticipant) {
+            editingParticipant.querySelector('.participant-chest').textContent = chest;
+            editingParticipant.querySelector('.participant-name').textContent = name;
+            editingParticipant.querySelector('.participant-category-text').textContent = category;
+            if (editingParticipant.querySelector('.participant-team-text')) {
+              editingParticipant.querySelector('.participant-team-text').textContent = team || '';
+            } else if (team) {
+              var small = editingParticipant.querySelector('.small.text-muted');
+              small.innerHTML = small.innerHTML + ' • Team: <span class="participant-team-text">' + team + '</span>';
+            }
+            if (currentPhotoData) {
+              editingParticipant.dataset.photo = currentPhotoData;
+              var imgEl = editingParticipant.querySelector('img');
+              if (imgEl) {
+                imgEl.src = currentPhotoData;
+              } else {
+                var newImg = document.createElement('img');
+                newImg.src = currentPhotoData;
+                newImg.alt = name;
+                newImg.style.cssText = 'width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 10px;';
+                editingParticipant.querySelector('div').insertBefore(newImg, editingParticipant.querySelector('div').firstChild);
+              }
+            }
+            if (finalQrCode) {
+              editingParticipant.dataset.qrCode = finalQrCode;
+              var qrBox = editingParticipant.querySelector('div[style*="width: 52px"]');
+              if (!qrBox && editingParticipant.querySelector('img[alt*="QR code"')) {
+                qrBox = editingParticipant.querySelector('img[alt*="QR code"]').parentNode;
+              }
+              if (qrBox) {
+                qrBox.innerHTML = '<img src="' + finalQrCode + '" alt="QR code for ' + (name || 'participant') + '" style="width: 100%; height: 100%; object-fit: contain;">';
+              } else {
+                var qrWrap = document.createElement('div');
+                qrWrap.style.cssText = 'width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #dfe3ea; border-radius: 6px; padding: 4px; margin-left: 12px;';
+                var qrImg = document.createElement('img');
+                qrImg.src = finalQrCode;
+                qrImg.alt = 'QR code for ' + (name || 'participant');
+                qrImg.style.cssText = 'width: 100%; height: 100%; object-fit: contain;';
+                qrWrap.appendChild(qrImg);
+                editingParticipant.insertBefore(qrWrap, editingParticipant.lastElementChild);
+              }
+            }
+            editingParticipant = null;
+          } else {
+            var li = createParticipantItem(chest, name, category, team, currentPhotoData, finalQrCode);
+            participantList.appendChild(li);
+          }
+
+          saveParticipantsToStorage();
+          partChest.value = ''; partName.value = ''; partCategory.selectedIndex = 0; if (partTeam) partTeam.selectedIndex = 0; currentPhotoData = null; photoPreviewContainer.style.display = 'none'; partPhoto.value = ''; var label = document.querySelector('.custom-file-label'); if (label) label.textContent = 'Choose photo...'; partChest.focus();
+        });
+      });
+
+      participantList.addEventListener('click', function (e) {
+        var btn = e.target.closest('button'); if (!btn) return; var li = btn.closest('li'); if (!li) return;
+        if (btn.classList.contains('delete-participant-button')) { li.remove(); saveParticipantsToStorage(); return; }
+        if (btn.classList.contains('edit-participant-button')) {
+          editingParticipant = li;
+          partName.value = li.querySelector('.participant-name').textContent;
+          partChest.value = li.querySelector('.participant-chest').textContent;
+          var catText = li.querySelector('.participant-category-text').textContent;
+          // ensure option exists
+          if (!Array.from(partCategory.options).some(function (o) { return o.value.toLowerCase() === catText.toLowerCase(); })) {
+            var opt = document.createElement('option'); opt.value = catText; opt.textContent = catText; partCategory.appendChild(opt);
+          }
+          partCategory.value = catText;
+          var teamTextEl = li.querySelector('.participant-team-text');
+          if (teamTextEl) {
+            var teamText = teamTextEl.textContent;
+            if (!Array.from(partTeam.options).some(function (o) { return o.value.toLowerCase() === teamText.toLowerCase(); })) {
+              var opt2 = document.createElement('option'); opt2.value = teamText; opt2.textContent = teamText; partTeam.appendChild(opt2);
+            }
+            partTeam.value = teamText;
+          } else if (partTeam) {
+            partTeam.selectedIndex = 0;
+          }
+          // Load photo if it exists
+          if (li.dataset.photo) {
+            currentPhotoData = li.dataset.photo;
+            photoPreview.src = currentPhotoData;
+            photoPreviewContainer.style.display = 'block';
+          } else {
+            currentPhotoData = null;
+            photoPreviewContainer.style.display = 'none';
+          }
+          saveParticipantsToStorage();
+          partName.focus();
+          return;
+        }
+      });
+
+      ensureCategoryOptions();
+      loadTeamsFromStorage();
+      loadParticipantsFromStorage();
+    });
+  </script>
+  </body>
+</html>
+
+

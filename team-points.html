@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Team Points - Beeone Digital</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+      body { background: #050913; color: #f8fbff; }
+      .page-shell { min-height: 100vh; padding-top: 40px; padding-bottom: 40px; }
+      .page-card { background: rgba(15,23,52,.90); border: 1px solid rgba(255,255,255,.08); box-shadow: 0 30px 80px rgba(0,0,0,.28); border-radius: 28px; }
+      .page-card .card-body { padding: 40px; }
+      .team-heading { color: #f6f8ff; font-weight: 700; letter-spacing: .04em; margin-bottom: 10px; }
+      .team-subtitle { color: rgba(255,255,255,.72); font-size: 1.05rem; max-width: 720px; margin: 0 auto 32px; }
+      #points-table { border-collapse: separate; border-spacing: 0 12px; width: 100%; }
+      #points-table thead th { color: #d6e1ff; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; border-bottom: none; padding-bottom: 12px; }
+      #points-table tbody tr { background: rgba(255,255,255,.05); border-radius: 18px; transition: transform .18s ease, box-shadow .18s ease; }
+      #points-table tbody tr:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(0,0,0,.14); }
+      #points-table tbody td { padding: 18px 20px; border: none; color: #edf3ff; vertical-align: middle; }
+      #points-table tbody td:first-child { font-weight: 700; color: #ffffff; width: 80px; }
+      #points-table tbody td:nth-child(3) { text-align: right; }
+      .points-note { margin-top: 28px; display: inline-flex; align-items: center; justify-content: center; width: 100%; color: rgba(255,255,255,.95); background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); border-radius: 20px; padding: 24px 28px; }
+      .points-note .note-text { font-size: 3.4rem; font-weight: 900; line-height: 1; text-transform: uppercase; letter-spacing: .08em; color: #9ab7ff; text-align: center; }
+      @media (max-width: 768px) {
+        .page-card .card-body { padding: 28px 20px; }
+        #points-table tbody td { padding: 14px 12px; }
+        .points-note { flex-direction: column; align-items: flex-start; }
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beeone Digital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="speakers.html" class="nav-link">Speakers</a></li>
+            <li class="nav-item"><a href="schedule.html" class="nav-link">Schedule</a></li>
+            <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+            <li class="nav-item active"><a href="team-points.html" class="nav-link">Team Points</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section class="ftco-section page-shell">
+      <div class="container">
+        <div class="row justify-content-center mb-4">
+          <div class="col-lg-8 text-center">
+            <p class="eyebrow text-primary" style="text-transform:uppercase;letter-spacing:.18em;font-weight:700;margin-bottom:16px;">Team Standings</p>
+            <h1 class="team-heading">Team Points</h1>
+            <p class="team-subtitle">Public view of team points and standings — updated automatically from the competition results.</p>
+          </div>
+        </div>
+
+
+        <div class="row justify-content-center">
+          <div class="col-xl-10">
+            <div class="page-card">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table" id="points-table">
+                    <thead>
+                      <tr>
+                        <th>Rank</th>
+                        <th>Team</th>
+                        <th class="text-right">Points</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="points-note">
+                  <div class="note-text" id="callout-text">after 10 results</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <script>
+    (function(){
+      function safeParse(key){ try{ var raw = localStorage.getItem(key); var arr = raw?JSON.parse(raw):[]; return Array.isArray(arr)?arr:[]; }catch(e){ return []; } }
+      function safeParseMeta(){ try{ var raw = localStorage.getItem('eventalk_team_points_meta'); return raw ? JSON.parse(raw) : {}; }catch(e){ return {}; } }
+      function render(){ var rows = safeParse('eventalk_team_points');
+        rows = rows.slice().sort(function(a,b){ return (b.points||0) - (a.points||0); });
+        var tbody = document.querySelector('#points-table tbody'); if(!tbody) return; tbody.innerHTML = '';
+        rows.forEach(function(r, idx){ var tr = document.createElement('tr');
+          var rank = document.createElement('td'); rank.textContent = idx+1;
+          var name = document.createElement('td'); name.textContent = r.teamName||r.team||'Unknown';
+          var pts = document.createElement('td'); pts.textContent = r.points||0;
+          tr.appendChild(rank); tr.appendChild(name); tr.appendChild(pts);
+          tbody.appendChild(tr);
+        });
+      }
+      function applyCallout(){ var data = safeParseMeta(); var calloutEl = document.getElementById('callout-text'); if(calloutEl){ calloutEl.textContent = data.calloutText || 'after 10 results'; } }
+      document.addEventListener('DOMContentLoaded', function(){ render(); applyCallout(); });
+      window.addEventListener('storage', function(e){ if(e.key==='eventalk_team_points' || e.key==='eventalk_team_points_meta'){ render(); applyCallout(); } });
+    })();
+  </script>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+

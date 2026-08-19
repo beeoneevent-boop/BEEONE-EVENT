@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Programs - Admin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beeone Digital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+              <div class="dropdown-menu dropdown-menu-right" style="background: rgba(15,19,36,0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                <a href="admin.html" class="dropdown-item" style="color: #fff;">Dashboard</a>
+                <a href="registration.html" class="dropdown-item" style="color: #fff;">Registration</a>
+                <a href="calling-list.html" class="dropdown-item" style="color: #fff;">Calling List</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="mark-entry.html" class="dropdown-item" style="color: #fff;">Mark Entry</a>
+                <a href="judge-mark-entry.html" class="dropdown-item" style="color: #fff;">Judge Mark Entry</a>
+                <a href="green-room.html" class="dropdown-item" style="color: #fff;">Green Room</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="results.html" class="dropdown-item" style="color: #fff;">Results</a>
+                <a href="team-badge.html" class="dropdown-item" style="color: #fff;">Team Badge</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="admin-blog.html" class="dropdown-item" style="color: #fff;">Manage Blog</a>
+                <a href="admin-schedule.html" class="dropdown-item" style="color: #fff;">Manage Schedule</a>
+                <a href="admin-team-points.html" class="dropdown-item" style="color: #fff;">Manage Team Points</a>
+                <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="#" id="logoutLink" class="nav-link">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- END nav -->
+
+    <section class="ftco-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">Program Management</span>
+            <h2 class="mb-4"><span>Create</span> Program</h2>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card schedule-admin-card p-4 mb-4">
+                  <div class="card-body schedule-admin-card-body">
+                    <h3 class="mb-4">Program Setup</h3>
+                    <p>Add and manage categories here. Use the form on the right to add program names.</p>
+                    <div id="defaults-region" role="region" aria-label="Default points for types" class="border rounded p-3 mb-3">
+                      <h5 class="mb-2">Defaults (applies to all programs by type)</h5>
+                      <div class="form-row">
+                        <div class="col-12 mb-2"><strong>Individual</strong></div>
+                        <div class="form-group col-md-4">
+                          <input type="number" min="0" class="form-control" id="default-ind-first" placeholder="1st">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <input type="number" min="0" class="form-control" id="default-ind-second" placeholder="2nd">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <input type="number" min="0" class="form-control" id="default-ind-third" placeholder="3rd">
+                        </div>
+                      </div>
+                      <div class="form-row mt-2">
+                        <div class="col-12 mb-2"><strong>Group</strong></div>
+                        <div class="form-group col-md-4">
+                          <input type="number" min="0" class="form-control" id="default-group-first" placeholder="1st">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <input type="number" min="0" class="form-control" id="default-group-second" placeholder="2nd">
+                        </div>
+                        <div class="form-group col-md-4">
+                          <input type="number" min="0" class="form-control" id="default-group-third" placeholder="3rd">
+                        </div>
+                      </div>
+                      <div class="text-right mt-2">
+                        <button id="apply-defaults-button" type="button" class="btn btn-sm btn-outline-primary">Apply defaults</button>
+                      </div>
+                    </div>
+                    <div class="form-group mt-3">
+                      <label for="program-category">Category</label>
+                      <select class="form-control" id="program-category">
+                        <option value="" disabled selected>Select category</option>
+                      </select>
+                    </div>
+                    <div class="form-row align-items-end">
+                      <div class="form-group col-md-8 mb-0">
+                        <label for="new-category-name">New Category</label>
+                        <input type="text" class="form-control" id="new-category-name" placeholder="Enter category name">
+                      </div>
+                      <div class="form-group col-md-4 mb-0">
+                        <button id="add-category-button" type="button" class="btn btn-secondary btn-block">Add Category</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card schedule-admin-card p-4">
+                  <div class="card-body schedule-admin-card-body">
+                    <form id="program-form">
+                      <div class="form-group">
+                        <label for="program-name">Name</label>
+                        <input type="text" class="form-control" id="program-name" placeholder="Enter program name">
+                      </div>
+                      <div class="form-group">
+                        <label for="program-type">Type</label>
+                        <select class="form-control" id="program-type">
+                          <option value="" disabled selected>Select type</option>
+                          <option value="individual">Individual</option>
+                          <option value="group">Group</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="program-category-form">Category</label>
+                        <select class="form-control" id="program-category-form">
+                          <option value="" disabled selected>Select category</option>
+                        </select>
+                      </div>
+                      <button id="create-program-button" type="button" class="btn btn-primary btn-lg float-right">Save</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+          <div class="col-md-10">
+            <div class="bg-dark-panel shadow-sm rounded p-4">
+              <h4 class="mb-3">Saved Program Names</h4>
+              <ul id="program-list" class="list-group">
+                <li id="placeholder-item" class="list-group-item text-muted">No saved programs yet.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Beeone Digital</h2>
+              <p>Manage your event with a single dashboard interface.</p>
+              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Useful Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="admin.html" class="py-2 d-block">Admin</a></li>
+                <li><a href="registration.html" class="py-2 d-block">Registration</a></li>
+                <li><a href="programs.html" class="py-2 d-block">Programs</a></li>
+                <li><a href="results.html" class="py-2 d-block">Results</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+             <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Admin Actions</h2>
+              <ul class="list-unstyled">
+                <li><a href="backup.html" class="py-2 d-block">Backup</a></li>
+                <li><a href="import-online-data.html" class="py-2 d-block">Import Online Data</a></li>
+                <li><a href="export-winners.html" class="py-2 d-block">Export Winners</a></li>
+                <li><a href="certificate.html" class="py-2 d-block">Certificate</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Contact</h2>
+              <div class="block-23 mb-3">
+                <ul>
+                  <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                  <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by Colorlib</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+      (function(handler){
+        function runIfReady(){
+          var domReady = document.readyState === 'interactive' || document.readyState === 'complete';
+          var hydrated = !!window._localstorageHydrated;
+          if(domReady && hydrated){ handler(); return; }
+          function domHandler(){ domReady = true; if(hydrated){ cleanup(); handler(); } }
+          function hydHandler(){ hydrated = true; if(domReady){ cleanup(); handler(); } }
+          function cleanup(){ document.removeEventListener('DOMContentLoaded', domHandler); window.removeEventListener('localstorage-hydrated', hydHandler); }
+          document.addEventListener('DOMContentLoaded', domHandler);
+          window.addEventListener('localstorage-hydrated', hydHandler);
+        }
+        runIfReady();
+      })(function () {
+      var createBtn = document.getElementById('create-program-button');
+      var nameInput = document.getElementById('program-name');
+      var categorySelect = document.getElementById('program-category');
+      var newCategoryInput = document.getElementById('new-category-name');
+      var addCategoryBtn = document.getElementById('add-category-button');
+      var list = document.getElementById('program-list');
+      var currentEditItem = null;
+      var typeSelect = document.getElementById('program-type');
+      var categoryFormSelect = document.getElementById('program-category-form');
+
+      var STORAGE_KEY_CATEGORIES = 'eventalk_categories';
+      var STORAGE_KEY_PROGRAMS = 'eventalk_programs';
+      var STORAGE_KEY_DEFAULT_POINTS = 'eventalk_default_points';
+
+      // default inputs and apply button
+      var defaultIndFirst = document.getElementById('default-ind-first');
+      var defaultIndSecond = document.getElementById('default-ind-second');
+      var defaultIndThird = document.getElementById('default-ind-third');
+      var defaultGroupFirst = document.getElementById('default-group-first');
+      var defaultGroupSecond = document.getElementById('default-group-second');
+      var defaultGroupThird = document.getElementById('default-group-third');
+      var applyDefaultsBtn = document.getElementById('apply-defaults-button');
+
+      function saveDefaultPointsToStorage(obj) {
+        try { localStorage.setItem(STORAGE_KEY_DEFAULT_POINTS, JSON.stringify(obj)); } catch (e) { }
+      }
+
+      function loadDefaultPointsFromStorage() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY_DEFAULT_POINTS);
+          if (!raw) return null;
+          return JSON.parse(raw);
+        } catch (e) { return null; }
+      }
+
+      function applyDefaultsToList(defaults) {
+        if (!defaults) return;
+        var items = list.querySelectorAll('li:not(#placeholder-item)');
+        items.forEach(function (li) {
+          var t = li.querySelector('.program-type-text') ? li.querySelector('.program-type-text').textContent.toLowerCase() : '';
+          var pts = t === 'group' ? defaults.group : defaults.individual;
+          if (!pts) return;
+          // ensure spans exist
+          var firstSpan = li.querySelector('.program-point-first');
+          var secondSpan = li.querySelector('.program-point-second');
+          var thirdSpan = li.querySelector('.program-point-third');
+          if (!firstSpan && (pts.first || pts.second || pts.third)) {
+            var pointsHtml = '<span class="text-muted mr-3 program-points-text">'
+              + '<small class="mr-2">1st: <span class="program-point-first">' + (pts.first || '') + '</span></small>'
+              + '<small class="mr-2">2nd: <span class="program-point-second">' + (pts.second || '') + '</span></small>'
+              + '<small>3rd: <span class="program-point-third">' + (pts.third || '') + '</span></small>'
+              + '</span>';
+            var typeBadge = li.querySelector('.program-type-text');
+            if (typeBadge) typeBadge.insertAdjacentHTML('beforebegin', pointsHtml);
+          } else {
+            // only fill missing/empty values to avoid overwriting existing data with blanks
+            if (firstSpan && (!firstSpan.textContent || firstSpan.textContent.trim() === '') && (pts.first || pts.first === 0)) firstSpan.textContent = pts.first;
+            if (secondSpan && (!secondSpan.textContent || secondSpan.textContent.trim() === '') && (pts.second || pts.second === 0)) secondSpan.textContent = pts.second;
+            if (thirdSpan && (!thirdSpan.textContent || thirdSpan.textContent.trim() === '') && (pts.third || pts.third === 0)) thirdSpan.textContent = pts.third;
+          }
+        });
+        saveProgramsToStorage();
+      }
+
+      function saveProgramsToStorage() {
+        var programs = Array.from(list.querySelectorAll('li:not(#placeholder-item)')).map(function (li) {
+          return {
+            name: li.querySelector('strong').textContent,
+            category: li.querySelector('.program-category-text').textContent,
+            type: li.querySelector('.program-type-text').textContent,
+            points: {
+              first: li.querySelector('.program-point-first') ? li.querySelector('.program-point-first').textContent : '',
+              second: li.querySelector('.program-point-second') ? li.querySelector('.program-point-second').textContent : '',
+              third: li.querySelector('.program-point-third') ? li.querySelector('.program-point-third').textContent : ''
+            }
+          };
+        });
+        try { localStorage.setItem(STORAGE_KEY_PROGRAMS, JSON.stringify(programs)); } catch (e) { }
+      }
+
+      function loadProgramsFromStorage() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY_PROGRAMS);
+          if (!raw) return;
+          var programs = JSON.parse(raw);
+          if (!Array.isArray(programs)) return;
+          if (programs.length) {
+            var placeholder = document.getElementById('placeholder-item');
+            if (placeholder) placeholder.remove();
+          }
+          programs.forEach(function (program) {
+            var li = createListItem(program.name, program.category, program.type, program.points || {});
+            list.appendChild(li);
+          });
+        } catch (e) { }
+      }
+
+      function saveCategoriesToStorage() {
+        var categories = Array.from(categorySelect.options).map(function (opt) { return opt.value; }).filter(function (v) { return v && v !== 'Select category'; });
+        try { localStorage.setItem(STORAGE_KEY_CATEGORIES, JSON.stringify(categories)); } catch (e) { }
+      }
+
+      function loadCategoriesFromStorage() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY_CATEGORIES);
+          if (!raw) return;
+          var categories = JSON.parse(raw);
+          if (!Array.isArray(categories)) return;
+          categories.forEach(function (c) { addCategoryOption(c); });
+        } catch (e) { }
+      }
+
+      function addCategoryOption(category) {
+        var value = category.trim();
+        if (!value) return;
+        var existing = Array.from(categorySelect.options).find(function (opt) {
+          return opt.value.toLowerCase() === value.toLowerCase();
+        });
+        if (existing) {
+          categorySelect.value = existing.value;
+          if (categoryFormSelect) categoryFormSelect.value = existing.value;
+          return;
+        }
+        var option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        categorySelect.appendChild(option);
+        if (categoryFormSelect) {
+          var option2 = document.createElement('option');
+          option2.value = value;
+          option2.textContent = value;
+          categoryFormSelect.appendChild(option2);
+        }
+        categorySelect.value = value;
+        if (categoryFormSelect) categoryFormSelect.value = value;
+        saveCategoriesToStorage();
+      }
+
+      function createListItem(name, category, type, points) {
+        var li = document.createElement('li');
+        li.className = 'list-group-item d-flex justify-content-between align-items-center';
+
+        var pointsHtml = '';
+        if (points) {
+          pointsHtml = '<span class="text-muted mr-3 program-points-text">'
+            + '<small class="mr-2">1st: <span class="program-point-first">' + (points.first || '') + '</span></small>'
+            + '<small class="mr-2">2nd: <span class="program-point-second">' + (points.second || '') + '</span></small>'
+            + '<small>3rd: <span class="program-point-third">' + (points.third || '') + '</span></small>'
+            + '</span>';
+        }
+
+        li.innerHTML = '<span><strong>' + name + '</strong></span>'
+          + '<span class="d-flex align-items-center">'
+            + '<span class="text-muted mr-3 program-category-text">' + category + '</span>'
+            + pointsHtml
+            + '<span class="badge badge-secondary mr-3 program-type-text">' + (type || '') + '</span>'
+            + '<button type="button" class="btn btn-sm btn-outline-warning mr-2 edit-program-button" title="Edit"><span class="icon-pencil"></span></button>'
+            + '<button type="button" class="btn btn-sm btn-outline-danger delete-program-button" title="Delete"><span class="icon-trash"></span></button>'
+          + '</span>';
+        return li;
+      }
+
+      function updateActionButton() {
+        createBtn.textContent = currentEditItem ? 'Update' : 'Save';
+      }
+
+      // No per-program points inputs: points come from defaults (if set) per type
+
+      createBtn.addEventListener('click', function () {
+        var name = nameInput.value.trim();
+        var category = (categoryFormSelect && categoryFormSelect.value) ? categoryFormSelect.value : categorySelect.value;
+        var type = typeSelect ? typeSelect.value : '';
+        var placeholder = document.getElementById('placeholder-item');
+
+        if (!name || !category) {
+          alert('Please fill in the name and select a category.');
+          return;
+        }
+
+        var points = { first: '', second: '', third: '' };
+        // if user left points empty, fall back to defaults for this type
+        var defaults = loadDefaultPointsFromStorage();
+        if (defaults && (!points.first && !points.second && !points.third) && type) {
+          var d = (type.toLowerCase() === 'group') ? defaults.group : defaults.individual;
+          if (d) {
+            points.first = d.first || '';
+            points.second = d.second || '';
+            points.third = d.third || '';
+          }
+        }
+
+        if (placeholder && !currentEditItem) {
+          placeholder.remove();
+        }
+
+        if (currentEditItem) {
+          currentEditItem.querySelector('strong').textContent = name;
+          currentEditItem.querySelector('.program-category-text').textContent = category;
+          if (currentEditItem.querySelector('.program-type-text')) {
+            currentEditItem.querySelector('.program-type-text').textContent = type;
+          }
+          if (currentEditItem.querySelector('.program-point-first')) currentEditItem.querySelector('.program-point-first').textContent = points.first;
+          else if (points.first) currentEditItem.querySelector('.program-type-text').insertAdjacentHTML('beforebegin',
+            '<span class="text-muted mr-3 program-points-text">'
+            + '<small class="mr-2">1st: <span class="program-point-first">' + points.first + '</span></small>'
+            + '<small class="mr-2">2nd: <span class="program-point-second">' + points.second + '</span></small>'
+            + '<small>3rd: <span class="program-point-third">' + points.third + '</span></small>'
+            + '</span>');
+          if (currentEditItem.querySelector('.program-point-second')) currentEditItem.querySelector('.program-point-second').textContent = points.second;
+          if (currentEditItem.querySelector('.program-point-third')) currentEditItem.querySelector('.program-point-third').textContent = points.third;
+          currentEditItem = null;
+        } else {
+          var li = createListItem(name, category, type, points);
+          list.appendChild(li);
+        }
+
+        saveProgramsToStorage();
+        nameInput.value = '';
+        // reset both category selects
+        if (categorySelect) categorySelect.selectedIndex = 0;
+        if (categoryFormSelect) categoryFormSelect.selectedIndex = 0;
+        if (typeSelect) typeSelect.selectedIndex = 0;
+        updateActionButton();
+      });
+
+      addCategoryBtn.addEventListener('click', function () {
+        var newCategory = newCategoryInput.value.trim();
+        if (!newCategory) {
+          alert('Enter a category name first.');
+          return;
+        }
+        addCategoryOption(newCategory);
+        newCategoryInput.value = '';
+      });
+
+      // load categories and programs from storage (categories first so selects exist)
+      loadCategoriesFromStorage();
+      loadProgramsFromStorage();
+      // load default points and populate inputs, then apply to list items where points are empty
+      (function () {
+        var defs = loadDefaultPointsFromStorage();
+        if (!defs) return;
+        if (defaultIndFirst) defaultIndFirst.value = defs.individual ? (defs.individual.first || '') : '';
+        if (defaultIndSecond) defaultIndSecond.value = defs.individual ? (defs.individual.second || '') : '';
+        if (defaultIndThird) defaultIndThird.value = defs.individual ? (defs.individual.third || '') : '';
+        if (defaultGroupFirst) defaultGroupFirst.value = defs.group ? (defs.group.first || '') : '';
+        if (defaultGroupSecond) defaultGroupSecond.value = defs.group ? (defs.group.second || '') : '';
+        if (defaultGroupThird) defaultGroupThird.value = defs.group ? (defs.group.third || '') : '';
+        // apply to existing list only where points are missing
+        applyDefaultsToList(defs);
+      })();
+
+      list.addEventListener('click', function (event) {
+        var button = event.target.closest('button');
+        if (!button) return;
+
+        var li = button.closest('li');
+        if (!li) return;
+
+        if (button.classList.contains('delete-program-button')) {
+          var nextItem = list.querySelector('li:not(#placeholder-item)');
+          li.remove();
+          saveProgramsToStorage();
+          if (!list.querySelector('li:not(#placeholder-item)')) {
+            var placeholder = document.createElement('li');
+            placeholder.id = 'placeholder-item';
+            placeholder.className = 'list-group-item text-muted';
+            placeholder.textContent = 'No saved programs yet.';
+            list.appendChild(placeholder);
+          }
+          if (currentEditItem === li) {
+            currentEditItem = null;
+            nameInput.value = '';
+            if (categorySelect) categorySelect.selectedIndex = 0;
+            if (categoryFormSelect) categoryFormSelect.selectedIndex = 0;
+            if (typeSelect) typeSelect.selectedIndex = 0;
+            updateActionButton();
+          }
+          return;
+        }
+
+        if (button.classList.contains('edit-program-button')) {
+          currentEditItem = li;
+          nameInput.value = li.querySelector('strong').textContent;
+          var categoryText = li.querySelector('.program-category-text').textContent;
+          addCategoryOption(categoryText);
+          if (typeSelect) {
+            var t = li.querySelector('.program-type-text') ? li.querySelector('.program-type-text').textContent : '';
+            typeSelect.value = t || '';
+          }
+          if (categoryFormSelect) categoryFormSelect.value = categoryText || '';
+          updateActionButton();
+          return;
+        }
+      });
+
+      // Apply defaults button
+      if (applyDefaultsBtn) {
+        applyDefaultsBtn.addEventListener('click', function () {
+          var defs = {
+            individual: {
+              first: defaultIndFirst && defaultIndFirst.value ? defaultIndFirst.value : '',
+              second: defaultIndSecond && defaultIndSecond.value ? defaultIndSecond.value : '',
+              third: defaultIndThird && defaultIndThird.value ? defaultIndThird.value : ''
+            },
+            group: {
+              first: defaultGroupFirst && defaultGroupFirst.value ? defaultGroupFirst.value : '',
+              second: defaultGroupSecond && defaultGroupSecond.value ? defaultGroupSecond.value : '',
+              third: defaultGroupThird && defaultGroupThird.value ? defaultGroupThird.value : ''
+            }
+          };
+          saveDefaultPointsToStorage(defs);
+          applyDefaultsToList(defs);
+        });
+      }
+
+      // keep category selects in sync
+      if (categorySelect && categoryFormSelect) {
+        categorySelect.addEventListener('change', function () { categoryFormSelect.value = categorySelect.value; });
+        categoryFormSelect.addEventListener('change', function () { categorySelect.value = categoryFormSelect.value; });
+      }
+
+      // initialize UI from storage
+      loadProgramsFromStorage();
+
+      updateActionButton();
+    });
+  </script>
+  </body>
+</html>
+

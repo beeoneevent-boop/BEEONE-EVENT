@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Calling List - Admin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beeone Digital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+              <div class="dropdown-menu dropdown-menu-right" style="background: rgba(15,19,36,0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                <a href="admin.html" class="dropdown-item" style="color: #fff;">Dashboard</a>
+                <a href="registration.html" class="dropdown-item" style="color: #fff;">Registration</a>
+                <a href="calling-list.html" class="dropdown-item" style="color: #fff;">Calling List</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="mark-entry.html" class="dropdown-item" style="color: #fff;">Mark Entry</a>
+                <a href="judge-mark-entry.html" class="dropdown-item" style="color: #fff;">Judge Mark Entry</a>
+                <a href="green-room.html" class="dropdown-item" style="color: #fff;">Green Room</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="results.html" class="dropdown-item" style="color: #fff;">Results</a>
+                <a href="team-badge.html" class="dropdown-item" style="color: #fff;">Team Badge</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="admin-blog.html" class="dropdown-item" style="color: #fff;">Manage Blog</a>
+                <a href="admin-schedule.html" class="dropdown-item" style="color: #fff;">Manage Schedule</a>
+                <a href="admin-team-points.html" class="dropdown-item" style="color: #fff;">Manage Team Points</a>
+                <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="#" id="logoutLink" class="nav-link">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- END nav -->
+
+    <section class="ftco-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">Admin Section</span>
+            <h2 class="mb-4"><span>Calling</span> List</h2>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <div class="card schedule-admin-card">
+              <div class="card-body schedule-admin-card-body">
+                <h3 class="card-title">Calling List</h3>
+                <p class="card-text">Generate the calling list, green room sign, and valuation form for a selected program.</p>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="border p-4 mb-4 schedule-day-card">
+                      <h5>Program List</h5>
+                      <div class="form-group row align-items-center">
+                        <label class="col-sm-4 col-form-label">Category</label>
+                        <div class="col-sm-8">
+                          <select id="cl-category" class="form-control"><option value="" disabled selected>Select category</option></select>
+                        </div>
+                      </div>
+                      <div class="form-group row align-items-center">
+                        <label class="col-sm-4 col-form-label">Select Item</label>
+                        <div class="col-sm-8">
+                          <select id="cl-item" class="form-control"><option value="" disabled selected>Select item</option></select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="cl-option" id="cl-calllist" value="calllist" checked>
+                          <label class="form-check-label" for="cl-calllist">Call List</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="cl-option" id="cl-greenroom" value="greenroom">
+                          <label class="form-check-label" for="cl-greenroom">Green room Sign</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="cl-option" id="cl-valuation" value="valuation">
+                          <label class="form-check-label" for="cl-valuation">Valuation Form</label>
+                        </div>
+                      </div>
+                      <button id="btn-cl-print" class="btn btn-primary">Print</button>
+                      <button id="btn-print-all-modal" type="button" class="btn btn-outline-primary ml-2">Call list Quick print all sheets</button>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="border p-4 mb-4 schedule-day-card">
+                      <h5>All programs lists</h5>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="list-type" id="list-item-order" value="item-order" checked>
+                        <label class="form-check-label" for="list-item-order">Program list in item order</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="list-type" id="list-stage-wise" value="stage-wise">
+                        <label class="form-check-label" for="list-stage-wise">Stage wise list</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="list-type" id="list-stage-timings" value="stage-timings">
+                        <label class="form-check-label" for="list-stage-timings">Participant stage timings</label>
+                      </div>
+                      <button id="btn-all-programs-print" class="btn btn-light mt-3"><span class="icon-print"></span> Print</button>
+                    </div>
+                    <div class="border p-4 schedule-day-card">
+                      <h5>Group Members List</h5>
+                      <div class="form-group row align-items-center">
+                        <label class="col-sm-4 col-form-label">Group Item</label>
+                        <div class="col-sm-8">
+                          <select id="cl-group-item" class="form-control"><option value="" disabled selected>Select group item</option></select>
+                        </div>
+                      </div>
+                      <div class="form-group row align-items-center">
+                        <label class="col-sm-4 col-form-label">Team</label>
+                        <div class="col-sm-8">
+                          <select id="cl-team" class="form-control"><option value="*">*</option></select>
+                        </div>
+                      </div>
+                      <button id="btn-group-list-print" class="btn btn-light"><span class="icon-print"></span> Print</button>
+                    </div>
+                  </div>
+                </div>
+                <a href="admin.html" class="btn btn-secondary mt-3">Back to Dashboard</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Beeone Digital</h2>
+              <p>Manage your event with a single dashboard interface.</p>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Useful Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="calling-list.html" class="py-2 d-block">Calling List</a></li>
+                <li><a href="admin.html" class="py-2 d-block">Admin</a></li>
+                <li><a href="results.html" class="py-2 d-block">Results</a></li>
+                <li><a href="certificate.html" class="py-2 d-block">Certificate</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Contact</h2>
+              <div class="block-23 mb-3">
+                <ul>
+                  <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                  <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by Colorlib</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+  <div class="modal fade" id="printAllModal" tabindex="-1" role="dialog" aria-labelledby="printAllModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="printAllModalLabel">CALLING LIST PRINT ALL</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+          <div class="p-4" style="background:#0f4ca5;color:#fff;font-weight:700;">
+            All pages will be printed out in single action
+          </div>
+          <div class="mt-4">
+            <button id="btn-modal-calllist" type="button" class="btn btn-outline-primary btn-block mb-2">Call List</button>
+            <button id="btn-modal-greenroom" type="button" class="btn btn-outline-primary btn-block mb-2">Green room Sign</button>
+            <button id="btn-modal-valuation" type="button" class="btn btn-outline-primary btn-block mb-2">Valuation Form</button>
+            <button id="btn-modal-print-all" type="button" class="btn btn-primary btn-block">Print All Sheets</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function(handler){
+      function runIfReady(){
+        var domReady = document.readyState === 'interactive' || document.readyState === 'complete';
+        var hydrated = !!window._localstorageHydrated;
+        if(domReady && hydrated){ handler(); return; }
+        function domHandler(){ domReady = true; if(hydrated){ cleanup(); handler(); } }
+        function hydHandler(){ hydrated = true; if(domReady){ cleanup(); handler(); } }
+        function cleanup(){ document.removeEventListener('DOMContentLoaded', domHandler); window.removeEventListener('localstorage-hydrated', hydHandler); }
+        document.addEventListener('DOMContentLoaded', domHandler);
+        window.addEventListener('localstorage-hydrated', hydHandler);
+      }
+      runIfReady();
+    })(function () {
+      var catSelect = document.getElementById('cl-category');
+      var itemSelect = document.getElementById('cl-item');
+      var groupItemSelect = document.getElementById('cl-group-item');
+      var teamSelect = document.getElementById('cl-team');
+      var btnClPrint = document.getElementById('btn-cl-print');
+      var btnAllProgramsPrint = document.getElementById('btn-all-programs-print');
+      var btnGroupListPrint = document.getElementById('btn-group-list-print');
+      var btnPrintAllModal = document.getElementById('btn-print-all-modal');
+
+      function isSelectionValid() {
+        return !!catSelect.value && !!itemSelect.value;
+      }
+
+      function updateModalButtonState() {
+        // no-op for now; keep the button enabled so it opens the popup
+      }
+
+      function fetchPrograms() {
+        try { var raw = localStorage.getItem('eventalk_programs'); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
+      }
+      function fetchCategories() {
+        try { var raw = localStorage.getItem('eventalk_categories'); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
+      }
+      function fetchEventTitle() {
+        try { var raw = localStorage.getItem('eventalk_event_title'); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+      }
+      function fetchParticipants() {
+        try { var raw = localStorage.getItem('eventalk_participants'); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
+      }
+      function fetchCompetitions() {
+        try { var raw = localStorage.getItem('eventalk_competitions'); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
+      }
+      function fetchMarkEntries() {
+        try { var raw = localStorage.getItem('eventalk_mark_entries'); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+      }
+      function getEntriesFor(category, item) {
+        var entriesMap = fetchMarkEntries();
+        var key = (category || '') + '||' + (item || '');
+        return Array.isArray(entriesMap[key]) ? entriesMap[key] : [];
+      }
+      function getCompetitionEntriesFor(category, item) {
+        var competitions = fetchCompetitions();
+        return competitions.filter(function(c) {
+          return c.category === category && Array.isArray(c.programs) && c.programs.indexOf(item) !== -1;
+        });
+      }
+      function populateSelect(select, items) {
+        select.innerHTML = '<option value="" disabled selected>Select</option>';
+        items.forEach(function(item){ var o = document.createElement('option'); o.value = item.value || item; o.textContent = item.text || item; select.appendChild(o); });
+      }
+
+      function loadCategoryItems(cat) {
+        var programs = fetchPrograms().filter(function(p){ return p.category === cat; });
+        populateSelect(itemSelect, programs.map(function(p){ return { value: p.name, text: p.name }; }));
+        updateModalButtonState();
+      }
+
+      function resetSelection() {
+        itemSelect.innerHTML = '<option value="" disabled selected>Select item</option>';
+        updatePrintModalState();
+      }
+
+      function buildHeaderHtml(eventData, subtitle, category, item, program) {
+        eventData = eventData || {};
+        var logoHtml = eventData.programLogo
+          ? '<div style="width:90px;height:90px;display:flex;align-items:center;justify-content:center;margin-right:18px;">'
+            + '<img src="' + eventData.programLogo + '" style="max-width:90px;max-height:90px;display:block;" />'
+            + '</div>'
+          : '<div style="width:90px;height:90px;margin-right:18px;display:flex;align-items:center;justify-content:center;background:#f7f7f7;">Logo</div>';
+        var title = eventData.programName || 'Event Name';
+        var date = eventData.programDate ? new Date(eventData.programDate).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) : '';
+        var placeLine = eventData.programPlace ? '<div style="font-size:14px;color:#555;margin-top:6px;">' + eventData.programPlace + '</div>' : '';
+        var now = new Date();
+        var timestamp = now.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) + '  ' + now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:false });
+        var rightDetails = '<div style="text-align:right;font-size:12px;color:#333;line-height:1.4;">' + (date ? '<div>' + date + '</div>' : '') + '<div>' + timestamp + '</div></div>';
+
+        var html = '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;">'
+                 + '<div style="display:flex;align-items:center;flex:1;min-width:0;">'
+                 + logoHtml
+                 + '<div style="min-width:0;">'
+                 + '<div style="font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;line-height:1.1;">' + title + '</div>'
+                 + placeLine
+                 + '</div>'
+                 + '</div>'
+                 + rightDetails
+                 + '</div>';
+
+        html += '<div style="font-size:24px;font-weight:700;line-height:1.1;margin-bottom:12px;">' + subtitle + '</div>';
+
+        var detailCategory = category ? category.toUpperCase() : '';
+        var detailItem = item ? item.toUpperCase() : '';
+        var detailType = program && program.type ? program.type.toUpperCase() : '';
+        var stageNo = program && program.stageNo ? program.stageNo : '';
+        html += '<div style="display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:10px;">'
+                 + '<div style="display:flex;flex-wrap:wrap;gap:24px;">'
+                 + (detailCategory ? '<span>' + detailCategory + '</span>' : '')
+                 + (detailItem ? '<span>' + detailItem + '</span>' : '')
+                 + (detailType ? '<span>' + detailType + '</span>' : '')
+                 + '</div>'
+                 + '</div>';
+        html += '<div style="border-top:1px solid #000;margin-bottom:14px;">&nbsp;</div>';
+        return html;
+      }
+
+      function buildAllProgramCallListHtml(type) {
+        var competitions = fetchCompetitions();
+        var programKeys = [];
+        competitions.forEach(function(c) {
+          if (!Array.isArray(c.programs)) return;
+          c.programs.forEach(function(programName) {
+            var key = (c.category || '') + '||' + programName;
+            if (programKeys.indexOf(key) === -1) {
+              programKeys.push(key);
+            }
+          });
+        });
+        if (programKeys.length === 0) return '<p>No competition programs found.</p>';
+        programKeys.sort();
+        var html = '';
+        programKeys.forEach(function(key, index) {
+          var parts = key.split('||');
+          var category = parts[0];
+          var item = parts[1];
+          html += buildCallingHtml(type, category, item);
+          if (index < programKeys.length - 1) {
+            html += '<div class="page-break"></div>';
+          }
+        });
+        return html;
+      }
+
+      function buildBulkPreviewHtml(category, item) {
+        var parts = ['calllist', 'greenroom', 'valuation'];
+        var html = '';
+        parts.forEach(function(type, index) {
+          html += '<div class="preview-page">' + buildCallingHtml(type, category, item) + '</div>';
+          if (index < parts.length - 1) {
+            html += '<div class="page-break"></div>';
+          }
+        });
+        return html;
+      }
+
+      function buildCallingHtml(type, category, item) {
+        if (!category || !item) return '';
+        var eventData = fetchEventTitle();
+        var programs = fetchPrograms();
+        var program = programs.filter(function(p){ return p.category === category && p.name === item; })[0] || null;
+        var entries = getEntriesFor(category, item);
+        var participants = fetchParticipants();
+        var participantMap = {};
+        participants.forEach(function(p) { participantMap[p.chest] = p; });
+
+        var label = type === 'calllist' ? 'Competitions Call List' : type === 'greenroom' ? 'Green Room Sign' : 'Valuation Form';
+        var html = buildHeaderHtml(eventData, label, category, item, program);
+
+        var rows = [];
+        if (entries.length > 0) {
+          rows = entries.map(function(entry) {
+            var participant = participantMap[entry.chest] || {};
+            return {
+              chest: entry.chest || '',
+              name: participant.name || '',
+              team: participant.team || '',
+              code: entry.code || ''
+            };
+          });
+        } else {
+          // Fallback to competition assignments when mark entries are not yet saved.
+          var competitionEntries = getCompetitionEntriesFor(category, item);
+          rows = competitionEntries.map(function(entry) {
+            var participant = participantMap[entry.chest] || {};
+            return {
+              chest: entry.chest || '',
+              name: participant.name || entry.participant || '',
+              team: entry.team || participant.team || '',
+              code: ''
+            };
+          });
+        }
+
+        if (type === 'greenroom') {
+          html += '<table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;">'
+                + '<thead><tr>'
+                + '<th style="border-bottom:1px solid #000;padding:10px 8px;text-align:left;width:90px;">Chest No</th>'
+                + '<th style="border-bottom:1px solid #000;padding:10px 8px;text-align:left;">Name of participant</th>'
+                + '<th style="border-bottom:1px solid #000;padding:10px 8px;text-align:left;width:120px;">Code letter</th>'
+                + '<th style="border-bottom:1px solid #000;padding:10px 8px;text-align:left;">Participant\'s Signature</th>'
+                + '</tr></thead><tbody>';
+          if (rows.length === 0) {
+            html += '<tr><td colspan="4" style="padding:12px;text-align:center;">No entries found.</td></tr>';
+          } else {
+            rows.forEach(function(row){
+              html += '<tr>'
+                + '<td style="padding:10px 8px;">' + (row.chest || '') + '</td>'
+                + '<td style="padding:10px 8px;">' + (row.name || '') + '</td>'
+                + '<td style="padding:10px 8px;">' + (row.code || '') + '</td>'
+                + '<td style="padding:10px 8px;">&nbsp;</td>'
+                + '</tr>';
+            });
+          }
+          html += '</tbody></table>';
+          html += '<div style="margin-top:24px;font-size:13px;line-height:1.6;">'
+                + '<div>Competition Start Time: ______________________________</div>'
+                + '<div style="margin-top:10px;">Competition End Time : ______________________________</div>'
+                + '<div style="margin-top:20px;text-align:center;">Stage Incharge\'s Signature : ______________________________</div>'
+                + '</div>';
+        } else if (type === 'valuation') {
+          var markColumns = (program && program.valuationColumns) ? parseInt(program.valuationColumns, 10) || 5 : 5;
+          var rowCount = rows.length || 5;
+          html += '<table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;">'
+                + '<thead><tr>'
+                + '<th style="border-bottom:1px solid #000;padding:10px 8px;text-align:left;width:120px;">Code letter</th>'
+                + '<th colspan="' + markColumns + '" style="border-bottom:1px solid #000;padding:10px 8px;text-align:center;">MARKS</th>'
+                + '<th style="border-bottom:1px solid #000;padding:10px 8px;text-align:left;width:120px;">MARK OUT OF 100</th>'
+                + '</tr></thead><tbody>';
+          if (rowCount === 0) {
+            html += '<tr><td colspan="' + (markColumns + 2) + '" style="padding:12px;text-align:center;">No entries found.</td></tr>';
+          } else {
+            for (var i = 0; i < rowCount; i++) {
+              html += '<tr>'
+                + '<td style="padding:10px 8px;">' + ((rows[i] && rows[i].code) || '') + '</td>';
+              for (var j = 0; j < markColumns; j++) {
+                html += '<td style="padding:10px 8px;border:1px solid #000;">&nbsp;</td>';
+              }
+              html += '<td style="padding:10px 8px;border:1px solid #000;">&nbsp;</td>'
+                + '</tr>';
+            }
+          }
+          html += '</tbody></table>';
+          html += '<div style="margin-top:20px;font-size:13px;">Judging Comments:-</div>';
+        } else {
+          html += '<table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;">'
+                + '<thead><tr>'
+                + '<th style="border-bottom:1px solid #000;padding:10px 8px;text-align:left;">Chest No</th>'
+                + '<th style="border-bottom:1px solid #000;padding:10px 8px;text-align:left;">Name of participant</th>'
+                + '<th style="border-bottom:1px solid #000;padding:10px 8px;text-align:left;">Team</th>'
+                + '</tr></thead><tbody>';
+          if (rows.length === 0) {
+            html += '<tr><td colspan="3" style="padding:12px;text-align:center;">No entries found.</td></tr>';
+          } else {
+            rows.forEach(function(row){
+              html += '<tr>'
+                + '<td style="padding:10px 8px;">' + (row.chest || '') + '</td>'
+                + '<td style="padding:10px 8px;">' + (row.name || '') + '</td>'
+                + '<td style="padding:10px 8px;">' + (row.team || '') + '</td>'
+                + '</tr>';
+            });
+          }
+          html += '</tbody></table>';
+        }
+        return html;
+      }
+
+      function getAllProgramsHtml(type) {
+        var eventData = fetchEventTitle();
+        var programs = fetchPrograms();
+        var competitions = fetchCompetitions();
+        var participants = fetchParticipants();
+        if (programs.length === 0) return '<p>No programs available.</p>';
+        var label = type === 'item-order' ? 'Program list in item order' : type === 'stage-wise' ? 'Stage wise list' : 'Participant stage timings';
+        var html = buildHeaderHtml(eventData, label, 'All programs overview');
+        var tableClass = type === 'item-order' ? ' class="no-box"' : '';
+
+        var participantMap = {};
+        participants.forEach(function(p) { participantMap[p.chest] = p; });
+
+        var programGroups = {};
+        programs.forEach(function(p) {
+          var key = (p.category || '') + '||' + (p.name || '');
+          programGroups[key] = programGroups[key] || { category: p.category || '', name: p.name || '', type: p.type || 'Individual', stageNo: p.stageNo || '', entries: [] };
+        });
+        competitions.forEach(function(c) {
+          if (!Array.isArray(c.programs)) return;
+          c.programs.forEach(function(programName) {
+            var key = (c.category || '') + '||' + programName;
+            if (programGroups[key]) {
+              programGroups[key].entries.push(c);
+            }
+          });
+        });
+
+        var keys = Object.keys(programGroups).filter(function(key) {
+          return type !== 'item-order' || programGroups[key].entries.length > 0;
+        }).sort(function(a, b) {
+          var aGroup = programGroups[a];
+          var bGroup = programGroups[b];
+          if (aGroup.category !== bGroup.category) return aGroup.category.localeCompare(bGroup.category);
+          return aGroup.name.localeCompare(bGroup.name);
+        });
+
+        if (keys.length === 0) return '<p>No competition programs found.</p>';
+
+        keys.forEach(function(key) {
+          var group = programGroups[key];
+          html += '<div style="margin-top:24px;font-size:14px;font-weight:700;display:flex;justify-content:flex-start;align-items:center;gap:12px;">'
+                + '<span>' + (group.category || '') + ' ' + (group.name || '') + '</span>'
+                + '</div>';
+          html += '<table' + tableClass + ' style="width:100%;border-collapse:collapse;margin-top:8px;font-size:13px;">'
+                + '<thead><tr>'
+                + '<th style="border-bottom:1px solid #000;padding:8px;text-align:left;width:90px;">Chest No</th>'
+                + '<th style="border-bottom:1px solid #000;padding:8px;text-align:left;">Name of participant</th>'
+                + '<th style="border-bottom:1px solid #000;padding:8px;text-align:left;">Team</th>'
+                + '<th style="border-bottom:1px solid #000;padding:8px;text-align:left;width:100px;">Group</th>'
+                + '</tr></thead><tbody>';
+          group.entries.forEach(function(entry) {
+            var participant = participantMap[entry.chest] || {};
+            html += '<tr>'
+                  + '<td style="padding:8px;">' + (entry.chest || '') + '</td>'
+                  + '<td style="padding:8px;">' + (participant.name || entry.participant || '') + '</td>'
+                  + '<td style="padding:8px;">' + (entry.team || participant.team || '') + '</td>'
+                  + '<td style="padding:8px;">' + (group.type || '') + '</td>'
+                  + '</tr>';
+          });
+          html += '</tbody></table>';
+        });
+
+        return html;
+      }
+
+      function getGroupMembersHtml(groupItem, team) {
+        var eventData = fetchEventTitle();
+        var programs = fetchPrograms();
+        var html = buildHeaderHtml(eventData, 'Group Members List', 'Group: '+ (groupItem || '*') +', Team: '+ (team || '*'));
+        html += '<table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr>' +
+                '<th style="border-bottom:1px solid #000;padding:8px;text-align:left;">Group Item</th>' +
+                '<th style="border-bottom:1px solid #000;padding:8px;text-align:left;">Team</th>' +
+                '<th style="border-bottom:1px solid #000;padding:8px;text-align:left;">Chest No</th>' +
+                '<th style="border-bottom:1px solid #000;padding:8px;text-align:left;">Name</th>' +
+                '</tr></thead><tbody>';
+        var filtered = programs.filter(function(p){ return (!groupItem || groupItem === '*') && (!team || team === '*' || p.team === team); });
+        if (filtered.length === 0) html += '<tr><td colspan="4" style="padding:10px;text-align:center;">No members found.</td></tr>';
+        filtered.forEach(function(p){ html += '<tr>' +
+              '<td style="padding:8px;">'+(groupItem || '*')+'</td>' +
+              '<td style="padding:8px;">'+(p.team||'')+'</td>' +
+              '<td style="padding:8px;">'+(p.chest||'')+'</td>' +
+              '<td style="padding:8px;">'+(p.name||'')+'</td>' +
+              '</tr>'; });
+        html += '</tbody></table>';
+        return html;
+      }
+
+      function showPrintPreview(html) {
+        var w = window.open('', '_blank');
+        var css = '<style>@page{size:A4;margin:15mm} body{font-family:Arial, sans-serif;margin:15mm;color:#111} table{width:100%;border-collapse:collapse} th,td{border:1px solid #ccc;padding:8px;text-align:left} table.no-box, table.no-box th, table.no-box td{border:none} th{background:#f5f5f5} hr{border:none;border-top:1px solid #000} .page-break{page-break-after:always;height:0;line-height:0;}</style>';
+        w.document.open(); w.document.write('<html><head><title>Print</title>'+css+'</head><body>'+html+'</body></html>'); w.document.close();
+        w.onload = function(){ w.print(); };
+      }
+
+      function populateGroupSelects() {
+        // sample placeholder values for group dropdowns
+        populateSelect(groupItemSelect, [{value:'*',text:'*'},{value:'Group A',text:'Group A'},{value:'Group B',text:'Group B'}]);
+        populateSelect(teamSelect, [{value:'*',text:'*'},{value:'Team 1',text:'Team 1'},{value:'Team 2',text:'Team 2'}]);
+      }
+
+      function loadCategories() {
+        var categories = fetchCategories();
+        populateSelect(catSelect, categories.map(function(c){ return { value: c, text: c }; }));
+      }
+
+      catSelect.addEventListener('change', function(){
+        if (catSelect.value) loadCategoryItems(catSelect.value);
+      });
+      itemSelect.addEventListener('change', function(){
+      });
+      btnClPrint.addEventListener('click', function(){
+        if (!catSelect.value || !itemSelect.value) { showPrintPreview(''); return; }
+        var type = document.querySelector('input[name="cl-option"]:checked').value;
+        showPrintPreview(buildCallingHtml(type, catSelect.value, itemSelect.value));
+      });
+      btnPrintAllModal.addEventListener('click', function(){
+        $('#printAllModal').modal('show');
+      });
+      document.getElementById('btn-modal-calllist').addEventListener('click', function(){
+        $('#printAllModal').modal('hide');
+        showPrintPreview(buildAllProgramCallListHtml('calllist'));
+      });
+      document.getElementById('btn-modal-greenroom').addEventListener('click', function(){
+        $('#printAllModal').modal('hide');
+        showPrintPreview(buildAllProgramCallListHtml('greenroom'));
+      });
+      document.getElementById('btn-modal-valuation').addEventListener('click', function(){
+        $('#printAllModal').modal('hide');
+        showPrintPreview(buildAllProgramCallListHtml('valuation'));
+      });
+      document.getElementById('btn-modal-print-all').addEventListener('click', function(){
+        $('#printAllModal').modal('hide');
+        var html = buildAllProgramCallListHtml('calllist')
+                 + '<div style="page-break-after:always;"></div>'
+                 + buildAllProgramCallListHtml('greenroom')
+                 + '<div style="page-break-after:always;"></div>'
+                 + buildAllProgramCallListHtml('valuation');
+        showPrintPreview(html);
+      });
+      btnAllProgramsPrint.addEventListener('click', function(){
+        var type = document.querySelector('input[name="list-type"]:checked').value;
+        showPrintPreview(getAllProgramsHtml(type));
+      });
+      btnGroupListPrint.addEventListener('click', function(){
+        var groupItem = groupItemSelect.value;
+        var team = teamSelect.value;
+        showPrintPreview(getGroupMembersHtml(groupItem, team));
+      });
+
+      loadCategories();
+      populateGroupSelects();
+    });
+  </script>
+  </body>
+</html>
+
+

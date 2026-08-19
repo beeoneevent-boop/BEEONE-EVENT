@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Export Winners - Admin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beeone Digital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="#ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+              <div class="dropdown-menu dropdown-menu-right" style="background: rgba(15,19,36,0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                <a href="admin.html" class="dropdown-item" style="color: #fff;">Dashboard</a>
+                <a href="registration.html" class="dropdown-item" style="color: #fff;">Registration</a>
+                <a href="calling-list.html" class="dropdown-item" style="color: #fff;">Calling List</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="mark-entry.html" class="dropdown-item" style="color: #fff;">Mark Entry</a>
+                <a href="judge-mark-entry.html" class="dropdown-item" style="color: #fff;">Judge Mark Entry</a>
+                <a href="green-room.html" class="dropdown-item" style="color: #fff;">Green Room</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="results.html" class="dropdown-item" style="color: #fff;">Results</a>
+                <a href="team-badge.html" class="dropdown-item" style="color: #fff;">Team Badge</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="admin-blog.html" class="dropdown-item" style="color: #fff;">Manage Blog</a>
+                <a href="admin-schedule.html" class="dropdown-item" style="color: #fff;">Manage Schedule</a>
+                <a href="admin-team-points.html" class="dropdown-item" style="color: #fff;">Manage Team Points</a>
+                <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="#" id="logoutLink" class="nav-link">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- END nav -->
+
+    <section class="ftco-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">Admin Section</span>
+            <h2 class="mb-4"><span>Export</span> Winners</h2>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-9">
+            <div class="card schedule-admin-card">
+              <div class="card-body schedule-admin-card-body">
+                <h3 class="card-title">Export Winners</h3>
+                <p class="card-text">Download winner lists for online upload and archiving.</p>
+                <div class="mb-3">
+                  <button id="btn-view-first-winners" class="btn btn-success mr-2">View First Prize Winners</button>
+                  <button id="btn-download-first-winners" class="btn btn-outline-secondary mr-2">Download CSV</button>
+                  <button id="btn-download-pdf" class="btn btn-outline-info">Download PDF</button>
+                  <a href="admin.html" class="btn btn-primary ml-2">Back to Dashboard</a>
+                </div>
+                <div id="winners-list-container" class="mt-4"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Beeone Digital</h2>
+              <p>Manage your event with a single dashboard interface.</p>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Useful Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="export-winners.html" class="py-2 d-block">Export Winners</a></li>
+                <li><a href="admin.html" class="py-2 d-block">Admin</a></li>
+                <li><a href="certificate.html" class="py-2 d-block">Certificate</a></li>
+                <li><a href="event-title.html" class="py-2 d-block">Event Title</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Contact</h2>
+              <div class="block-23 mb-3">
+                <ul>
+                  <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                  <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by Colorlib</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    function getFinalResultsMap() {
+      try {
+        var raw = localStorage.getItem('eventalk_final_results');
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function getParticipantMap() {
+      try {
+        var raw = localStorage.getItem('eventalk_participants');
+        var parts = raw ? JSON.parse(raw) : [];
+        var map = {};
+        parts.forEach(function (p) {
+          if (p && p.chest) {
+            map[p.chest] = p;
+          }
+        });
+        return map;
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function getSelectedProgram() {
+      try {
+        var raw = localStorage.getItem('eventalk_selected_program');
+        return raw ? JSON.parse(raw) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function getEventTitleData() {
+      try {
+        var raw = localStorage.getItem('eventalk_event_title');
+        return raw ? JSON.parse(raw) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function getMarkEntriesForProgram(cat, item) {
+      try {
+        var raw = localStorage.getItem('eventalk_mark_entries');
+        var map = raw ? JSON.parse(raw) : {};
+        return map[(cat || '') + '||' + (item || '')] || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function collectFirstPrizeWinnersForKey(key, rows, participantMap) {
+      var winners = [];
+      if (!rows || !rows.length) return winners;
+      var entries = rows.map(function (r) {
+        var total = (parseFloat(r.j1) || 0) + (parseFloat(r.j2) || 0) + (parseFloat(r.j3) || 0);
+        return {
+          key: key,
+          category: (key.split('||')[0] || ''),
+          item: (key.split('||')[1] || ''),
+          chest: r.chest || '',
+          code: r.code || '',
+          total: total,
+          participant: participantMap[r.chest] || {}
+        };
+      });
+      entries.sort(function (a, b) { return b.total - a.total; });
+      var topScore = entries[0].total;
+      return entries.filter(function (e) { return e.total === topScore; });
+    }
+
+    function getFirstPrizeWinners() {
+      var finals = getFinalResultsMap();
+      var parts = getParticipantMap();
+      var winners = [];
+      var hasFinals = Object.keys(finals).length > 0;
+
+      if (hasFinals) {
+        Object.keys(finals).forEach(function (key) {
+          winners = winners.concat(collectFirstPrizeWinnersForKey(key, finals[key] || [], parts));
+        });
+      } else {
+        var selected = getSelectedProgram();
+        if (selected && selected.category && selected.name) {
+          var rows = getMarkEntriesForProgram(selected.category, selected.name);
+          if (rows.length) {
+            var key = (selected.category || '') + '||' + (selected.name || '');
+            winners = winners.concat(collectFirstPrizeWinnersForKey(key, rows, parts));
+          }
+        }
+      }
+
+      return winners;
+    }
+
+    function renderLetterheadHeader(titleData) {
+      if (!titleData) return '';
+      var logoHtml = titleData.programLogo ? '<img src="' + titleData.programLogo + '" style="max-height:80px; max-width:120px; display:block;" />' : '';
+      var nameHtml = titleData.programName ? '<div style="font-size:24px;font-weight:700;margin-bottom:4px;text-align:right;">' + titleData.programName + '</div>' : '';
+      var placeHtml = titleData.programPlace ? '<div style="font-size:14px;color:#555;margin-bottom:2px;text-align:right;">' + titleData.programPlace + '</div>' : '';
+      var dateHtml = titleData.programDate ? '<div style="font-size:14px;color:#555;text-align:right;">Date: ' + titleData.programDate + '</div>' : '';
+      return '<div style="width:100%; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #333; padding-bottom:12px; margin-bottom:18px;">' +
+             '<div style="flex:0 0 auto;">' + logoHtml + '</div>' +
+             '<div style="flex:1 1 auto; padding-left:16px;">' +
+             '<div style="font-size:12px;color:#777;letter-spacing:1px;margin-bottom:8px;text-align:right;">Official Winners Report</div>' +
+             nameHtml + placeHtml + dateHtml +
+             '</div></div>';
+    }
+
+    function buildWinnersHtml() {
+      var winners = getFirstPrizeWinners();
+      if (!winners.length) {
+        return '<div class="alert alert-info">No finalized first prize winners found. Make sure a program is selected and finalised results are saved, or mark entries are available in Mark Entry.</div>';
+      }
+      var html = '<div class="table-responsive"><table class="table table-bordered table-sm">';
+      html += '<thead class="thead-light"><tr><th>Category</th><th>Item</th><th>Chest No</th><th>Code</th><th>Name</th><th>Team</th><th>Total Score</th></tr></thead><tbody>';
+      winners.forEach(function (w) {
+        html += '<tr>' +
+          '<td>' + (w.category || '') + '</td>' +
+          '<td>' + (w.item || '') + '</td>' +
+          '<td>' + (w.chest || '') + '</td>' +
+          '<td>' + (w.code || '') + '</td>' +
+          '<td>' + ((w.participant && w.participant.name) || '') + '</td>' +
+          '<td>' + ((w.participant && w.participant.team) || '') + '</td>' +
+          '<td>' + (w.total || 0) + '</td>' +
+          '</tr>';
+      });
+      html += '</tbody></table></div>';
+      return html;
+    }
+
+    function downloadWinnersCsv() {
+      var winners = getFirstPrizeWinners();
+      if (!winners.length) {
+        alert('No first prize winners found to download.');
+        return;
+      }
+      var lines = ['Category,Item,Chest No,Code,Name,Team,Total Score'];
+      winners.forEach(function (w) {
+        var row = [
+          '"' + (w.category || '') + '"',
+          '"' + (w.item || '') + '"',
+          '"' + (w.chest || '') + '"',
+          '"' + (w.code || '') + '"',
+          '"' + ((w.participant && w.participant.name) || '') + '"',
+          '"' + ((w.participant && w.participant.team) || '') + '"',
+          '"' + (w.total || 0) + '"'
+        ];
+        lines.push(row.join(','));
+      });
+      var csv = lines.join('\n');
+      var blob = new Blob([csv], { type: 'text/csv' });
+      var url = URL.createObjectURL(blob);
+      var anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = 'first-prize-winners.csv';
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+      URL.revokeObjectURL(url);
+    }
+
+    function downloadWinnersPdf() {
+      var winners = getFirstPrizeWinners();
+      if (!winners.length) {
+        alert('No first prize winners found to download.');
+        return;
+      }
+      var titleData = getEventTitleData();
+      var headerHtml = renderLetterheadHeader(titleData);
+      var html = '<html><head><title>First Prize Winners</title>' +
+        '<link rel="stylesheet" href="css/bootstrap.min.css">' +
+        '<style>body{font-family:Arial,Helvetica,sans-serif;padding:20px;} table{width:100%;border-collapse:collapse;} th,td{border:1px solid #ccc;padding:8px;text-align:left;} th{background:#f7f7f7;} .title-date{font-size:12px;color:#555;margin-bottom:8px;}</style>' +
+        '</head><body>' +
+        headerHtml +
+        '<h2 style="margin-bottom:12px;">First Prize Winners</h2>' +
+        '<table><thead><tr><th>Category</th><th>Item</th><th>Chest No</th><th>Code</th><th>Name</th><th>Team</th><th>Total Score</th></tr></thead><tbody>';
+
+      winners.forEach(function (w) {
+        html += '<tr>' +
+          '<td>' + (w.category || '') + '</td>' +
+          '<td>' + (w.item || '') + '</td>' +
+          '<td>' + (w.chest || '') + '</td>' +
+          '<td>' + (w.code || '') + '</td>' +
+          '<td>' + ((w.participant && w.participant.name) || '') + '</td>' +
+          '<td>' + ((w.participant && w.participant.team) || '') + '</td>' +
+          '<td>' + (w.total || 0) + '</td>' +
+          '</tr>';
+      });
+
+      html += '</tbody></table></body></html>';
+      var win = window.open('', '_blank');
+      if (!win) {
+        alert('Please allow popups to download PDF.');
+        return;
+      }
+      win.document.write(html);
+      win.document.close();
+      win.focus();
+      win.print();
+    }
+
+    (function(handler){
+      function runIfReady(){
+        var domReady = document.readyState === 'interactive' || document.readyState === 'complete';
+        var hydrated = !!window._localstorageHydrated;
+        if(domReady && hydrated){ handler(); return; }
+        function domHandler(){ domReady = true; if(hydrated){ cleanup(); handler(); } }
+        function hydHandler(){ hydrated = true; if(domReady){ cleanup(); handler(); } }
+        function cleanup(){ document.removeEventListener('DOMContentLoaded', domHandler); window.removeEventListener('localstorage-hydrated', hydHandler); }
+        document.addEventListener('DOMContentLoaded', domHandler);
+        window.addEventListener('localstorage-hydrated', hydHandler);
+      }
+      runIfReady();
+    })(function () {
+      var viewBtn = document.getElementById('btn-view-first-winners');
+      var downloadBtn = document.getElementById('btn-download-first-winners');
+      var container = document.getElementById('winners-list-container');
+      if (viewBtn && container) {
+        viewBtn.addEventListener('click', function () {
+          container.innerHTML = buildWinnersHtml();
+        });
+      }
+      if (downloadBtn) {
+        downloadBtn.addEventListener('click', function () {
+          downloadWinnersCsv();
+        });
+      }
+      var pdfBtn = document.getElementById('btn-download-pdf');
+      if (pdfBtn) {
+        pdfBtn.addEventListener('click', function () {
+          downloadWinnersPdf();
+        });
+      }
+    });
+  </script>
+  </body>
+</html>
+
+

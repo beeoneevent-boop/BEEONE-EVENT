@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Edit Home Speakers - Admin</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+  <style>
+    body{padding:24px;background:#f7f9fb}
+    .speaker-card{background:#fff;border-radius:8px;padding:12px;margin-bottom:12px;box-shadow:0 6px 18px rgba(0,0,0,0.04)}
+    .speaker-card img{width:84px;height:84px;object-fit:cover;border-radius:8px}
+    .controls{display:flex;gap:8px}
+    .top-actions{display:flex;gap:12px;align-items:center;margin-bottom:16px}
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Beeone Digital</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="oi oi-menu"></span> Menu
+      </button>
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="speakers.html" class="nav-link">Speakers</a></li>
+          <li class="nav-item"><a href="schedule.html" class="nav-link">Schedule</a></li>
+          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+          <li class="nav-item"><a href="team-points.html" class="nav-link">Team Points</a></li>
+          <li class="nav-item active dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+            <div class="dropdown-menu dropdown-menu-right" style="background: rgba(15,19,36,0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+              <a href="admin.html" class="dropdown-item" style="color: #fff;">Dashboard</a>
+              <a href="registration.html" class="dropdown-item" style="color: #fff;">Registration</a>
+              <a href="calling-list.html" class="dropdown-item" style="color: #fff;">Calling List</a>
+              <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+              <a href="mark-entry.html" class="dropdown-item" style="color: #fff;">Mark Entry</a>
+              <a href="judge-mark-entry.html" class="dropdown-item" style="color: #fff;">Judge Mark Entry</a>
+              <a href="green-room.html" class="dropdown-item" style="color: #fff;">Green Room</a>
+              <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+              <a href="results.html" class="dropdown-item" style="color: #fff;">Results</a>
+              <a href="team-badge.html" class="dropdown-item" style="color: #fff;">Team Badge</a>
+              <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+              <a href="admin-blog.html" class="dropdown-item" style="color: #fff;">Manage Blog</a>
+              <a href="admin-schedule.html" class="dropdown-item" style="color: #fff;">Manage Schedule</a>
+              <a href="admin-team-points.html" class="dropdown-item" style="color: #fff;">Manage Team Points</a>
+              <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="margin-top: 24px;">
+    <h2>Edit Home Speakers</h2>
+    <p class="text-muted">Manage the speakers shown on the public Speakers page. Changes are saved to localStorage under <strong>eventalk_speakers</strong>.</p>
+
+    <div class="top-actions">
+      <button id="btn-add" class="btn btn-primary">Add Speaker</button>
+      <button id="btn-save" class="btn btn-success">Save All</button>
+      <button id="btn-export" class="btn btn-outline-secondary">Export JSON</button>
+      <input id="import-file" type="file" accept="application/json" style="display:none">
+      <button id="btn-import" class="btn btn-outline-secondary">Import JSON</button>
+    </div>
+
+    <div id="list"></div>
+  </div>
+
+<script>
+(function(){
+  const STORAGE_KEY = 'eventalk_speakers';
+  function safeParse(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY))||[] }catch(e){return[]} }
+  function saveAll(arr){ localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
+  function render(){
+    const list = document.getElementById('list'); list.innerHTML='';
+    const arr = safeParse();
+    arr.forEach((s,i)=>{
+      const div = document.createElement('div'); div.className='speaker-card row align-items-center';
+      div.innerHTML = `
+        <div class="col-auto">
+          <img src="${s.image||'images/speaker-1.jpg'}" alt="img">
+        </div>
+        <div class="col">
+          <div class="form-group"><label>Name</label><input class="form-control name" value="${escapeHtml(s.name||'')}"></div>
+          <div class="form-group"><label>Position</label><input class="form-control position" value="${escapeHtml(s.position||'')}"></div>
+          <div class="form-row">
+            <div class="col"><input class="form-control twitter" placeholder="Twitter URL" value="${escapeHtml(s.twitter||'')}"></div>
+            <div class="col"><input class="form-control facebook" placeholder="Facebook URL" value="${escapeHtml(s.facebook||'')}"></div>
+            <div class="col"><input class="form-control instagram" placeholder="Instagram URL" value="${escapeHtml(s.instagram||'')}"></div>
+          </div>
+        </div>
+        <div class="col-auto text-right">
+          <div class="controls">
+            <label class="btn btn-sm btn-light">Image<input type="file" accept="image/*" class="d-none imgfile"></label>
+            <button class="btn btn-sm btn-danger btn-remove">Remove</button>
+          </div>
+        </div>
+      `;
+      // bind actions
+      div.querySelector('.btn-remove').addEventListener('click', ()=>{ arr.splice(i,1); saveAll(arr); render(); });
+      const imgInput = div.querySelector('.imgfile');
+      imgInput.addEventListener('change', e=>{
+        const f = e.target.files[0]; if(!f) return; const reader=new FileReader(); reader.onload = function(ev){ arr[i].image = ev.target.result; saveAll(arr); render(); }; reader.readAsDataURL(f);
+      });
+      // inputs update on blur
+      ['name','position','twitter','facebook','instagram'].forEach(cls=>{
+        div.querySelector('.'+cls).addEventListener('change', e=>{ arr[i][cls] = e.target.value; saveAll(arr); });
+      });
+      list.appendChild(div);
+    });
+    if(arr.length===0) list.innerHTML = '<div class="alert alert-info">No speakers defined. Click "Add Speaker" to create one.</div>';
+  }
+  function escapeHtml(str){ return (''+str).replace(/[&<>\"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;" })[c]); }
+  document.getElementById('btn-add').addEventListener('click', ()=>{
+    const arr = safeParse(); arr.push({name:'New Speaker', position:'Position', image:'', twitter:'', facebook:'', instagram:''}); saveAll(arr); render();
+  });
+  document.getElementById('btn-save').addEventListener('click', ()=>{ alert('Saved to localStorage'); });
+  document.getElementById('btn-export').addEventListener('click', ()=>{
+    const data = JSON.stringify(safeParse(), null, 2); const blob = new Blob([data], {type:'application/json'}); const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='eventalk_speakers.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  });
+  document.getElementById('btn-import').addEventListener('click', ()=>{ document.getElementById('import-file').click(); });
+  document.getElementById('import-file').addEventListener('change', e=>{
+    const f=e.target.files[0]; if(!f) return; const reader=new FileReader(); reader.onload=function(ev){ try{ const parsed=JSON.parse(ev.target.result); if(Array.isArray(parsed)){ saveAll(parsed); render(); alert('Imported'); }else alert('JSON must be an array'); }catch(err){ alert('Invalid JSON'); } }; reader.readAsText(f);
+  });
+  // initial render
+  if(!localStorage.getItem(STORAGE_KEY)){
+    const seed = [
+    ];
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(seed));
+  }
+  render();
+})();
+</script>
+</body>
+</html>

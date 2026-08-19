@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Beeone Digital</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+      body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f8f9fa;}
+      .login-card{max-width:420px;width:100%;padding:32px;border-radius:18px;box-shadow:0 18px 45px rgba(0,0,0,.12);background:#ffffff;}
+      .login-card h1{font-size:28px;margin-bottom:18px;font-weight:700;text-align:center;}
+      .login-card .btn{width:100%;}
+      .login-error{color:#d9534f;margin-top:8px;display:none;text-align:center;}
+    </style>
+  </head>
+  <body>
+    <div class="login-card">
+      <h1>Admin Login</h1>
+      <p class="text-muted text-center">Enter your admin username and password.</p>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="adminUsername">Username</label>
+          <input id="adminUsername" class="form-control" type="text" placeholder="USERNAME" autocomplete="username" required>
+        </div>
+        <div class="form-group">
+          <label for="adminPassword">Password</label>
+          <input id="adminPassword" class="form-control" type="password" placeholder="PASSWORD" autocomplete="current-password" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Sign In</button>
+        <div class="login-error" id="loginError">Incorrect username or password. Try again.</div>
+      </form>
+    </div>
+
+    <script src="js/admin-auth.js"></script>
+    <script>
+      if(window.adminAuth && window.adminAuth.isAuthenticated && window.adminAuth.isAuthenticated()){
+        window.location.href = 'admin.html';
+      }
+      document.getElementById('loginForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        var username = document.getElementById('adminUsername').value.trim();
+        var password = document.getElementById('adminPassword').value.trim();
+        if(window.adminAuth.login(username, password)){
+          window.location.href = 'admin.html';
+        } else {
+          var err = document.getElementById('loginError');
+          err.style.display = 'block';
+        }
+      });
+    </script>
+  </body>
+</html>
+

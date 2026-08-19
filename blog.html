@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Beeone Digital - Free Bootstrap 4 Template by Colorlib</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+  </head>
+  <body>
+    
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index.html">Beeone Digital</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+	          <li class="nav-item"><a href="speakers.html" class="nav-link">Speakers</a></li>
+	          <li class="nav-item"><a href="schedule.html" class="nav-link">Schedule</a></li>
+	          <li class="nav-item active"><a href="blog.html" class="nav-link">Blog</a></li>
+            <li class="nav-item"><a href="team-points.html" class="nav-link">Team Points</a></li>
+
+
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+    
+    <!-- hero section removed -->
+
+    <section class="ftco-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-3">
+          <div class="col-md-8 text-center ftco-animate">
+            <h2 class="mb-4"><span>Recent</span> Blog</h2>
+          </div>
+        </div>
+        <div id="blog-posts" class="row d-flex"></div>
+        <div id="blog-empty" class="row d-flex" style="display:none;"><div class="col-md-12"><div class="alert alert-info text-center">No blog posts are published yet. Add posts from admin.</div></div></div>
+      </div>
+    </section>
+    <script>
+      (function(){
+        function safeParse(){
+          try{ var raw = localStorage.getItem('eventalk_blogs'); var data = raw ? JSON.parse(raw) : []; return Array.isArray(data) ? data : []; } catch(e){ return []; }
+        }
+        function escapeHtml(str){ return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+        function formatDate(date){ if(!date) return ''; var parts = date.split('-'); return parts.length===3 ? parts[2] + ' ' + parts[1] + ' ' + parts[0] : date; }
+        function renderPosts(){ var posts = safeParse(); var container = document.getElementById('blog-posts'); var empty = document.getElementById('blog-empty'); if(!container) return;
+          if(posts.length === 0){ container.innerHTML=''; if(empty) empty.style.display='flex'; return; }
+          if(empty) empty.style.display='none';
+          var html = '';
+          posts.slice().reverse().forEach(function(post){ html += '<div class="col-md-4 d-flex ftco-animate">'
+            + '<div class="blog-entry justify-content-end">'
+            + '<a href="blog-single.html?id=' + encodeURIComponent(post.id||'') + '" class="block-20" style="background-image: url(' + (post.image ? '"'+ escapeHtml(post.image) +'"' : 'images/image_1.jpg') + ');"></a>'
+            + '<div class="text p-4 float-right d-block">'
+            + '<div class="d-flex align-items-center pt-2 mb-4">'
+            + '<div class="one"><span class="day">' + escapeHtml(post.date ? post.date.split('-')[2] : '') + '</span></div>'
+            + '<div class="two"><span class="yr">' + escapeHtml(post.date ? post.date.split('-')[0] : '') + '</span><span class="mos">' + escapeHtml(post.category || '') + '</span></div>'
+            + '</div>'
+            + '<h3 class="heading mt-2"><a href="blog-single.html?id=' + encodeURIComponent(post.id||'') + '">' + escapeHtml(post.title) + '</a></h3>'
+            + '<p>' + escapeHtml(post.excerpt) + '</p>'
+            + '</div></div></div>';
+          });
+          container.innerHTML = html;
+        }
+        (function(handler){
+          function runIfReady(){
+            var domReady = document.readyState === 'interactive' || document.readyState === 'complete';
+            var hydrated = !!window._localstorageHydrated;
+            if(domReady && hydrated){ handler(); return; }
+            function domHandler(){ domReady = true; if(hydrated){ cleanup(); handler(); } }
+            function hydHandler(){ hydrated = true; if(domReady){ cleanup(); handler(); } }
+            function cleanup(){ document.removeEventListener('DOMContentLoaded', domHandler); window.removeEventListener('localstorage-hydrated', hydHandler); }
+            document.addEventListener('DOMContentLoaded', domHandler);
+            window.addEventListener('localstorage-hydrated', hydHandler);
+          }
+          runIfReady();
+        })(renderPosts);
+        window.addEventListener('storage', renderPosts);
+      })();
+    </script>
+    <!-- Footer removed from blog.html per request -->
+    
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+    
+  </body>
+</html>
+

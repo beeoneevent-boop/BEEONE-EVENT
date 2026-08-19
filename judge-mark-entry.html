@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Judge Mark Entry - Admin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <script src="js/admin-auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+    
+    <style>
+      body { background: #0e1419; color: #333; }
+      .judge-container { max-width: 1200px; margin: 0 auto; }
+      .program-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
+      .program-card { 
+        background: #0e1419; 
+        border: 1px solid #0d0537; 
+        padding: 15px; 
+        border-radius: 8px; 
+        cursor: pointer; 
+        transition: all 0.3s ease;
+      }
+      .program-card:hover { 
+        background: #1d2228; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+        transform: translateY(-2px);
+      }
+      .program-card h6 { margin: 0 0 8px 0; color: #003366; font-weight: 700; }
+      .program-card p { margin: 0; font-size: 13px; color: #666; }
+      .student-count { font-weight: 700; color: #28a745; font-size: 14px; margin-top: 8px; }
+      .program-status { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; margin-top: 10px; }
+      .program-status.finalised { background: rgba(40, 167, 69, 0.15); color: #1e7e34; border: 1px solid rgba(40, 167, 69, 0.35); }
+      .program-status.pending { background: rgba(255, 153, 0, 0.12); color: #b26a00; border: 1px solid rgba(255, 153, 0, 0.35); }
+      .mark-popup-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+      .mark-popup-table th, .mark-popup-table td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+      .mark-popup-table th { background: #007bff; color: white; font-weight: 700; }
+      .mark-popup-table tr:nth-child(even) { background: #f9f9f9; }
+      .mark-input { 
+        width: 100%; 
+        padding: 6px 8px; 
+        border: 1px solid #ddd; 
+        border-radius: 4px; 
+        font-size: 12px; 
+        text-align: center;
+        font-weight: 600;
+      }
+      .mark-input:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        background: #f0f7ff;
+      }
+      .mark-input.has-value {
+        background: #e8f5e9;
+        border-color: #4caf50;
+      }
+      .mark-input.no-value {
+        background: #ffebee;
+        border-color: #f44336;
+      }
+      .judge-input, .remarks-input {
+        width: 100%;
+        padding: 6px 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+        text-align: center;
+      }
+      .judge-input:focus, .remarks-input:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        background: #f0f7ff;
+      }
+      .judge-input.has-value {
+        background: #e8f5e9;
+        border-color: #4caf50;
+      }
+      .remarks-input {
+        text-align: left;
+      }
+      .save-btn {
+        background: linear-gradient(135deg, #28a745, #218838);
+        color: white;
+        border: none;
+        padding: 7px 14px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-top: 10px;
+      }
+      .save-btn:hover {
+        background: linear-gradient(135deg, #218838, #1e7e34);
+        transform: translateY(-1px);
+      }
+      .export-btn {
+        background: linear-gradient(135deg, #17a2b8, #138496);
+        color: white;
+        border: none;
+        padding: 7px 14px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+      .export-btn:hover {
+        background: linear-gradient(135deg, #138496, #0c5460);
+        transform: translateY(-1px);
+      }
+      /* Login Modal Styles */
+      .login-modal-content {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      .login-form-group {
+        margin-bottom: 15px;
+      }
+      .login-form-group label {
+        color: white;
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+      }
+      .login-form-group input {
+        width: 100%;
+        padding: 10px 12px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+      .login-btn {
+        width: 100%;
+        padding: 10px;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      }
+      .login-error {
+        color: #ff6b6b;
+        font-size: 13px;
+        margin-top: 5px;
+        display: none;
+      }
+      .logout-btn {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 7px 14px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .logout-btn:hover {
+        background: #c82333;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beeone Digital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+              <div class="dropdown-menu dropdown-menu-right" style="background: rgba(15,19,36,0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                <a href="admin.html" class="dropdown-item" style="color: #fff;">Dashboard</a>
+                <a href="registration.html" class="dropdown-item" style="color: #fff;">Registration</a>
+                <a href="calling-list.html" class="dropdown-item" style="color: #fff;">Calling List</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="mark-entry.html" class="dropdown-item" style="color: #fff;">Mark Entry</a>
+                <a href="judge-mark-entry.html" class="dropdown-item" style="color: #fff;">Judge Mark Entry</a>
+                <a href="green-room.html" class="dropdown-item" style="color: #fff;">Green Room</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="results.html" class="dropdown-item" style="color: #fff;">Results</a>
+                <a href="team-badge.html" class="dropdown-item" style="color: #fff;">Team Badge</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="admin-blog.html" class="dropdown-item" style="color: #fff;">Manage Blog</a>
+                <a href="admin-schedule.html" class="dropdown-item" style="color: #fff;">Manage Schedule</a>
+                <a href="admin-team-points.html" class="dropdown-item" style="color: #fff;">Manage Team Points</a>
+                <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="#" id="logoutLink" class="nav-link">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content login-modal-content">
+          <div class="modal-header border-0">
+            <h5 class="modal-title" style="color: white; font-weight: 700;">Judge Mark Entry - Login</h5>
+          </div>
+          <div class="modal-body">
+            <div class="login-form-group">
+              <label for="loginUsername">Username</label>
+              <input type="text" class="form-control" id="loginUsername" placeholder="Enter username">
+            </div>
+            <div class="login-form-group">
+              <label for="loginPassword">Password</label>
+              <input type="password" class="form-control" id="loginPassword" placeholder="Enter password">
+            </div>
+            <div class="login-error" id="loginError"></div>
+            <button class="login-btn" onclick="handleLogin()">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-section bg-light">
+      <div class="container judge-container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-9 text-center heading-section ftco-animate">
+            <span class="subheading">Admin Section</span>
+            <h2 class="mb-4"><span>JUDGE MARK</span> Entry System</h2>
+            <p class="text-muted">Select a program and enter marks for each student by code letter</p>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-md-11">
+            <div style="background: transparent; border: none;">
+              <div style="padding: 0;">
+                
+                <!-- Program Info Section -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <h5 style="color: #003366; font-weight: 700; margin-bottom: 15px;">Program Information</h5>
+                    <div id="current-program-info" style="background: #0e3053; padding: 15px; border-radius: 8px; min-height: 250px; display: none;">
+                      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <!-- Left Column -->
+                        <div>
+                          <div>
+                            <strong>Program:</strong> <span id="current-program-name" style="color: #28a745; font-size: 16px;"></span>
+                          </div>
+                          <div style="margin-top: 8px;">
+                            <strong>Category:</strong> <span id="current-program-category"></span>
+                          </div>
+                          <div style="margin-top: 8px;">
+                            <strong>Total Students:</strong> <span id="current-program-total" style="color: #007bff; font-weight: 700; font-size: 18px;"></span>
+                          </div>
+                          <div style="margin-top: 8px;">
+                            <strong>Marks Entered:</strong> <span id="current-program-marked" style="color: #28a745; font-weight: 700; font-size: 18px;"></span>
+                          </div>
+                        </div>
+                        <!-- Right Column - Green Room Details -->
+                        <div>
+                          <div style="background: white; padding: 12px; border-radius: 5px; border-left: 4px solid #28a745; margin-bottom: 8px;">
+                            <div style="font-size: 11px; color: #666;">✓ Verified Students</div>
+                            <div style="font-size: 18px; font-weight: 700; color: #28a745;" id="judge-verified-count">0</div>
+                          </div>
+                          <div style="background: white; padding: 12px; border-radius: 5px; border-left: 4px solid #17a2b8;">
+                            <div style="font-size: 11px; color: #666;">📋 With Code Letter</div>
+                            <div style="font-size: 18px; font-weight: 700; color: #17a2b8;" id="judge-code-letter-count">0</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top: 15px;">
+                        <button id="btn-view-marks" class="btn btn-info btn-sm">👁 View/Enter Marks</button>
+                        <button id="btn-export-marks" class="export-btn btn-sm">📋 Export Marks</button>
+                        <button id="btn-clear-marks" class="btn btn-warning btn-sm">🗑 Clear Marks</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Programs List Section -->
+                <div style="margin-top: 40px; border-top: 1px solid #ddd; padding-top: 30px;">
+                  <h5 style="color: #003366; font-weight: 700; margin-bottom: 15px;">All Programs</h5>
+                  <div id="programs-container" class="program-grid">
+                    <div class="text-center text-muted" style="grid-column: 1/-1;">Loading programs...</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Beeone Digital</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Mark Entry Modal -->
+    <div class="modal fade" id="markModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h5 class="modal-title" id="markModalTitle">Enter Marks</h5>
+            <button type="button" class="close" data-dismiss="modal" style="color: white; opacity: 0.8;">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div style="background: #e3f2fd; padding: 12px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #2196f3;">
+              <small style="color: #1565c0; font-weight: 600;">
+                <i class="fa fa-info-circle"></i> Enter marks for each student. Marks are saved automatically when you leave each field. 
+                <span id="marks-progress" style="float: right; font-weight: 700;"></span>
+              </small>
+            </div>
+            <table class="mark-popup-table">
+              <thead>
+                <tr>
+                  <th style="width: 10%;">Chest No</th>
+                  <th style="width: 20%;">Name</th>
+                  <th style="width: 12%;">Code Letter</th>
+                  <th style="width: 12%;">Judge 1</th>
+                  <th style="width: 12%;">Judge 2</th>
+                  <th style="width: 12%;">Judge 3</th>
+                  <th style="width: 22%;">Remarks</th>
+                </tr>
+              </thead>
+              <tbody id="mark-popup-tbody">
+              </tbody>
+            </table>
+            <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: space-between; align-items: center;">
+              <div style="background: #f5f5f5; padding: 10px 15px; border-radius: 6px; font-size: 12px; flex: 1;">
+                <strong>Progress:</strong> <span id="marks-entered-count">0</span> / <span id="marks-total-count">0</span> students marked
+              </div>
+              <button id="btn-save-marks" class="save-btn" style="margin-top: 0; margin-left: auto;">💾 Save All Marks</button>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    (function(handler){
+      function runIfReady(){
+        var domReady = document.readyState === 'interactive' || document.readyState === 'complete';
+        var hydrated = !!window._localstorageHydrated;
+        if(domReady && hydrated){ handler(); return; }
+        function domHandler(){ domReady = true; if(hydrated){ cleanup(); handler(); } }
+        function hydHandler(){ hydrated = true; if(domReady){ cleanup(); handler(); } }
+        function cleanup(){ document.removeEventListener('DOMContentLoaded', domHandler); window.removeEventListener('localstorage-hydrated', hydHandler); }
+        document.addEventListener('DOMContentLoaded', domHandler);
+        window.addEventListener('localstorage-hydrated', hydHandler);
+      }
+      runIfReady();
+    })(function () {
+      
+      // Check authentication
+      if (!adminAuth.isAuthenticated()) {
+        $('#loginModal').modal('show');
+        return;
+      }
+
+      var currentSelectedProgram = null;
+      var participantMap = {};
+      var programsData = [];
+      var judgeMarks = {}; // Store marks: { 'category||program': { chest: mark, ... } }
+      var greenRoomCheckIns = {}; // Reference to code letters
+
+      // Handle login
+      window.handleLogin = function() {
+        var username = document.getElementById('loginUsername').value.trim();
+        var password = document.getElementById('loginPassword').value.trim();
+        var errorDiv = document.getElementById('loginError');
+
+        if (!username || !password) {
+          errorDiv.textContent = 'Please enter both username and password';
+          errorDiv.style.display = 'block';
+          return;
+        }
+
+        if (adminAuth.login(username, password)) {
+          $('#loginModal').modal('hide');
+          location.reload();
+        } else {
+          errorDiv.textContent = 'Invalid username or password';
+          errorDiv.style.display = 'block';
+        }
+      };
+
+      // Handle logout
+      document.getElementById('logoutLink').addEventListener('click', function(e) {
+        e.preventDefault();
+        adminAuth.logout();
+        location.href = 'admin.html';
+      });
+
+      function isProgramFinalised(category, name) {
+        try {
+          var raw = localStorage.getItem('eventalk_final_results') || '{}';
+          var finals = JSON.parse(raw);
+          var key = (category || '') + '||' + (name || '');
+          return !!(finals && finals[key]);
+        } catch (e) {
+          return false;
+        }
+      }
+
+      // Load marks from localStorage
+      function loadMarks() {
+        try {
+          var raw = localStorage.getItem('eventalk_judge_marks') || '{}';
+          judgeMarks = JSON.parse(raw);
+        } catch(e) { judgeMarks = {}; }
+      }
+
+      // Save marks to localStorage
+      function saveMarks() {
+        try {
+          localStorage.setItem('eventalk_judge_marks', JSON.stringify(judgeMarks));
+        } catch(e) {}
+      }
+
+      // Load code letters from green room
+      function loadCodeLetters() {
+        try {
+          var raw = localStorage.getItem('eventalk_green_room_checkins') || '{}';
+          greenRoomCheckIns = JSON.parse(raw);
+        } catch(e) { greenRoomCheckIns = {}; }
+      }
+
+      function isProgramFinalised(category, name) {
+        try {
+          var raw = localStorage.getItem('eventalk_final_results') || '{}';
+          var finals = JSON.parse(raw);
+          var key = (category || '') + '||' + (name || '');
+          return !!(finals && finals[key]);
+        } catch (e) {
+          return false;
+        }
+      }
+
+      // Load all data
+      function loadAllData() {
+        try {
+          var parts = localStorage.getItem('eventalk_participants') || '[]';
+          var participants = JSON.parse(parts);
+          participantMap = {}; // Clear before repopulating
+          participants.forEach(function(p) {
+            participantMap[p.chest] = p;
+          });
+
+          var programs = localStorage.getItem('eventalk_programs') || '[]';
+          programsData = JSON.parse(programs);
+        } catch(e) {}
+        loadMarks();
+        loadCodeLetters();
+      }
+
+      // Refresh all data from localStorage
+      function refreshAllData() {
+        console.log('🔄 Refreshing all data...');
+        loadAllData();
+        loadProgramsList();
+        if (currentSelectedProgram) {
+          updateProgramUI();
+        }
+      }
+
+      // Load and display programs
+      function loadProgramsList() {
+        var container = document.getElementById('programs-container');
+        if (programsData.length === 0) {
+          container.innerHTML = '<div class="text-center text-muted" style="grid-column: 1/-1;">No programs available</div>';
+          return;
+        }
+
+        // Load green room data
+        var greenRoomCheckins = {};
+        try {
+          greenRoomCheckins = JSON.parse(localStorage.getItem('eventalk_green_room_checkins') || '{}');
+        } catch(e) {}
+
+        var html = '';
+        programsData.forEach(function(prog) {
+          var key = (prog.category || '') + '||' + (prog.name || '');
+          var markedCount = 0;
+          var registered = 0;
+          var finalised = isProgramFinalised(prog.category, prog.name);
+          var statusClass = finalised ? 'finalised' : 'pending';
+          var statusText = finalised ? 'Finalised' : 'In Progress';
+          
+          // Count registered students for this program
+          Object.keys(participantMap).forEach(function(chest) {
+            var p = participantMap[chest];
+            if (p.category === prog.category) {
+              registered++;
+              // Check if mark exists
+              if (judgeMarks[key] && judgeMarks[key][chest]) {
+                markedCount++;
+              }
+            }
+          });
+
+          // Get green room verification stats
+          var programRecords = greenRoomCheckins[prog.name] || [];
+          if (!Array.isArray(programRecords)) {
+            programRecords = [];
+          }
+          var verified = programRecords.filter(function(r) { return r.verifiedAt; }).length;
+          var withCode = programRecords.filter(function(r) { return r.codeLetter && r.codeLetter.trim(); }).length;
+
+          html += '<div class="program-card" onclick="selectProgram(\'' + prog.category.replace(/'/g, "\\'") + '\', \'' + prog.name.replace(/'/g, "\\'") + '\')" style="cursor: pointer; position: relative;">'
+            + '<h6>' + prog.name + '</h6>'
+            + '<p>Category: ' + prog.category + '</p>'
+            + '<div class="student-count" style="margin-bottom: 8px;">Students: <span style="color: #007bff; font-weight: 900;">' + registered + '</span></div>'
+            + '<div style="font-size: 12px; color: #666; line-height: 1.6;">'
+            + '📋 Marked: <span style="color: #28a745; font-weight: 700;">' + markedCount + '</span> | '
+            + '✓ Verified: <span style="color: #28a745; font-weight: 700;">' + verified + '</span> | '
+            + '🔤 Code: <span style="color: #17a2b8; font-weight: 700;">' + withCode + '</span>'
+            + '</div>'
+            + '<div class="program-status ' + statusClass + '">' + statusText + '</div>'
+            + '</div>';
+        });
+
+        container.innerHTML = html;
+      }
+
+      // Select program
+      window.selectProgram = function(category, name) {
+        currentSelectedProgram = { category: category, name: name };
+        // Refresh latest data before updating UI
+        loadMarks();
+        loadCodeLetters();
+        updateProgramUI();
+      };
+
+      // Update program UI
+      function updateProgramUI() {
+        if (!currentSelectedProgram) return;
+
+        var key = currentSelectedProgram.category + '||' + currentSelectedProgram.name;
+        var markedCount = 0;
+        var registered = 0;
+
+        Object.keys(participantMap).forEach(function(chest) {
+          var p = participantMap[chest];
+          if (p.category === currentSelectedProgram.category) {
+            registered++;
+            if (judgeMarks[key] && judgeMarks[key][chest]) {
+              markedCount++;
+            }
+          }
+        });
+
+        // Load green room verification details
+        var greenRoomCheckins = {};
+        try {
+          greenRoomCheckins = JSON.parse(localStorage.getItem('eventalk_green_room_checkins') || '{}');
+        } catch(e) {}
+        
+        var programRecords = greenRoomCheckins[currentSelectedProgram.name] || [];
+        if (!Array.isArray(programRecords)) {
+          programRecords = [];
+        }
+        
+        var verifiedCount = programRecords.filter(function(r) { return r.verifiedAt; }).length;
+        var codeLetterCount = programRecords.filter(function(r) { return r.codeLetter && r.codeLetter.trim(); }).length;
+
+        var finalised = isProgramFinalised(currentSelectedProgram.category, currentSelectedProgram.name);
+        var finalStatusText = finalised ? 'Finalised' : 'In Progress';
+
+        document.getElementById('current-program-info').style.display = 'block';
+        document.getElementById('current-program-name').textContent = currentSelectedProgram.name;
+        document.getElementById('current-program-category').textContent = currentSelectedProgram.category;
+        document.getElementById('current-program-total').textContent = registered;
+        document.getElementById('current-program-marked').textContent = markedCount;
+        document.getElementById('judge-verified-count').textContent = verifiedCount;
+        document.getElementById('judge-code-letter-count').textContent = codeLetterCount;
+
+        var statusBlock = document.getElementById('current-program-status');
+        if (!statusBlock) {
+          var statusDiv = document.createElement('div');
+          statusDiv.id = 'current-program-status';
+          statusDiv.style.marginTop = '10px';
+          statusDiv.style.fontWeight = '700';
+          statusDiv.style.display = 'inline-block';
+          statusDiv.style.padding = '6px 10px';
+          statusDiv.style.borderRadius = '999px';
+          statusDiv.style.textTransform = 'uppercase';
+          statusDiv.style.letterSpacing = '0.05em';
+          statusDiv.style.fontSize = '11px';
+          document.getElementById('current-program-info').appendChild(statusDiv);
+        }
+
+        var currentStatus = document.getElementById('current-program-status');
+        currentStatus.textContent = 'Status: ' + finalStatusText;
+        currentStatus.style.background = finalised ? 'rgba(40, 167, 69, 0.15)' : 'rgba(255, 153, 0, 0.12)';
+        currentStatus.style.color = finalised ? '#1e7e34' : '#b26a00';
+        currentStatus.style.border = finalised ? '1px solid rgba(40, 167, 69, 0.35)' : '1px solid rgba(255, 153, 0, 0.35)';
+
+        loadProgramsList();
+      }
+
+      // Save individual judge marks (auto-save)
+      window.saveJudgeMarks = function(chest) {
+        if (!currentSelectedProgram) return;
+        if (isProgramFinalised(currentSelectedProgram.category, currentSelectedProgram.name)) {
+          return;
+        }
+
+        var key = currentSelectedProgram.category + '||' + currentSelectedProgram.name;
+        if (!judgeMarks[key]) {
+          judgeMarks[key] = {};
+        }
+
+        var j1 = document.getElementById('j1-' + chest).value.trim();
+        var j2 = document.getElementById('j2-' + chest).value.trim();
+        var j3 = document.getElementById('j3-' + chest).value.trim();
+        var remarks = document.getElementById('remarks-' + chest).value.trim();
+
+        judgeMarks[key][chest] = {
+          j1: j1,
+          j2: j2,
+          j3: j3,
+          remarks: remarks
+        };
+
+        saveMarks();
+        updateMarkProgress();
+        updateJudgeMarkVisuals(chest);
+      };
+
+      // Update judge mark input visuals
+      function updateJudgeMarkVisuals(chest) {
+        var j1Input = document.getElementById('j1-' + chest);
+        var j2Input = document.getElementById('j2-' + chest);
+        var j3Input = document.getElementById('j3-' + chest);
+
+        if (j1Input) {
+          j1Input.classList.toggle('has-value', j1Input.value && j1Input.value.trim());
+        }
+        if (j2Input) {
+          j2Input.classList.toggle('has-value', j2Input.value && j2Input.value.trim());
+        }
+        if (j3Input) {
+          j3Input.classList.toggle('has-value', j3Input.value && j3Input.value.trim());
+        }
+      }
+
+      // Save individual mark (auto-save) - deprecated, kept for compatibility
+      window.saveMark = function(chest, markValue) {
+        if (!currentSelectedProgram) return;
+
+        var key = currentSelectedProgram.category + '||' + currentSelectedProgram.name;
+        if (!judgeMarks[key]) {
+          judgeMarks[key] = {};
+        }
+
+        if (markValue && markValue.trim()) {
+          judgeMarks[key][chest] = markValue.trim();
+        } else {
+          delete judgeMarks[key][chest];
+        }
+
+        saveMarks();
+        updateMarkProgress();
+      };
+
+      // Update mark input visuals
+      function updateMarkInputVisuals(chest) {
+        var markInput = document.getElementById('mark-' + chest);
+        if (!markInput) return;
+
+        if (markInput.value && markInput.value.trim()) {
+          markInput.classList.remove('no-value');
+          markInput.classList.add('has-value');
+        } else {
+          markInput.classList.remove('has-value');
+          markInput.classList.add('no-value');
+        }
+      }
+
+      // Update mark progress
+      function updateMarkProgress() {
+        if (!currentSelectedProgram) return;
+
+        var key = currentSelectedProgram.category + '||' + currentSelectedProgram.name;
+        var markedCount = 0;
+        var totalCount = 0;
+
+        Object.keys(participantMap).forEach(function(chest) {
+          var p = participantMap[chest];
+          if (p.category === currentSelectedProgram.category) {
+            totalCount++;
+            var markData = judgeMarks[key] && judgeMarks[key][chest];
+            if (markData && (markData.j1 || markData.j2 || markData.j3)) {
+              markedCount++;
+            }
+          }
+        });
+
+        document.getElementById('marks-entered-count').textContent = markedCount;
+        document.getElementById('marks-total-count').textContent = totalCount;
+        var percentage = totalCount > 0 ? Math.round((markedCount / totalCount) * 100) : 0;
+        document.getElementById('marks-progress').textContent = percentage + '% Complete';
+      };
+
+      // View/Enter marks for program
+      document.getElementById('btn-view-marks').addEventListener('click', function() {
+        if (!currentSelectedProgram) return;
+
+        var finalised = isProgramFinalised(currentSelectedProgram.category, currentSelectedProgram.name);
+        var key = currentSelectedProgram.category + '||' + currentSelectedProgram.name;
+        if (!judgeMarks[key]) {
+          judgeMarks[key] = {};
+        }
+
+        // Load green room verification data
+        var greenRoomData = {};
+        try {
+          greenRoomData = JSON.parse(localStorage.getItem('eventalk_green_room_checkins') || '{}');
+        } catch(e) {}
+
+        var programGreenRoomRecords = greenRoomData[currentSelectedProgram.name] || [];
+        if (!Array.isArray(programGreenRoomRecords)) {
+          programGreenRoomRecords = [];
+        }
+
+        // Build map of verified students
+        var verifiedStudents = {};
+        programGreenRoomRecords.forEach(function(record) {
+          if (record && record.chest && record.verifiedAt) {
+            verifiedStudents[record.chest] = record;
+          }
+        });
+
+        var markRows = '';
+        var greenRoomKey = key;
+        var verifiedCount = 0;
+
+        Object.keys(participantMap).forEach(function(chest) {
+          var p = participantMap[chest];
+          if (p.category === currentSelectedProgram.category) {
+            // FILTER: Only show verified students
+            if (!verifiedStudents[chest]) {
+              return; // Skip unverified students
+            }
+
+            var markData = judgeMarks[key][chest] || { j1: '', j2: '', j3: '', remarks: '' };
+            var verifiedRecord = verifiedStudents[chest];
+            var codeLetter = verifiedRecord.codeLetter || 'N/A';
+            
+            verifiedCount++;
+
+            var disabledAttr = finalised ? 'disabled' : '';
+            var readonlyAttr = finalised ? 'readonly' : '';
+            markRows += '<tr class="mark-row-highlight">'
+              + '<td>' + chest + '</td>'
+              + '<td>' + p.name + '</td>'
+              + '<td><div class="code-letter-display" style="background: #d4edda; color: #155724; padding: 4px 8px; border-radius: 4px; font-weight: 700;">' + codeLetter + '</div></td>'
+              + '<td><input type="number" class="judge-input j1 ' + (markData.j1 ? 'has-value' : '') + '" id="j1-' + chest + '" value="' + (markData.j1 || '') + '" placeholder="Mark" ' + disabledAttr + ' onchange="saveJudgeMarks(\'' + chest + '\')" onblur="saveJudgeMarks(\'' + chest + '\')"></td>'
+              + '<td><input type="number" class="judge-input j2 ' + (markData.j2 ? 'has-value' : '') + '" id="j2-' + chest + '" value="' + (markData.j2 || '') + '" placeholder="Mark" ' + disabledAttr + ' onchange="saveJudgeMarks(\'' + chest + '\')" onblur="saveJudgeMarks(\'' + chest + '\')"></td>'
+              + '<td><input type="number" class="judge-input j3 ' + (markData.j3 ? 'has-value' : '') + '" id="j3-' + chest + '" value="' + (markData.j3 || '') + '" placeholder="Mark" ' + disabledAttr + ' onchange="saveJudgeMarks(\'' + chest + '\')" onblur="saveJudgeMarks(\'' + chest + '\')"></td>'
+              + '<td><input type="text" class="remarks-input" id="remarks-' + chest + '" value="' + (markData.remarks || '') + '" placeholder="Add remarks" ' + readonlyAttr + ' onchange="saveJudgeMarks(\'' + chest + '\')" onblur="saveJudgeMarks(\'' + chest + '\')"></td>'
+              + '</tr>';
+          }
+        });
+
+        if (!markRows) {
+          markRows = '<tr><td colspan="7" style="text-align:center; padding:20px; color:#999;">✓ No verified students found. Please verify students in Green Room first.</td></tr>';
+        }
+
+        document.getElementById('mark-popup-tbody').innerHTML = markRows;
+        document.getElementById('markModalTitle').textContent = currentSelectedProgram.name + ' - Enter Marks (' + currentSelectedProgram.category + ') - ✓ ' + verifiedCount + ' Verified';
+        updateMarkProgress();
+        $('#markModal').modal('show');
+      });
+
+      // Save marks
+      document.getElementById('btn-save-marks').addEventListener('click', function() {
+        if (!currentSelectedProgram) return;
+        if (isProgramFinalised(currentSelectedProgram.category, currentSelectedProgram.name)) {
+          alert('This program is finalised. Marks and code letters are locked.');
+          return;
+        }
+
+        var key = currentSelectedProgram.category + '||' + currentSelectedProgram.name;
+        if (!judgeMarks[key]) {
+          judgeMarks[key] = {};
+        }
+
+        var markedCount = 0;
+        var markEntryData = [];
+
+        Object.keys(participantMap).forEach(function(chest) {
+          var p = participantMap[chest];
+          if (p.category === currentSelectedProgram.category) {
+            var j1Input = document.getElementById('j1-' + chest);
+            var j2Input = document.getElementById('j2-' + chest);
+            var j3Input = document.getElementById('j3-' + chest);
+            var remarksInput = document.getElementById('remarks-' + chest);
+
+            var j1 = j1Input ? j1Input.value.trim() : '';
+            var j2 = j2Input ? j2Input.value.trim() : '';
+            var j3 = j3Input ? j3Input.value.trim() : '';
+            var remarks = remarksInput ? remarksInput.value.trim() : '';
+
+            if (j1 || j2 || j3) {
+              judgeMarks[key][chest] = {
+                j1: j1,
+                j2: j2,
+                j3: j3,
+                remarks: remarks
+              };
+              markedCount++;
+
+              // Get code letter from green room for sync
+              var codeLetter = '';
+              if (greenRoomCheckIns[key]) {
+                var record = greenRoomCheckIns[key].find(function(item) {
+                  return item && item.chest === String(chest);
+                });
+                if (record && record.codeLetter) {
+                  codeLetter = record.codeLetter;
+                }
+              }
+
+              // Prepare data for mark-entry.html storage
+              markEntryData.push({
+                chest: chest,
+                code: codeLetter,
+                j1: j1,
+                j2: j2,
+                j3: j3
+              });
+            } else {
+              delete judgeMarks[key][chest];
+            }
+          }
+        });
+
+        // Save to judge marks storage
+        saveMarks();
+
+        // SYNC: Also save to mark-entry.html storage (eventalk_mark_entries)
+        try {
+          var raw = localStorage.getItem('eventalk_mark_entries') || '{}';
+          var markEntryMap = JSON.parse(raw);
+          markEntryMap[key] = markEntryData;
+          localStorage.setItem('eventalk_mark_entries', JSON.stringify(markEntryMap));
+        } catch(e) { console.error('Error syncing to mark-entry storage:', e); }
+
+        updateProgramUI();
+        alert('✅ Marks saved successfully! (' + markedCount + ' entries marked)\n📤 Data synced to Mark Entry system.');
+      });
+
+      // Export marks
+      document.getElementById('btn-export-marks').addEventListener('click', function() {
+        if (!currentSelectedProgram) return;
+
+        var key = currentSelectedProgram.category + '||' + currentSelectedProgram.name;
+        var marksData = [];
+        var greenRoomKey = key;
+        var markedCount = 0;
+
+        Object.keys(participantMap).forEach(function(chest) {
+          var p = participantMap[chest];
+          if (p.category === currentSelectedProgram.category) {
+            var markData = judgeMarks[key] && judgeMarks[key][chest] ? judgeMarks[key][chest] : { j1: '', j2: '', j3: '', remarks: '' };
+            
+            // Get code letter from green room
+            var codeLetter = '';
+            if (greenRoomCheckIns[greenRoomKey]) {
+              var record = greenRoomCheckIns[greenRoomKey].find(function(item) {
+                return item && item.chest === String(chest);
+              });
+              if (record && record.codeLetter) {
+                codeLetter = record.codeLetter;
+              }
+            }
+
+            if (markData.j1 || markData.j2 || markData.j3) {
+              markedCount++;
+            }
+
+            marksData.push({
+              chest: chest,
+              name: p.name,
+              codeLetter: codeLetter,
+              j1: markData.j1 || '',
+              j2: markData.j2 || '',
+              j3: markData.j3 || '',
+              remarks: markData.remarks || '',
+              team: p.team || 'N/A'
+            });
+          }
+        });
+
+        // Create CSV
+        var csvContent = 'data:text/csv;charset=utf-8,';
+        csvContent += 'Chest No,Name,Code Letter,Judge 1,Judge 2,Judge 3,Remarks,Team\n';
+        marksData.forEach(function(row) {
+          csvContent += '"' + row.chest + '","' + row.name + '","' + row.codeLetter + '","' + row.j1 + '","' + row.j2 + '","' + row.j3 + '","' + row.remarks.replace(/"/g, '""') + '","' + row.team + '"\n';
+        });
+
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement('a');
+        link.setAttribute('href', encodedUri);
+        link.setAttribute('download', currentSelectedProgram.name + '_marks_' + new Date().getTime() + '.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        alert('✅ Exported ' + markedCount + ' entries to CSV file');
+      });
+
+      // Clear marks for program
+      document.getElementById('btn-clear-marks').addEventListener('click', function() {
+        if (!currentSelectedProgram) return;
+        if (isProgramFinalised(currentSelectedProgram.category, currentSelectedProgram.name)) {
+          alert('This program is finalised. Marks and code letters are locked.');
+          return;
+        }
+
+        var key = currentSelectedProgram.category + '||' + currentSelectedProgram.name;
+        var markedCount = judgeMarks[key] ? Object.keys(judgeMarks[key]).length : 0;
+
+        if (!confirm('🗑️ Clear all ' + markedCount + ' marks for ' + currentSelectedProgram.name + '? This action cannot be undone.')) return;
+
+        delete judgeMarks[key];
+        saveMarks();
+        updateProgramUI();
+        alert('✅ All marks cleared for ' + currentSelectedProgram.name);
+      });
+
+      // Initialize with auto-refresh every 10 seconds
+      var autoRefreshInterval = setInterval(function() {
+        if (!currentSelectedProgram) return;
+        loadMarks();
+        loadCodeLetters();
+      }, 10000);
+
+      loadAllData();
+      loadProgramsList();
+    });
+  </script>
+  </body>
+</html>

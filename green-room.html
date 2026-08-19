@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Green Room - Admin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- QR Code Scanner Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+    
+    <style>
+      .green-room-container { max-width: 1200px; margin: 0 auto; }
+      .program-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
+      .program-card { 
+        background: #0e1419; 
+        border: 1px solid #0d0537; 
+        padding: 15px; 
+        border-radius: 8px; 
+        cursor: pointer; 
+        transition: all 0.3s ease;
+      }
+      .program-card:hover { 
+        background: #1d2228; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+        transform: translateY(-2px);
+      }
+      .program-card h6 { margin: 0 0 8px 0; color: #003366; font-weight: 700; }
+      .program-card p { margin: 0; font-size: 13px; color: #666; }
+      .student-count { font-weight: 700; color: #28a745; font-size: 14px; margin-top: 8px; }
+      .checked-in { color: #17a2b8; }
+      .student-popup-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+      .student-popup-table th, .student-popup-table td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+      .student-popup-table th { background: #007bff; color: white; font-weight: 700; }
+      .student-popup-table tr:nth-child(even) { background: #f9f9f9; }
+      .code-letter-input { width: 100%; padding: 4px 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; }
+      .checked-in-badge { 
+        display: inline-block; 
+        background: #28a745; 
+        color: rgb(57, 8, 8); 
+        padding: 4px 8px; 
+        border-radius: 4px; 
+        font-size: 11px; 
+        font-weight: 700;
+      }
+      .not-checked-in-badge { 
+        display: inline-block; 
+        background: #dc3545; 
+        color: white; 
+        padding: 4px 8px; 
+        border-radius: 4px; 
+        font-size: 11px; 
+        font-weight: 700;
+      }
+      .verify-btn { 
+        background: #ffc107; 
+        color: #333; 
+        border: none; 
+        padding: 4px 10px; 
+        border-radius: 4px; 
+        font-size: 11px; 
+        font-weight: 700; 
+        cursor: pointer; 
+        transition: all 0.2s ease;
+      }
+      .verify-btn:hover { 
+        background: #e0a800; 
+        transform: scale(1.05);
+      }
+      .print-btn {
+        background: linear-gradient(135deg, #28a745, #218838);
+        color: white;
+        border: none;
+        padding: 7px 14px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .print-btn:hover {
+        background: linear-gradient(135deg, #218838, #1e7e34);
+        transform: translateY(-1px);
+      }
+      .qr-verify-btn {
+        background: #17a2b8;
+        color: white;
+        border: none;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .qr-verify-btn:hover {
+        background: #138496;
+        transform: scale(1.05);
+      }
+      #qr-reader {
+        width: 100%;
+        height: 300px;
+        border: 2px solid #007bff;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .qr-result {
+        margin-top: 15px;
+        padding: 15px;
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+        border-radius: 5px;
+        display: none;
+      }
+      .qr-result.error {
+        background: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+      }
+      .qr-result.success {
+        background: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beeone Digital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+              <div class="dropdown-menu dropdown-menu-right" style="background: rgba(15,19,36,0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                <a href="admin.html" class="dropdown-item" style="color: #fff;">Dashboard</a>
+                <a href="registration.html" class="dropdown-item" style="color: #fff;">Registration</a>
+                <a href="calling-list.html" class="dropdown-item" style="color: #fff;">Calling List</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="mark-entry.html" class="dropdown-item" style="color: #fff;">Mark Entry</a>
+                <a href="judge-mark-entry.html" class="dropdown-item" style="color: #fff;">Judge Mark Entry</a>
+                <a href="green-room.html" class="dropdown-item" style="color: #fff;">Green Room</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="results.html" class="dropdown-item" style="color: #fff;">Results</a>
+                <a href="team-badge.html" class="dropdown-item" style="color: #fff;">Team Badge</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="admin-blog.html" class="dropdown-item" style="color: #fff;">Manage Blog</a>
+                <a href="admin-schedule.html" class="dropdown-item" style="color: #fff;">Manage Schedule</a>
+                <a href="admin-team-points.html" class="dropdown-item" style="color: #fff;">Manage Team Points</a>
+                <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="#" id="logoutLink" class="nav-link">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section class="ftco-section bg-light">
+      <div class="container green-room-container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-9 text-center heading-section ftco-animate">
+            <span class="subheading">Admin Section</span>
+            <h2 class="mb-4"><span>GREEN ROOM</span> - Student Verification</h2>
+            <p class="text-muted">Scan QR codes to verify student attendance by program</p>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-md-11">
+            <div class="card">
+              <div class="card-body">
+                
+                <!-- Data Sync Status -->
+                <div class="row" style="margin-bottom: 20px;">
+                  <div class="col-md-12">
+                    <div style="background: #e3f2fd; padding: 12px; border-left: 4px solid #2196F3; border-radius: 4px;">
+                      <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                          <strong>📊 Data Status:</strong> 
+                          <span id="sync-status" style="color: #1976D2; font-weight: 600;">Synced - <span id="competition-count">0</span> competitions loaded</span>
+                        </div>
+                        <button id="btn-sync-data" class="btn btn-info btn-sm" title="Refresh and sync with competitions">🔄 Sync Data</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Program Info Section -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <h5 style="color: #003366; font-weight: 700; margin-bottom: 15px;">Program Information</h5>
+                    <div id="current-program-info" style="background: #0e2d4d; padding: 15px; border-radius: 8px; min-height: 250px; display: none;">
+                      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <!-- Left Column -->
+                        <div>
+                          <div>
+                            <strong>Program:</strong> <span id="current-program-name" style="color: #28a745; font-size: 16px;"></span>
+                          </div>
+                          <div style="margin-top: 8px;">
+                            <strong>Category:</strong> <span id="current-program-category"></span>
+                          </div>
+                          <div style="margin-top: 8px;">
+                            <strong>Registered:</strong> <span id="current-program-total" style="color: #007bff; font-weight: 700; font-size: 18px;"></span>
+                          </div>
+                          <div style="margin-top: 8px;">
+                            <strong>Verified:</strong> <span id="current-program-verified" style="color: #28a745; font-weight: 700; font-size: 18px;"></span>
+                          </div>
+                        </div>
+                        <!-- Right Column -->
+                        <div>
+                          <div>
+                            <strong>Checked In:</strong> <span id="current-program-checked" style="color: #ff9800; font-weight: 700; font-size: 18px;"></span>
+                          </div>
+                          <div style="margin-top: 8px;">
+                            <strong>With Code Letter:</strong> <span id="current-program-with-code" style="color: #17a2b8; font-weight: 700; font-size: 18px;"></span>
+                          </div>
+                          <div style="margin-top: 8px;">
+                            <strong>Pending Code Letter:</strong> <span id="current-program-pending-code" style="color: #dc3545; font-weight: 700; font-size: 18px;"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="margin-top: 15px;">
+                        <strong>Verification Progress:</strong> <div style="height: 28px; background: #e0e0e0; border-radius: 4px; overflow: hidden; margin-top: 5px;">
+                          <div id="progress-bar" style="height: 100%; background: linear-gradient(90deg, #28a745, #20c997); width: 0%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold; transition: width 0.3s ease;">0%</div>
+                        </div>
+                      </div>
+                      <div style="margin-top: 15px;">
+                        <button id="btn-view-students" class="btn btn-info btn-sm">👁 View All Students</button>
+                        <button id="btn-export-codes" class="btn btn-success btn-sm">📋 Export Code Letters</button>
+                        <button id="btn-clear-program" class="btn btn-warning btn-sm">🗑 Clear Check-ins</button>
+                        <button id="btn-print-program" class="print-btn btn-sm">🖨 Print Report</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Programs List Section -->
+                <div style="margin-top: 40px; border-top: 1px solid #ddd; padding-top: 30px;">
+                  <h5 style="color: #003366; font-weight: 700; margin-bottom: 15px;">All Programs</h5>
+                  <div id="programs-container" class="program-grid">
+                    <div class="text-center text-muted" style="grid-column: 1/-1;">Loading programs...</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Beeone Digital</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Student Popup Modal -->
+    <div class="modal fade" id="studentModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="studentModalTitle">Program Students</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <table class="student-popup-table">
+              <thead>
+                <tr>
+                  <th>Chest No</th>
+                  <th>Name</th>
+                  <th>Team</th>
+                  <th>Status</th>
+                  <th>Verify Time</th>
+                  <th>Code Letter</th>
+                  <th style="text-align: center;">Code Status</th>
+                  <th>QR Verify</th>
+                </tr>
+              </thead>
+              <tbody id="student-popup-tbody">
+              </tbody>
+            </table>
+            <div style="margin-top: 15px; padding: 10px; background: #e8f4f8; border-left: 4px solid #007bff; border-radius: 4px;">
+              <small style="color: #0066cc; font-weight: 600;">💡 Tip: Enter code letters for each student. Green background = code assigned. Auto-saves on blur.</small>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="btn-save-all-codes" class="btn btn-success">Save All Code Letters</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QR Scanner Modal -->
+    <div class="modal fade" id="qrScannerModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="qrScannerTitle">QR Code Scanner</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p><strong>Student:</strong> <span id="qr-student-name"></span> (Chest: <span id="qr-student-chest"></span>)</p>
+            <div id="qr-reader"></div>
+            <div id="qr-result" class="qr-result"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    (function(handler){
+      function runIfReady(){
+        var domReady = document.readyState === 'interactive' || document.readyState === 'complete';
+        var hydrated = !!window._localstorageHydrated;
+        if(domReady && hydrated){ handler(); return; }
+        function domHandler(){ domReady = true; if(hydrated){ cleanup(); handler(); } }
+        function hydHandler(){ hydrated = true; if(domReady){ cleanup(); handler(); } }
+        function cleanup(){ document.removeEventListener('DOMContentLoaded', domHandler); window.removeEventListener('localstorage-hydrated', hydHandler); }
+        document.addEventListener('DOMContentLoaded', domHandler);
+        window.addEventListener('localstorage-hydrated', hydHandler);
+      }
+      runIfReady();
+    })(function () {
+      var currentSelectedProgram = null;
+      var participantMap = {};
+      var programsData = [];
+      var competitionsData = []; // Load saved competitions to filter students by program
+      var greenRoomCheckIns = {}; // Store check-ins: { 'program_name': [chest1, chest2, ...] }
+      var html5QrcodeScanner = null;
+      var currentQRVerifyChest = null;
+
+      // Load check-ins from localStorage
+      function loadCheckIns() {
+        try {
+          var raw = localStorage.getItem('eventalk_green_room_checkins') || '{}';
+          greenRoomCheckIns = JSON.parse(raw);
+        } catch(e) { greenRoomCheckIns = {}; }
+      }
+
+      // Save check-ins to localStorage
+      function saveCheckIns() {
+        try {
+          localStorage.setItem('eventalk_green_room_checkins', JSON.stringify(greenRoomCheckIns));
+        } catch(e) {}
+      }
+
+      // Sync competitions data from localStorage and build participant map
+      function syncCompetitionsData() {
+        try {
+          var raw = localStorage.getItem('eventalk_competitions') || '[]';
+          var data = JSON.parse(raw);
+          competitionsData = Array.isArray(data) ? data : [];
+          
+          // Update sync status
+          document.getElementById('competition-count').textContent = competitionsData.length;
+          document.getElementById('sync-status').style.color = '#28a745';
+          document.getElementById('sync-status').innerHTML = '✓ Synced - <span id="competition-count">' + competitionsData.length + '</span> competitions loaded';
+          
+          console.log('✓ Synced ' + competitionsData.length + ' competitions');
+          return competitionsData.length;
+        } catch(e) {
+          console.error('Error syncing competitions:', e);
+          document.getElementById('sync-status').style.color = '#d32f2f';
+          document.getElementById('sync-status').textContent = '✗ Sync Error - Check console';
+          return 0;
+        }
+      }
+
+      function formatVerifyTime(value) {
+        if (!value) return '—';
+        var date = new Date(value);
+        if (isNaN(date.getTime())) return value;
+        return date.toLocaleString([], { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+      }
+
+      function normalizeCheckInRecords(key) {
+        var rawRecords = greenRoomCheckIns[key] || [];
+        if (!Array.isArray(rawRecords)) {
+          rawRecords = [];
+        }
+
+        var normalized = [];
+        rawRecords.forEach(function(item) {
+          var chest = '';
+          var name = 'Unknown';
+          var verifiedAt = null;
+          var codeLetter = '';
+
+          if (typeof item === 'string') {
+            chest = item;
+            name = (participantMap[item] && participantMap[item].name) ? participantMap[item].name : 'Unknown';
+          } else if (item && typeof item === 'object') {
+            chest = item.chest || item.studentChest || item.id || item.chestNo || '';
+            name = item.name || ((participantMap[chest] && participantMap[chest].name) ? participantMap[chest].name : 'Unknown');
+            verifiedAt = item.verifiedAt || item.checkedAt || item.updatedAt || item.time || null;
+            codeLetter = item.codeLetter || '';
+          }
+
+          if (chest) {
+            normalized.push({
+              chest: String(chest),
+              name: name,
+              verifiedAt: verifiedAt,
+              updatedAt: verifiedAt,
+              codeLetter: codeLetter
+            });
+          }
+        });
+
+        var unique = {};
+        normalized.forEach(function(record) {
+          if (!record.chest) return;
+          if (!unique[record.chest]) {
+            unique[record.chest] = record;
+          }
+        });
+
+        greenRoomCheckIns[key] = Object.keys(unique).map(function(chest) {
+          return unique[chest];
+        });
+        saveCheckIns();
+        return greenRoomCheckIns[key];
+      }
+
+      function getProgramCheckInRecords(key) {
+        return normalizeCheckInRecords(key);
+      }
+
+      // Load all data
+      function loadAllData() {
+        try {
+          var parts = localStorage.getItem('eventalk_participants') || '[]';
+          var participants = JSON.parse(parts);
+          participants.forEach(function(p) {
+            participantMap[p.chest] = p;
+          });
+
+          var programs = localStorage.getItem('eventalk_programs') || '[]';
+          programsData = JSON.parse(programs);
+        } catch(e) {}
+        loadCheckIns();
+        Object.keys(greenRoomCheckIns).forEach(function(key) {
+          normalizeCheckInRecords(key);
+        });
+      }
+      
+      // Get students registered for a specific program from saved competitions
+      function getStudentsForProgram(programName) {
+        var chests = {};
+        competitionsData.forEach(function(comp) {
+          if (comp.programs && Array.isArray(comp.programs)) {
+            if (comp.programs.indexOf(programName) !== -1 && comp.chest) {
+              chests[comp.chest] = {
+                chest: comp.chest,
+                name: comp.participant || 'Unknown',
+                team: comp.team || '',
+                category: comp.category || ''
+              };
+            }
+          }
+        });
+        return Object.keys(chests).map(function(k) { return chests[k]; });
+      }
+
+      // Load and display programs
+      function loadProgramsList() {
+        var container = document.getElementById('programs-container');
+        if (programsData.length === 0) {
+          container.innerHTML = '<div class="text-center text-muted" style="grid-column: 1/-1;">No programs available</div>';
+          return;
+        }
+
+        var html = '';
+        programsData.forEach(function(prog) {
+          var key = prog.name || '';
+          var checkedRecords = getProgramCheckInRecords(key);
+          var studentsForProgram = getStudentsForProgram(prog.name);
+          var registered = studentsForProgram.length;
+          var verified = checkedRecords.filter(function(r) { return r.verifiedAt; }).length;
+          var withCode = checkedRecords.filter(function(r) { return r.codeLetter && r.codeLetter.trim(); }).length;
+
+          html += '<div class="program-card" onclick="selectProgram(\'' + prog.category.replace(/'/g, "\\'") + '\', \'' + prog.name.replace(/'/g, "\\'") + '\')" style="cursor: pointer; position: relative;">'
+            + '<h6>' + prog.name + '</h6>'
+            + '<p>Category: ' + prog.category + '</p>'
+            + '<div class="student-count" style="margin-bottom: 8px;">Students: <span style="color: #007bff; font-weight: 900;">' + registered + '</span></div>'
+            + '<div style="font-size: 12px; color: #666; line-height: 1.6;">'
+            + '✓ Verified: <span style="color: #28a745; font-weight: 700;">' + verified + '</span> | '
+            + '📋 Code: <span style="color: #17a2b8; font-weight: 700;">' + withCode + '</span> | '
+            + '📌 Checked: <span style="color: #ff9800; font-weight: 700;">' + checkedRecords.length + '</span>'
+            + '</div>'
+            + '</div>';
+        });
+
+        container.innerHTML = html;
+      }
+
+      // Select program
+      window.selectProgram = function(category, name) {
+        currentSelectedProgram = { category: category, name: name };
+        updateProgramUI();
+      };
+
+      // Update program UI with progress bar and code letter stats
+      function updateProgramUI() {
+        if (!currentSelectedProgram) return;
+
+        var key = currentSelectedProgram.name;
+        var checkedRecords = getProgramCheckInRecords(key);
+        var verifiedRecords = checkedRecords.filter(function(r) { return r.verifiedAt; });
+        var studentsForProgram = getStudentsForProgram(currentSelectedProgram.name);
+        var registered = studentsForProgram.length;
+        
+        // Count students with and without code letters
+        var withCodeLetter = checkedRecords.filter(function(r) { return r.codeLetter && r.codeLetter.trim(); }).length;
+        var pendingCodeLetter = checkedRecords.filter(function(r) { return !r.codeLetter || !r.codeLetter.trim(); }).length;
+        
+        var verificationRate = registered > 0 ? Math.round((verifiedRecords.length / registered) * 100) : 0;
+
+        document.getElementById('current-program-info').style.display = 'block';
+        document.getElementById('current-program-name').textContent = currentSelectedProgram.name;
+        document.getElementById('current-program-category').textContent = currentSelectedProgram.category;
+        document.getElementById('current-program-total').textContent = registered;
+        document.getElementById('current-program-checked').textContent = checkedRecords.length;
+        document.getElementById('current-program-verified').textContent = verifiedRecords.length;
+        document.getElementById('current-program-with-code').textContent = withCodeLetter;
+        document.getElementById('current-program-pending-code').textContent = pendingCodeLetter;
+        
+        // Update progress bar
+        var progressBar = document.getElementById('progress-bar');
+        progressBar.style.width = verificationRate + '%';
+        progressBar.textContent = verificationRate + '%';
+
+        loadProgramsList();
+      }
+
+      // Save code letter for student
+      window.saveCodeLetter = function(chest, codeLetter) {
+        if (!currentSelectedProgram) return;
+
+        var key = currentSelectedProgram.name;
+        var records = getProgramCheckInRecords(key);
+        var existingIndex = -1;
+
+        records.forEach(function(record, index) {
+          if (record.chest === String(chest)) {
+            existingIndex = index;
+          }
+        });
+
+        if (existingIndex !== -1) {
+          records[existingIndex].codeLetter = codeLetter || '';
+        } else {
+          // If no record exists, create one just for the code letter
+          var participant = participantMap[chest] || {};
+          records.push({
+            chest: String(chest),
+            name: participant.name || 'Unknown',
+            codeLetter: codeLetter || '',
+            verifiedAt: null,
+            updatedAt: null
+          });
+        }
+
+        greenRoomCheckIns[key] = records;
+        saveCheckIns();
+      };
+
+      // Verify student check-in
+      window.verifyStudent = function(chest) {
+        if (!currentSelectedProgram) return;
+
+        var key = currentSelectedProgram.name;
+        if (!greenRoomCheckIns[key]) {
+          greenRoomCheckIns[key] = [];
+        }
+
+        var records = getProgramCheckInRecords(key);
+        var participant = participantMap[chest] || {};
+        var existingIndex = -1;
+
+        records.forEach(function(record, index) {
+          if (record.chest === String(chest)) {
+            existingIndex = index;
+          }
+        });
+
+        var nowIso = new Date().toISOString();
+        if (existingIndex === -1) {
+          records.push({
+            chest: String(chest),
+            name: participant.name || 'Unknown',
+            verifiedAt: nowIso,
+            updatedAt: nowIso
+          });
+        } else {
+          records[existingIndex].name = participant.name || records[existingIndex].name || 'Unknown';
+          records[existingIndex].verifiedAt = nowIso;
+          records[existingIndex].updatedAt = nowIso;
+        }
+
+        greenRoomCheckIns[key] = records;
+        saveCheckIns();
+
+        var viewStudentsBtn = document.getElementById('btn-view-students');
+        if (viewStudentsBtn) {
+          viewStudentsBtn.click();
+        }
+        updateProgramUI();
+      };
+
+      // View all students for program
+      document.getElementById('btn-view-students').addEventListener('click', function() {
+        if (!currentSelectedProgram) return;
+
+        var key = currentSelectedProgram.name;
+        var checkedRecords = getProgramCheckInRecords(key);
+        var studentRows = '';
+        var studentsForProgram = getStudentsForProgram(currentSelectedProgram.name);
+        var withCodeCount = 0;
+        var verifiedCount = 0;
+
+        studentsForProgram.forEach(function(student) {
+          var chest = student.chest;
+          var p = participantMap[chest] || student;
+          var record = checkedRecords.find(function(item) { return item.chest === String(chest); });
+          var isChecked = !!record;
+          var hasCode = record && record.codeLetter && record.codeLetter.trim();
+          var isVerified = record && record.verifiedAt;
+          
+          if (hasCode) withCodeCount++;
+          if (isVerified) verifiedCount++;
+          
+          var statusContent = '';
+          if (isVerified) {
+            statusContent = '<span class="checked-in-badge">✓ Verified</span>';
+          } else if (isChecked) {
+            statusContent = '<span style="display: inline-block; background: #ffc107; color: #333; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 700;">⏳ Checked In</span>';
+          } else {
+            statusContent = '<button class="verify-btn" onclick="verifyStudent(\''+chest+'\')" title="Verify Student">✓ Verify</button>';
+          }
+
+          var verifyTime = isChecked ? formatVerifyTime(record.verifiedAt || record.updatedAt) : '—';
+          var codeLetter = record && record.codeLetter ? record.codeLetter : '';
+          var codeLetterInput = '<input type="text" class="code-letter-input" value="' + (codeLetter || '') + '" placeholder="Enter code" onchange="saveCodeLetter(\'' + chest + '\', this.value)" maxlength="10" style="font-weight: ' + (codeLetter ? '700' : '400') + '; background-color: ' + (codeLetter ? '#d4edda' : '#fff3cd') + ';">';
+          var codeStatus = codeLetter ? '<span style="color: #28a745; font-weight: 700; font-size: 10px;">✓ ASSIGNED</span>' : '<span style="color: #dc3545; font-weight: 700; font-size: 10px;">PENDING</span>';
+          var qrVerifyBtn = '<button class="qr-verify-btn" onclick="openQRScanner(\''+chest+'\', \''+p.name.replace(/'/g, "\\'")+'\')" title="Scan QR Code">Scan QR</button>';
+          studentRows += '<tr style="' + (hasCode ? 'background-color: #f0fdf4;' : '') + '">'
+            + '<td><strong>' + chest + '</strong></td>'
+            + '<td>' + (p.name || 'Unknown') + '</td>'
+            + '<td>' + (p.team || 'N/A') + '</td>'
+            + '<td>' + statusContent + '</td>'
+            + '<td>' + verifyTime + '</td>'
+            + '<td>' + codeLetterInput + '</td>'
+            + '<td style="text-align: center;">' + codeStatus + '</td>'
+            + '<td>' + qrVerifyBtn + '</td></tr>';
+        });
+
+        if (!studentRows) {
+          studentRows = '<tr><td colspan="8" style="text-align:center; padding:20px; color:#999;">No students registered for this program.</td></tr>';
+        }
+
+        document.getElementById('student-popup-tbody').innerHTML = studentRows;
+        var summaryText = studentsForProgram.length + ' students | ' + verifiedCount + ' Verified | ' + withCodeCount + ' With Code Letter';
+        document.getElementById('studentModalTitle').textContent = currentSelectedProgram.name + ' (' + currentSelectedProgram.category + ') - ' + summaryText;
+        $('#studentModal').modal('show');
+      });
+
+      // Save all code letters button
+      document.getElementById('btn-save-all-codes').addEventListener('click', function() {
+        if (!currentSelectedProgram) return;
+
+        var key = currentSelectedProgram.name;
+        var saveCount = 0;
+
+        // Collect all code letter inputs and save them
+        Object.keys(participantMap).forEach(function(chest) {
+          var p = participantMap[chest];
+          if (p && p.program && p.program === currentSelectedProgram.name) {
+            var codeInput = document.querySelector('input[placeholder="Enter code"][onchange*="' + chest + '"]');
+            if (!codeInput) {
+              // Try alternative selector
+              var inputs = document.querySelectorAll('.code-letter-input');
+              for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].getAttribute('onchange').indexOf(chest) !== -1) {
+                  codeInput = inputs[i];
+                  break;
+                }
+              }
+            }
+            if (codeInput && codeInput.value) {
+              saveCodeLetter(chest, codeInput.value);
+              saveCount++;
+            }
+          }
+        });
+
+        alert('Code letters saved successfully! (' + saveCount + ' entries)');
+      });
+
+      // Sync data button
+      document.getElementById('btn-sync-data').addEventListener('click', function() {
+        var compCount = syncCompetitionsData();
+        loadAllData();
+        loadProgramsList();
+        if (currentSelectedProgram) {
+          updateProgramUI();
+        }
+        alert('✓ Data synced! Loaded ' + compCount + ' competitions');
+      });
+
+      // Export code letters button
+      document.getElementById('btn-export-codes').addEventListener('click', function() {
+        if (!currentSelectedProgram) {
+          alert('Please select a program first');
+          return;
+        }
+
+        var key = currentSelectedProgram.name;
+        var checkedRecords = getProgramCheckInRecords(key);
+        var studentsForProgram = getStudentsForProgram(currentSelectedProgram.name);
+        
+        var csvContent = 'Chest No,Name,Team,Code Letter,Verify Time,Status\n';
+        var hasData = false;
+
+        studentsForProgram.forEach(function(student) {
+          var chest = student.chest;
+          var p = participantMap[chest] || student;
+          var record = checkedRecords.find(function(item) { return item.chest === String(chest); });
+          var codeLetter = record && record.codeLetter ? record.codeLetter : '';
+          var verifyTime = record ? formatVerifyTime(record.verifiedAt || record.updatedAt) : '';
+          var status = record && record.verifiedAt ? 'Verified' : (record ? 'Checked In' : 'Not Verified');
+          
+          csvContent += '"' + chest + '","' + (p.name || 'Unknown').replace(/"/g, '""') + '","' + (p.team || 'N/A').replace(/"/g, '""') + '","' + (codeLetter || '').replace(/"/g, '""') + '","' + verifyTime + '","' + status + '"\n';
+          if (codeLetter) hasData = true;
+        });
+
+        if (!hasData) {
+          alert('⚠ No code letters assigned yet for this program.');
+          return;
+        }
+
+        // Create download link
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent));
+        element.setAttribute('download', currentSelectedProgram.name + '_code_letters_' + new Date().toISOString().split('T')[0] + '.csv');
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+        
+        alert('✓ Code letters exported! File: ' + currentSelectedProgram.name + '_code_letters.csv');
+      });
+
+      document.getElementById('btn-print-program').addEventListener('click', function() {
+        if (!currentSelectedProgram) return;
+
+        var key = currentSelectedProgram.name;
+        var checkedRecords = getProgramCheckInRecords(key);
+        var studentsForProgram = getStudentsForProgram(currentSelectedProgram.name);
+        var reportRows = '';
+        var totalVerified = 0;
+        var totalWithCode = 0;
+
+        studentsForProgram.forEach(function(student) {
+          var chest = student.chest;
+          var p = participantMap[chest] || student;
+          var record = checkedRecords.find(function(item) { return item.chest === String(chest); });
+          var status = record && record.verifiedAt ? 'Verified' : (record ? 'Checked In' : 'Not Verified');
+          var verifyTime = record ? formatVerifyTime(record.verifiedAt || record.updatedAt) : '—';
+          var codeLetter = record && record.codeLetter ? record.codeLetter : '—';
+          var codeStatus = record && record.codeLetter && record.codeLetter.trim() ? 'Assigned' : 'Pending';
+          
+          if (record && record.verifiedAt) totalVerified++;
+          if (record && record.codeLetter && record.codeLetter.trim()) totalWithCode++;
+          
+          reportRows += '<tr><td>' + chest + '</td><td>' + (p.name || 'Unknown') + '</td><td>' + (p.team || 'N/A') + '</td><td>' + status + '</td><td>' + verifyTime + '</td><td><strong>' + codeLetter + '</strong></td><td>' + codeStatus + '</td></tr>';
+        });
+
+        if (!reportRows) {
+          reportRows = '<tr><td colspan="7" style="text-align:center; padding:20px;">No students found for this program.</td></tr>';
+        }
+
+        var printWindow = window.open('', '', 'height=900,width=1400');
+        printWindow.document.write('<!DOCTYPE html><html><head><title>Program Verification Report</title>');
+        printWindow.document.write('<style>body{font-family:Arial,sans-serif;padding:25px;color:#222;} h1{margin-bottom:10px;} .meta{margin-bottom:20px;line-height:1.8;} .stats{display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px;} .stat-box{background: #f0f0f0; padding: 15px; border-radius: 5px; border-left: 4px solid #007bff;} .stat-value{font-size: 28px; font-weight: bold; color: #007bff;} .stat-label{font-size: 12px; color: #666;} table{width:100%;border-collapse:collapse;} th,td{border:1px solid #ccc;padding:10px;text-align:left;} th{background:#f2f2f2; font-weight: bold;} .summary{font-size:16px;font-weight:600;} @media print { body { margin: 0; } }</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write('<h1>📋 Program Verification & Code Letter Report</h1>');
+        printWindow.document.write('<div class="meta"><div class="summary">Program: ' + currentSelectedProgram.name + '</div><div>Category: ' + currentSelectedProgram.category + '</div><div>Report Date: ' + new Date().toLocaleString() + '</div></div>');
+        printWindow.document.write('<div class="stats">' +
+          '<div class="stat-box"><div class="stat-value">' + studentsForProgram.length + '</div><div class="stat-label">Total Registered</div></div>' +
+          '<div class="stat-box" style="border-left-color: #28a745;"><div class="stat-value" style="color: #28a745;">' + totalVerified + '</div><div class="stat-label">Verified Students</div></div>' +
+          '<div class="stat-box" style="border-left-color: #17a2b8;"><div class="stat-value" style="color: #17a2b8;">' + totalWithCode + '</div><div class="stat-label">With Code Letter</div></div>' +
+          '<div class="stat-box" style="border-left-color: #ff9800;"><div class="stat-value" style="color: #ff9800;">' + (checkedRecords.length) + '</div><div class="stat-label">Checked In</div></div>' +
+          '</div>');
+        printWindow.document.write('<table><thead><tr><th>Chest No</th><th>Name</th><th>Team</th><th>Status</th><th>Verify Time</th><th>Code Letter</th><th>Code Status</th></tr></thead><tbody>' + reportRows + '</tbody></table>');
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        setTimeout(function() {
+          printWindow.print();
+        }, 500);
+      });
+
+      // Clear check-ins for program
+      document.getElementById('btn-clear-program').addEventListener('click', function() {
+        if (!currentSelectedProgram) return;
+        if (!confirm('Clear all check-ins for ' + currentSelectedProgram.name + '?')) return;
+
+        var key = currentSelectedProgram.name;
+        delete greenRoomCheckIns[key];
+        saveCheckIns();
+        updateProgramUI();
+      });
+
+      // Open QR Scanner for student
+      window.openQRScanner = function(chest, name) {
+        currentQRVerifyChest = chest;
+        document.getElementById('qr-student-chest').textContent = chest;
+        document.getElementById('qr-student-name').textContent = name;
+        document.getElementById('qr-result').style.display = 'none';
+        document.getElementById('qr-result').textContent = '';
+        
+        $('#qrScannerModal').modal('show');
+        
+        setTimeout(function() {
+          startQRScanner();
+        }, 500);
+      };
+
+      // Start QR Scanner
+      function startQRScanner() {
+        if (html5QrcodeScanner) {
+          html5QrcodeScanner.render(
+            function(decodedText, decodedResult) {
+              handleQRScan(decodedText);
+            },
+            function(error) {}
+          );
+        } else {
+          html5QrcodeScanner = new Html5QrcodeScanner('qr-reader', {
+            fps: 10,
+            qrbox: { width: 250, height: 250 }
+          }, false);
+          html5QrcodeScanner.render(
+            function(decodedText, decodedResult) {
+              handleQRScan(decodedText);
+            },
+            function(error) {}
+          );
+        }
+      }
+
+      // Stop QR Scanner
+      function stopQRScanner() {
+        if (html5QrcodeScanner) {
+          try {
+            html5QrcodeScanner.clear();
+            html5QrcodeScanner = null;
+          } catch(e) {}
+        }
+      }
+
+      // Parse QR Code data
+      function parseQRData(qrText) {
+        // QR format: chest|name|category|team
+        var parts = qrText.split('|');
+        if (parts.length >= 4) {
+          return {
+            chest: parts[0],
+            name: parts[1],
+            category: parts[2],
+            team: parts[3]
+          };
+        }
+        return null;
+      }
+
+      // Handle QR scan result
+      function handleQRScan(qrText) {
+        var resultDiv = document.getElementById('qr-result');
+        var qrData = parseQRData(qrText);
+        
+        if (!qrData) {
+          resultDiv.className = 'qr-result error';
+          resultDiv.textContent = '✗ Invalid QR Code format';
+          resultDiv.style.display = 'block';
+          setTimeout(function() { resultDiv.style.display = 'none'; }, 3000);
+          return;
+        }
+
+        // Check if QR chest number matches the student
+        if (qrData.chest !== currentQRVerifyChest) {
+          resultDiv.className = 'qr-result error';
+          resultDiv.textContent = '✗ QR Code does not match this student! Scanned: ' + qrData.chest + ', Expected: ' + currentQRVerifyChest;
+          resultDiv.style.display = 'block';
+          setTimeout(function() { resultDiv.style.display = 'none'; }, 4000);
+          return;
+        }
+
+        // Verify the student check-in
+        if (!currentSelectedProgram) {
+          resultDiv.className = 'qr-result error';
+          resultDiv.textContent = '✗ No program selected';
+          resultDiv.style.display = 'block';
+          return;
+        }
+
+        var key = currentSelectedProgram.name;
+        if (!greenRoomCheckIns[key]) {
+          greenRoomCheckIns[key] = [];
+        }
+
+        var records = getProgramCheckInRecords(key);
+        var existingRecord = records.find(function(item) { return item.chest === String(currentQRVerifyChest); });
+        var nowIso = new Date().toISOString();
+
+        if (existingRecord) {
+          existingRecord.name = qrData.name || existingRecord.name || 'Unknown';
+          existingRecord.verifiedAt = nowIso;
+          existingRecord.updatedAt = nowIso;
+          greenRoomCheckIns[key] = records;
+          saveCheckIns();
+
+          resultDiv.className = 'qr-result success';
+          resultDiv.textContent = '✓ QR verified! Student ' + qrData.name + ' check-in updated at ' + formatVerifyTime(nowIso);
+          resultDiv.style.display = 'block';
+        } else {
+          records.push({
+            chest: String(currentQRVerifyChest),
+            name: qrData.name || 'Unknown',
+            verifiedAt: nowIso,
+            updatedAt: nowIso
+          });
+          greenRoomCheckIns[key] = records;
+          saveCheckIns();
+
+          resultDiv.className = 'qr-result success';
+          resultDiv.textContent = '✓ QR verified! Student ' + qrData.name + ' checked in successfully';
+          resultDiv.style.display = 'block';
+        }
+
+        stopQRScanner();
+        
+        setTimeout(function() {
+          $('#qrScannerModal').modal('hide');
+          updateProgramUI();
+          var viewStudentsBtn = document.getElementById('btn-view-students');
+          if (viewStudentsBtn) {
+            viewStudentsBtn.click();
+          }
+        }, 2000);
+      }
+
+      // Handle modal close - stop scanner
+      $('#qrScannerModal').on('hidden.bs.modal', function() {
+        stopQRScanner();
+      });
+
+      // Refresh all data and UI
+      function refreshAllGreenRoomData() {
+        loadAllData();
+        syncCompetitionsData();
+        loadProgramsList();
+        if (currentSelectedProgram) {
+          updateProgramUI();
+        }
+      }
+
+      // Auto-refresh every 15 seconds
+      setInterval(function() {
+        if (currentSelectedProgram) {
+          loadCheckIns();
+          Object.keys(greenRoomCheckIns).forEach(function(key) {
+            normalizeCheckInRecords(key);
+          });
+          updateProgramUI();
+          loadProgramsList();
+        }
+      }, 15000);
+
+      // Initialize
+      loadAllData();
+      syncCompetitionsData();
+      loadProgramsList();
+    });
+  </script>
+  </body>
+</html>

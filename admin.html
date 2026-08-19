@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Admin Dashboard - Beeone Digital</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <!-- Font Awesome for premium icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+      /* Premium admin dashboard styles */
+      .block-6 .media{ display:flex; flex-direction:column; align-items:center; justify-content:center; }
+      .block-6 .icon i {
+        display:inline-block;
+        width:110px;
+        height:110px;
+        border-radius:18px;
+        font-size:34px;
+        line-height:110px;
+        color:#fff !important;
+        text-align:center;
+        box-shadow:0 12px 28px rgba(0,0,0,0.18);
+        transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+        background:linear-gradient(135deg,#6a11cb,#2575fc);
+      }
+      .block-6 .icon i:hover{ transform:translateY(-8px) scale(1.02); box-shadow:0 24px 48px rgba(0,0,0,0.28); }
+      .block-6 .media-body{ margin-top:12px; }
+      .block-6 .media-body .heading{ font-size:16px; color:#222; font-weight:600; }
+      .block-6 .media{ background:#ffffff; padding:18px; border-radius:14px; min-height:170px; width:100%; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+      .block-6 a.media:hover .media{ box-shadow:0 12px 32px rgba(0,0,0,0.12); }
+      /* Center the grid and force three-per-row on md */
+      .services-row{ display:flex; flex-wrap:wrap; justify-content:center; gap:22px; }
+      .services-item{ flex: 0 0 calc(33.333% - 22px); max-width: calc(33.333% - 22px); }
+      @media(max-width:991px){ .services-item{ flex: 0 0 calc(50% - 18px); max-width: calc(50% - 18px); } }
+      @media(max-width:575px){ .services-item{ flex: 0 0 100%; max-width:100%; } }
+      /* small action buttons styling: single horizontal row on wide screens */
+      .small-actions-row{ display:flex; flex-wrap:nowrap; justify-content:center; gap:32px; margin-top:22px; overflow-x:auto; padding:12px 8px; }
+      .small-actions-item{ flex:0 0 auto; max-width:none; }
+      .small-action .icon i{ width:72px; height:72px; font-size:20px; line-height:72px; border-radius:50%; box-shadow:0 10px 20px rgba(0,0,0,0.12); }
+      .small-action .media{ background:transparent; padding:8px; border-radius:10px; min-height:120px; }
+      @media(max-width:991px){ .small-actions-row{ flex-wrap:wrap; gap:20px; } .small-actions-item{ flex:0 0 calc(50% - 20px); max-width: calc(50% - 20px); } }
+      @media(max-width:575px){ .small-actions-item{ flex:0 0 100%; max-width:100%; } }
+    </style>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beeone Digital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item active dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+              <div class="dropdown-menu dropdown-menu-right" style="background: rgba(15,19,36,0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                <a href="admin.html" class="dropdown-item" style="color: #fff;">Dashboard</a>
+                <a href="registration.html" class="dropdown-item" style="color: #fff;">Registration</a>
+                <a href="calling-list.html" class="dropdown-item" style="color: #fff;">Calling List</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="mark-entry.html" class="dropdown-item" style="color: #fff;">Mark Entry</a>
+                <a href="judge-mark-entry.html" class="dropdown-item" style="color: #fff;">Judge Mark Entry</a>
+                <a href="green-room.html" class="dropdown-item" style="color: #fff;">Green Room</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="results.html" class="dropdown-item" style="color: #fff;">Results</a>
+                <a href="team-badge.html" class="dropdown-item" style="color: #fff;">Team Badge</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="admin-blog.html" class="dropdown-item" style="color: #fff;">Manage Blog</a>
+                <a href="admin-schedule.html" class="dropdown-item" style="color: #fff;">Manage Schedule</a>
+                <a href="admin-team-points.html" class="dropdown-item" style="color: #fff;">Manage Team Points</a>
+                <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="#" id="logoutLink" class="nav-link">Logout</a></li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- END nav -->
+
+    <section class="ftco-section services-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">Admin</span>
+            <h2 class="mb-4"><span>Event</span> Control Panel</h2>
+          </div>
+        </div>
+        <div class="services-row">
+          <div class="services-item ftco-animate">
+            <a href="registration.html" class="media block-6 services d-block text-center">
+              <div class="icon"><i class="fa fa-user" style="background: linear-gradient(135deg, #1abc9c, #16a085);"></i></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Registration</h3>
+              </div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="calling-list.html" class="media block-6 services d-block text-center">
+              <div class="icon"><i class="fa fa-list" style="background: linear-gradient(135deg, #3498db, #2980b9);"></i></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Calling List</h3>
+              </div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="mark-entry.html" class="media block-6 services d-block text-center">
+              <div class="icon"><i class="fa fa-check-circle" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);"></i></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Mark Entry</h3>
+              </div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="team-badge.html" class="media block-6 services d-block text-center">
+              <div class="icon"><i class="fa fa-users" style="background: linear-gradient(135deg, #e67e22, #d35400);"></i></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Team, Badge</h3>
+              </div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="admin-schedule.html" class="media block-6 services d-block text-center">
+              <div class="icon"><i class="fa fa-clock" style="background: linear-gradient(135deg, #f1c40f, #f39c12);"></i></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Schedule</h3>
+              </div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="programs.html" class="media block-6 services d-block text-center">
+              <div class="icon"><i class="fa fa-calendar" style="background: linear-gradient(135deg, #3498db, #2980b9);"></i></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Programs</h3>
+              </div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="competitions.html" class="media block-6 services d-block text-center">
+              <div class="icon"><i class="fa fa-star" style="background: linear-gradient(135deg, #f39c12, #d35400);"></i></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Competitions</h3>
+              </div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="results.html" class="media block-6 services d-block text-center">
+              <div class="icon"><i class="fa fa-trophy" style="background: linear-gradient(135deg, #2ecc71, #27ae60);"></i></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Results</h3>
+              </div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="#" class="media block-6 services d-block text-center" data-toggle="modal" data-target="#badgePopupModal" onclick="event.preventDefault(); initializeBadgeModal();">
+              <div class="icon"><i class="fa fa-id-card" style="background: linear-gradient(135deg, #ff6b6b, #ff4757);"></i></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Participant Badges</h3>
+              </div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="green-room.html" class="media block-6 services d-block text-center">
+              <div class="icon"><i class="fa fa-qrcode" style="background: linear-gradient(135deg, #00d084, #00c896);"></i></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Green Room</h3>
+                <p style="font-size: 12px; color: #666;">Verify Students by QR</p>
+              </div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="judge-mark-entry.html" class="media block-6 services d-block text-center">
+              <div class="icon"><i class="fa fa-edit" style="background: linear-gradient(135deg, #ff6b9d, #c44569);"></i></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Judge Mark Entry</h3>
+                <p style="font-size: 12px; color: #666;">Enter marks by program</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <!-- action buttons moved below dashboard; placeholder removed here -->
+
+        <!-- Dark Theme Dashboard Stats -->
+        <div class="row justify-content-center mt-4">
+          <div class="col-md-10">
+            <div style="background:#111218;color:#f5f7fa;padding:18px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,0.3);">
+              <div class="row text-center">
+                <div class="col-6 col-sm-4 col-md-2 mb-3">
+                  <div style="font-size:12px;color:#9aa3ad">Participants</div>
+                  <div id="dash-participants" style="font-size:22px;font-weight:700;margin-top:6px">0</div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 mb-3">
+                  <div style="font-size:12px;color:#9aa3ad">Programs</div>
+                  <div id="dash-programs" style="font-size:22px;font-weight:700;margin-top:6px">0</div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 mb-3">
+                  <div style="font-size:12px;color:#9aa3ad">Finalised Results</div>
+                  <div id="dash-finalised" style="font-size:22px;font-weight:700;margin-top:6px">0</div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 mb-3">
+                  <div style="font-size:12px;color:#9aa3ad">Marked Programs</div>
+                  <div id="dash-marked" style="font-size:22px;font-weight:700;margin-top:6px">0</div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 mb-3">
+                  <div style="font-size:12px;color:#9aa3ad">Teams</div>
+                  <div id="dash-teams" style="font-size:22px;font-weight:700;margin-top:6px">0</div>
+                </div>
+                <div class="col-6 col-sm-4 col-md-2 mb-3">
+                  <div style="font-size:12px;color:#9aa3ad">Categories</div>
+                  <div id="dash-categories" style="font-size:22px;font-weight:700;margin-top:6px">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="small-actions-row">
+          <div class="small-actions-item ftco-animate">
+            <a href="backup.html" class="media block-6 services d-block text-center small-action">
+              <div class="icon"><i class="fa fa-sync" style="background: linear-gradient(135deg,#e74c3c,#c0392b);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Backup</h3></div>
+            </a>
+          </div>
+          <div class="small-actions-item ftco-animate">
+            <a href="import-online-data.html" class="media block-6 services d-block text-center small-action">
+              <div class="icon"><i class="fa fa-cloud-upload-alt" style="background: linear-gradient(135deg,#2980b9,#1f618d);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Import Online</h3></div>
+            </a>
+          </div>
+          <div class="small-actions-item ftco-animate">
+            <a href="export-winners.html" class="media block-6 services d-block text-center small-action">
+              <div class="icon"><i class="fa fa-cloud-download-alt" style="background: linear-gradient(135deg,#16a085,#0e6655);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Export Winners</h3></div>
+            </a>
+          </div>
+          <div class="small-actions-item ftco-animate">
+            <a href="#" id="deleteAllDetails" class="media block-6 services d-block text-center small-action">
+              <div class="icon"><i class="fa fa-trash" style="background: linear-gradient(135deg,#c0392b,#922b21);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Delete All Details</h3></div>
+            </a>
+          </div>
+          <div class="small-actions-item ftco-animate">
+            <a href="admin-blog.html" class="media block-6 services d-block text-center small-action">
+              <div class="icon"><i class="fa fa-blog" style="background: linear-gradient(135deg,#1abc9c,#16a085);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Blog Admin</h3></div>
+            </a>
+          </div>
+          <div class="small-actions-item ftco-animate">
+            <a href="admin-team-points.html" class="media block-6 services d-block text-center small-action">
+              <div class="icon"><i class="fa fa-table" style="background: linear-gradient(135deg,#2ecc71,#27ae60);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Team Points</h3></div>
+            </a>
+          </div>
+          <div class="small-actions-item ftco-animate">
+            <a href="event-title.html" class="media block-6 services d-block text-center small-action">
+              <div class="icon"><i class="fa fa-book" style="background: linear-gradient(135deg,#d35400,#a04000);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Event Title</h3></div>
+            </a>
+          </div>
+          <div class="small-actions-item ftco-animate">
+            <a href="#" class="media block-6 services d-block text-center small-action open-login-details">
+              <div class="icon"><i class="fa fa-user-cog" style="background: linear-gradient(135deg,#6c5ce7,#341f97);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Login Details</h3></div>
+            </a>
+          </div>
+          <div class="small-actions-item ftco-animate">
+            <a href="#" class="media block-6 services d-block text-center small-action open-edit-speakers">
+              <div class="icon"><i class="fa fa-microphone" style="background: linear-gradient(135deg,#34495e,#2c3e50);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Edit Speakers</h3></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Beeone Digital</h2>
+              <p>Manage your event with a single dashboard interface.</p>
+              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Useful Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="registration.html" class="py-2 d-block">Registration</a></li>
+                <li><a href="calling-list.html" class="py-2 d-block">Calling List</a></li>
+                <li><a href="programs.html" class="py-2 d-block">Programs</a></li>
+                <li><a href="competitions.html" class="py-2 d-block">Competitions</a></li>
+                <li><a href="admin-schedule.html" class="py-2 d-block">Schedule</a></li>
+                <li><a href="results.html" class="py-2 d-block">Results</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+             <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Admin Actions</h2
+              <ul class="list-unstyled">
+                <li><a href="backup.html" class="py-2 d-block">Backup</a></li>
+                <li><a href="import-online-data.html" class="py-2 d-block">Import Online Data</a></li>
+                <li><a href="export-winners.html" class="py-2 d-block">Export Winners</a></li>
+                <li><a href="certificate.html" class="py-2 d-block">Certificate</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Contact</h2>
+              <div class="block-23 mb-3">
+                <ul>
+                  <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                  <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by Colorlib</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+  
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function(){
+      if(!window.adminAuth || !window.adminAuth.isAuthenticated || !window.adminAuth.isAuthenticated()){
+        window.location.href = 'login.html';
+        return;
+      }
+      var logoutLink = document.getElementById('logoutLink');
+      if(logoutLink){
+        logoutLink.addEventListener('click', function(e){
+          e.preventDefault();
+          window.adminAuth.logout();
+          window.location.href = 'login.html';
+        });
+      }
+    })();
+  </script>
+  <script>
+    (function(){
+      function safeParseArray(key){ try{ var raw=localStorage.getItem(key); var obj = raw?JSON.parse(raw):[]; return Array.isArray(obj)?obj:[]; }catch(e){ return []; } }
+      function safeParseObject(key){ try{ var raw=localStorage.getItem(key); var obj = raw?JSON.parse(raw):{}; return (obj && typeof obj=== 'object')?obj:{}; }catch(e){ return {}; } }
+      function updateDashboardCounts(){
+        var parts = safeParseArray('eventalk_participants');
+        var programs = safeParseArray('eventalk_programs');
+        var teams = safeParseArray('eventalk_teams');
+        var cats = safeParseArray('eventalk_categories');
+        var finals = safeParseObject('eventalk_final_results');
+        var marks = safeParseObject('eventalk_mark_entries');
+        var participantsCount = parts.length || 0;
+        var programsCount = programs.length || 0;
+        var teamsCount = teams.length || 0;
+        var catsCount = cats.length || 0;
+        var finalisedCount = Object.keys(finals).length || 0;
+        var markedProgramsCount = Object.keys(marks).length || 0;
+        var setText = function(id, val){ var el=document.getElementById(id); if(el) el.textContent = val; };
+        setText('dash-participants', participantsCount);
+        setText('dash-programs', programsCount);
+        setText('dash-finalised', finalisedCount);
+        setText('dash-marked', markedProgramsCount);
+        setText('dash-teams', teamsCount);
+        setText('dash-categories', catsCount);
+      }
+      (function(handler){
+        function runIfReady(){
+          var domReady = document.readyState === 'interactive' || document.readyState === 'complete';
+          var hydrated = !!window._localstorageHydrated;
+          if(domReady && hydrated){ handler(); return; }
+          function domHandler(){ domReady = true; if(hydrated){ cleanup(); handler(); } }
+          function hydHandler(){ hydrated = true; if(domReady){ cleanup(); handler(); } }
+          function cleanup(){ document.removeEventListener('DOMContentLoaded', domHandler); window.removeEventListener('localstorage-hydrated', hydHandler); }
+          document.addEventListener('DOMContentLoaded', domHandler);
+          window.addEventListener('localstorage-hydrated', hydHandler);
+        }
+        runIfReady();
+      })(function(){ updateDashboardCounts(); });
+      window.addEventListener('storage', function(){ updateDashboardCounts(); });
+      // expose for manual refresh in console
+      window.updateAdminDashboard = updateDashboardCounts;
+    })();
+  </script>
+  <script>
+    (function(){
+    })();
+  </script>
+  <!-- Login details modal -->
+  <div class="modal fade" id="loginDetailsModal" tabindex="-1" role="dialog" aria-labelledby="loginDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginDetailsModalLabel">Login Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="loginDetailsForm">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="loginUsername">Super Admin Username</label>
+              <input id="loginUsername" class="form-control" type="text" value="RASHID313" readonly>
+            </div>
+            <div class="form-group">
+              <label for="loginPassword">Super Admin Password</label>
+              <input id="loginPassword" class="form-control" type="password" value="662830" readonly>
+            </div>
+            <div class="alert alert-info" id="loginDetailsInfo" role="alert">Super admin credentials are fixed and cannot be edited or deleted.</div>
+            <hr>
+            <h6>Additional admin users</h6>
+            <div id="loginUsersList" class="list-group mb-3"></div>
+            <div class="form-group">
+              <label for="newUsername">Username</label>
+              <input id="newUsername" class="form-control" type="text" placeholder="Enter new username">
+            </div>
+            <div class="form-group">
+              <label for="newPassword">Password</label>
+              <input id="newPassword" class="form-control" type="password" placeholder="Enter new password">
+            </div>
+            <div class="alert alert-danger d-none" id="loginDetailsError" role="alert"></div>
+            <div class="alert alert-success d-none" id="loginDetailsSuccess" role="alert">User added successfully.</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Add User</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Speakers editor modal -->
+  <div class="modal fade" id="speakersModal" tabindex="-1" role="dialog" aria-labelledby="speakersModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="speakersModalLabel">Edit Home Speakers</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">Loading editor…</div>
+      </div>
+    </div>
+  </div>
+  <!-- Delete all details warning modal -->
+  <div class="modal fade" id="deleteAllDetailsModal" tabindex="-1" role="dialog" aria-labelledby="deleteAllDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteAllDetailsModalLabel">Delete All Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-danger mb-0" role="alert">
+            <strong>Warning:</strong> This will permanently delete all event details, participants, marks, results, schedules, and settings. This action cannot be undone.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" id="confirmDeleteAllDetails" class="btn btn-danger">
+            <i class="fa fa-trash"></i> Delete All Details
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function(){
+      function deleteAllEventDetails(){
+        var preservedKeys = {
+          eventalk_admin_authenticated: true,
+          eventalk_admin_users: true
+        };
+        Object.keys(localStorage).forEach(function(key){
+          if(key.indexOf('eventalk_') === 0 && !preservedKeys[key]){
+            localStorage.removeItem(key);
+          }
+        });
+        if(window.updateAdminDashboard) window.updateAdminDashboard();
+        $('#deleteAllDetailsModal').modal('hide');
+        alert('All event details have been deleted.');
+      }
+
+      function renderLoginUsers(){
+        var list = document.getElementById('loginUsersList');
+        if(!list) return;
+        var users = window.adminAuth.getUsers();
+        list.innerHTML = '';
+        if(!users.length){
+          list.innerHTML = '<div class="text-muted">No additional admin users added.</div>';
+          return;
+        }
+        users.forEach(function(user){
+          var item = document.createElement('div');
+          item.className = 'list-group-item d-flex justify-content-between align-items-center';
+          item.textContent = user.username;
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'btn btn-sm btn-danger delete-user-button';
+          btn.textContent = 'Delete';
+          btn.dataset.username = user.username;
+          item.appendChild(btn);
+          list.appendChild(item);
+        });
+      }
+
+      function showLoginDetailsModal(){
+        var usernameInput = document.getElementById('loginUsername');
+        var passwordInput = document.getElementById('loginPassword');
+        var newUsernameInput = document.getElementById('newUsername');
+        var newPasswordInput = document.getElementById('newPassword');
+        var err = document.getElementById('loginDetailsError');
+        var success = document.getElementById('loginDetailsSuccess');
+        if(usernameInput){
+          usernameInput.value = window.adminAuth.getSuperAdmin().username;
+        }
+        if(passwordInput){
+          passwordInput.value = window.adminAuth.getSuperAdmin().password;
+        }
+        if(newUsernameInput){ newUsernameInput.value = ''; }
+        if(newPasswordInput){ newPasswordInput.value = ''; }
+        if(err){ err.style.display = 'none'; err.textContent = ''; }
+        if(success){ success.style.display = 'none'; }
+        renderLoginUsers();
+        $('#loginDetailsModal').modal('show');
+      }
+
+      document.addEventListener('click', function(e){
+        var deleteAllButton = e.target.closest && e.target.closest('#deleteAllDetails');
+        if(deleteAllButton){
+          e.preventDefault();
+          $('#deleteAllDetailsModal').modal('show');
+          return;
+        }
+
+        var confirmDeleteAllButton = e.target.closest && e.target.closest('#confirmDeleteAllDetails');
+        if(confirmDeleteAllButton){
+          e.preventDefault();
+          deleteAllEventDetails();
+          return;
+        }
+
+        var speakerButton = e.target.closest && e.target.closest('.open-edit-speakers');
+        if(speakerButton){
+          e.preventDefault();
+          $('#speakersModal .modal-body').load('edit-home-speakers.html', function(){
+            $('#speakersModal').modal('show');
+          });
+          return;
+        }
+
+        var loginDetailsButton = e.target.closest && e.target.closest('.open-login-details');
+        if(loginDetailsButton){
+          e.preventDefault();
+          showLoginDetailsModal();
+          return;
+        }
+
+        var deleteButton = e.target.closest && e.target.closest('.delete-user-button');
+        if(deleteButton){
+          e.preventDefault();
+          var username = deleteButton.dataset.username;
+          var err = document.getElementById('loginDetailsError');
+          var success = document.getElementById('loginDetailsSuccess');
+          var result = window.adminAuth.deleteUser(username);
+          if(result.success){
+            if(err){ err.style.display = 'none'; }
+            if(success){ success.textContent = 'User removed successfully.'; success.style.display = 'block'; }
+            renderLoginUsers();
+          } else if(err){
+            err.textContent = result.error;
+            err.style.display = 'block';
+            if(success){ success.style.display = 'none'; }
+          }
+        }
+      });
+
+      var form = document.getElementById('loginDetailsForm');
+      if(form){
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          var username = document.getElementById('newUsername').value.trim();
+          var password = document.getElementById('newPassword').value.trim();
+          var err = document.getElementById('loginDetailsError');
+          var success = document.getElementById('loginDetailsSuccess');
+          if(err){ err.style.display = 'none'; }
+          if(success){ success.style.display = 'none'; }
+
+          var result = window.adminAuth.addUser(username, password);
+          if(result.success){
+            if(success){ success.textContent = 'User added successfully.'; success.style.display = 'block'; }
+            if(err){ err.style.display = 'none'; }
+            document.getElementById('newUsername').value = '';
+            document.getElementById('newPassword').value = '';
+            renderLoginUsers();
+          } else if(err){
+            err.textContent = result.error;
+            err.style.display = 'block';
+            if(success){ success.style.display = 'none'; }
+          }
+        });
+      }
+    })();
+  </script>
+  <!-- Badge Popup Modal -->
+  <div class="modal fade" id="badgePopupModal" tabindex="-1" role="dialog" aria-labelledby="badgePopupModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content" style="background-color: #f8f9fa; color: #333; border: none;">
+        <div class="modal-header" style="border-bottom: 1px solid #dee2e6; background-color: #fff;">
+          <h5 class="modal-title" id="badgePopupModalLabel" style="color: #333;">PARTICIPANT BADGES</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="padding: 30px;">
+          
+          <!-- Badge Design Selection -->
+          <div class="mb-4">
+            <h6 style="color: #003366; font-weight: bold; margin-bottom: 15px;">Select Badge Design</h6>
+            <div style="border: 1px solid #ddd; padding: 15px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="images/badge-logo.png" style="max-height: 80px; max-width: 150px;" onerror="this.style.display='none'">
+                <div style="text-align: center; color: #999; font-size: 12px;">
+                  <p style="margin: 0;">Badge Design Preview</p>
+                </div>
+              </div>
+              <button class="btn btn-outline-secondary btn-sm" onclick="browseBadgeDesigns()">Browse Design</button>
+            </div>
+          </div>
+
+          <!-- Badge Size Options -->
+          <div class="mb-4">
+            <h6 style="color: #003366; font-weight: bold; margin-bottom: 15px;">Badge Sizes</h6>
+            
+            <!-- ID Card Size -->
+            <div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <h6 style="margin: 0 0 5px 0; color: #003366; font-weight: bold;">
+                    <a href="#" style="text-decoration: underline; color: #003366;">ID Card size -</a>
+                  </h6>
+                  <p style="margin: 0; color: #666; font-size: 13px;">86mm x 54mm</p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                  <button class="btn btn-outline-secondary btn-sm" onclick="previewBadge('idcard')">Preview</button>
+                  <button class="btn btn-outline-secondary btn-sm" onclick="printBadgeSize('idcard')">
+                    <i class="fa fa-print"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tip -->
+          <div style="background-color: #fff3cd; border: 1px solid #ffc107; padding: 12px; border-radius: 5px; font-size: 13px;">
+            <strong>Tip:</strong> If no printers available use <a href="#" style="color: #0066cc;">Pdf creator to print to PDF</a>
+          </div>
+
+          <!-- Badge Preview Section -->
+          <div class="mt-4 pt-4 border-top">
+            <h6 style="color: #003366; font-weight: bold; margin-bottom: 15px;">Badge Preview</h6>
+            <div id="badgePreview" style="width: 100%; max-width: 3.39in; height: 2.13in; margin: 0 auto; border-radius: 10px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+              <!-- Image Top Section -->
+              <div style="flex: 1; background: linear-gradient(135deg, #1b7d5e 0%, #15a578 100%); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; position: relative;" id="badgeImageArea">
+                <div style="position: absolute; right: 10px; top: 10px; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.4); color: white; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 999px; letter-spacing: 0.03em;" id="badgeChestNumber">#000</div>
+                <div style="color: white; text-align: center; font-size: 12px; opacity: 0.6;">Badge Design</div>
+              </div>
+              
+              <!-- White Box Bottom Section with Text Left and QR Right -->
+              <div style="background: white; color: #333; padding: 8px 10px; flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; min-height: 0.8in;">
+                <!-- Left Text Section -->
+                <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                  <p style="margin: 2px 0; font-size: 14px; font-weight: bold; line-height: 1.2; text-align: left;" id="badgeName">Participant Name</p>
+                  <p style="margin: 1px 0; font-size: 10px; color: #666; line-height: 1; text-align: left;" id="badgeCategory">Category</p>
+                  <p style="margin: 1px 0; font-size: 10px; color: #666; line-height: 1; text-align: left;" id="badgeTeam">Team Name</p>
+                </div>
+                
+                <!-- Right QR Code Section -->
+                <div style="flex-shrink: 0; width: 0.6in; height: 0.6in; background: #f0f0f0; border: 1px solid #ddd; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-left: 8px;" id="qrCodeBox">
+                  <div style="font-size: 9px; color: #999; text-align: center;">QR</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer" style="border-top: 1px solid #dee2e6;">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="printBadge()">
+            <i class="fa fa-print"></i> Print Badge
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Badge system variables
+    var currentBadgeOrientation = 'landscape';
+    var currentBadgeSize = 'medium';
+
+    function initializeBadgeModal() {
+      loadParticipantChestNumbers();
+    }
+
+    function getParticipantQrData(chestNo) {
+      try {
+        var raw = localStorage.getItem('eventalk_participants');
+        var participants = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(participants)) return '';
+        var match = participants.find(function (p) { return String(p.chest) === String(chestNo); });
+        return (match && match.qrCode) ? match.qrCode : '';
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function loadParticipantChestNumbers() {
+      // Create a temporary select for participants if needed
+      let chestNoSelect = document.getElementById('chestNo');
+      if (!chestNoSelect) {
+        chestNoSelect = document.createElement('select');
+        chestNoSelect.id = 'chestNo';
+        chestNoSelect.className = 'form-control';
+        chestNoSelect.style.display = 'none';
+        document.body.appendChild(chestNoSelect);
+      }
+      
+      try {
+        const partRaw = localStorage.getItem('eventalk_participants');
+        const participants = partRaw ? JSON.parse(partRaw) : [];
+        
+        chestNoSelect.innerHTML = '<option selected disabled>-- Select Chest No --</option>';
+        
+        participants.sort(function(a, b) {
+          const chestA = parseInt(a.chest) || 0;
+          const chestB = parseInt(b.chest) || 0;
+          return chestA - chestB;
+        }).forEach(function(participant) {
+          const option = document.createElement('option');
+          option.value = participant.chest;
+          option.textContent = participant.chest + ' - ' + participant.name;
+          option.dataset.name = participant.name;
+          option.dataset.team = participant.team || '';
+          option.dataset.category = participant.category || '';
+          option.dataset.competition = participant.competition || '';
+          option.dataset.qrCode = participant.qrCode || getParticipantQrData(participant.chest);
+          chestNoSelect.appendChild(option);
+        });
+      } catch (e) {
+        console.warn('Error loading chest numbers:', e);
+      }
+
+      chestNoSelect.addEventListener('change', function () {
+        updateBadgePreviewInfo();
+      });
+    }
+
+    function browseBadgeDesigns() {
+      let fileInput = document.getElementById('designFileInput');
+      if (!fileInput) {
+        fileInput = document.createElement('input');
+        fileInput.id = 'designFileInput';
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.style.display = 'none';
+        fileInput.addEventListener('change', function(e) {
+          if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+              const imageData = event.target.result;
+              
+              const img = document.querySelector('img[src*="badge-logo"]');
+              if (img) {
+                img.src = imageData;
+                img.style.display = 'block';
+              }
+              
+              try {
+                localStorage.setItem('badgeDesignImage', imageData);
+              } catch (e) {
+                console.warn('Could not save badge design to localStorage:', e);
+              }
+              
+              updateBadgePreviewWithDesign(imageData);
+              alert('Design selected: ' + file.name);
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+        document.body.appendChild(fileInput);
+      }
+      fileInput.click();
+    }
+    
+    function updateBadgePreviewWithDesign(imageData) {
+      const badgeImageArea = document.getElementById('badgeImageArea');
+      if (!badgeImageArea) return;
+      
+      badgeImageArea.style.backgroundImage = 'url(' + imageData + ')';
+      badgeImageArea.style.backgroundSize = 'cover';
+      badgeImageArea.style.backgroundPosition = 'center';
+      badgeImageArea.innerHTML = '<div style="position: absolute; right: 10px; top: 10px; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.4); color: white; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 999px; letter-spacing: 0.03em;" id="badgeChestNumber">#000</div>';
+      const chestLabel = document.getElementById('badgeChestNumber');
+      const chestNoSelect = document.getElementById('chestNo');
+      if (chestLabel && chestNoSelect && chestNoSelect.selectedIndex >= 0) {
+        const selectedOption = chestNoSelect.options[chestNoSelect.selectedIndex];
+        if (selectedOption && selectedOption.value) {
+          chestLabel.textContent = '#' + selectedOption.value;
+        }
+      }
+    }
+
+    function updateBadgePreviewInfo() {
+      const nameEl = document.getElementById('badgeName');
+      const categoryEl = document.getElementById('badgeCategory');
+      const teamEl = document.getElementById('badgeTeam');
+      const chestEl = document.getElementById('badgeChestNumber');
+      const qrBox = document.getElementById('qrCodeBox');
+      const chestNoSelect = document.getElementById('chestNo');
+      if (!chestNoSelect || chestNoSelect.selectedIndex < 0) {
+        return;
+      }
+      const selectedOption = chestNoSelect.options[chestNoSelect.selectedIndex];
+      if (!selectedOption) return;
+      if (nameEl) nameEl.textContent = selectedOption.dataset.name || 'Participant Name';
+      if (categoryEl) categoryEl.textContent = selectedOption.dataset.category || 'Category';
+      if (teamEl) teamEl.textContent = selectedOption.dataset.team || 'Team Name';
+      if (chestEl) chestEl.textContent = '#' + (selectedOption.value || '000');
+
+      var qrData = selectedOption.dataset.qrCode || getParticipantQrData(selectedOption.value);
+      if (qrBox) {
+        if (qrData) {
+          qrBox.innerHTML = '<img src="' + qrData + '" alt="QR code" style="width: 100%; height: 100%; object-fit: contain; border-radius: 4px;">';
+        } else {
+          qrBox.innerHTML = '<div style="font-size: 9px; color: #999; text-align: center;">QR</div>';
+        }
+      }
+    }
+
+    function previewBadge(size) {
+      currentBadgeSize = size;
+      const chestNoSelect = document.getElementById('chestNo');
+      const selectedOption = chestNoSelect.options[chestNoSelect.selectedIndex];
+      
+      if (!selectedOption || !selectedOption.value) {
+        alert('Please select a participant first');
+        return;
+      }
+      
+      const participantName = selectedOption.dataset.name || 'Participant Name';
+      const category = selectedOption.dataset.category || 'Category';
+      const team = selectedOption.dataset.team || 'Team Name';
+      const chestNo = selectedOption.value;
+      const qrCode = selectedOption.dataset.qrCode || getParticipantQrData(chestNo);
+      const designImage = localStorage.getItem('badgeDesignImage') || '';
+      
+      let sizeLabel = size === 'idcard' ? 'ID Card (86mm x 54mm)' : 'Standard Medium (95mm x 68mm)';
+      
+      const previewWindow = window.open('', '', 'height=500,width=600');
+      previewWindow.document.write('<!DOCTYPE html><html><head>');
+      previewWindow.document.write('<meta charset="utf-8">');
+      previewWindow.document.write('<title>Badge Preview</title>');
+      previewWindow.document.write('<style>');
+      previewWindow.document.write('body { font-family: "Work Sans", Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #f5f5f5; padding: 20px; }');
+      previewWindow.document.write('.preview-container { text-align: center; }');
+      previewWindow.document.write('.size-info { margin-bottom: 20px; font-size: 14px; color: #666; }');
+      previewWindow.document.write('.badge-card { width: 100%; max-width: 440px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 18px rgba(0,0,0,0.12); background: #f0f1f0; border: 1px solid #e0e0e0; }');
+      previewWindow.document.write('.badge-top { position: relative; height: 150px; display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; background-repeat: no-repeat; color: #fff; font-size: 24px; letter-spacing: 0.02em; ' + (designImage ? 'background-image: url(\'' + designImage + '\');' : 'background: linear-gradient(135deg, #1c8b71 0%, #157c66 100%);') + ' }');
+      previewWindow.document.write('.badge-chip { position: absolute; right: 14px; top: 12px; border-radius: 999px; background: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.6); padding: 5px 12px; font-size: 13px; font-weight: 700; color: #fff; }');
+      previewWindow.document.write('.badge-bottom { padding: 14px 18px 16px; display: flex; justify-content: space-between; align-items: center; }');
+      previewWindow.document.write('.badge-text { flex: 1; min-width: 0; }');
+      previewWindow.document.write('.badge-name { font-size: 22px; font-weight: 700; color: #2a2a2a; line-height: 1.2; margin: 0 0 8px; }');
+      previewWindow.document.write('.badge-meta { font-size: 14px; color: #4a4a4a; line-height: 1.5; }');
+      previewWindow.document.write('.badge-qr { width: 62px; height: 62px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: #dadada; border: 1px solid #c6c6c6; color: #666; font-size: 12px; margin-left: 18px; overflow: hidden; }');
+      previewWindow.document.write('.badge-qr img { width: 100%; height: 100%; object-fit: contain; }');
+      previewWindow.document.write('</style></head><body>');
+      
+      previewWindow.document.write('<div class="preview-container">');
+      previewWindow.document.write('<div class="size-info">Badge Preview - ' + sizeLabel + '</div>');
+      previewWindow.document.write('<div class="badge-card">');
+      previewWindow.document.write('<div class="badge-top"><div class="badge-chip">#' + chestNo + '</div></div>');
+      previewWindow.document.write('<div class="badge-bottom"><div class="badge-text"><div class="badge-name">' + participantName + '</div><div class="badge-meta">' + (category || 'Category') + '<br>' + (team || 'Team Name') + '</div></div><div class="badge-qr">' + (qrCode ? '<img src="' + qrCode + '" alt="QR code">' : 'QR') + '</div></div>');
+      previewWindow.document.write('</div>');
+      previewWindow.document.write('</div>');
+      
+      previewWindow.document.write('</body></html>');
+      previewWindow.document.close();
+    }
+
+    function printBadgeSize(size) {
+      const chestNoSelect = document.getElementById('chestNo');
+      const selectedOption = chestNoSelect && chestNoSelect.selectedIndex >= 0 ? chestNoSelect.options[chestNoSelect.selectedIndex] : null;
+      
+      let participants = [];
+      try {
+        const raw = localStorage.getItem('eventalk_participants');
+        const parsed = raw ? JSON.parse(raw) : [];
+        if (Array.isArray(parsed) && parsed.length) {
+          participants = parsed;
+        }
+      } catch (e) { console.warn('Error loading participants for badge print:', e); }
+      
+      if (!participants.length && selectedOption && selectedOption.value) {
+        participants = [{
+          chest: selectedOption.value,
+          name: selectedOption.dataset.name || 'Participant Name',
+          category: selectedOption.dataset.category || 'Category',
+          team: selectedOption.dataset.team || 'Team Name'
+        }];
+      }
+      
+      if (!participants.length) {
+        alert('Please add participant details from the registration page before printing badges.');
+        return;
+      }
+      
+      currentBadgeSize = 'idcard';
+      const designImage = localStorage.getItem('badgeDesignImage') || '';
+      const printWindow = window.open('', '', 'height=1000,width=1200');
+      if (!printWindow) {
+        alert('Please allow pop-ups to print the badge sheet.');
+        return;
+      }
+
+      const pageGroups = [];
+      for (let i = 0; i < participants.length; i += 8) {
+        pageGroups.push(participants.slice(i, i + 8));
+      }
+
+      const allPages = pageGroups.map(function (pageParticipants) {
+        const cards = pageParticipants.map(function (participant) {
+          const name = participant.name || 'Participant Name';
+          const category = participant.category || 'Category';
+          const team = participant.team || 'Team Name';
+          const chest = participant.chest || '';
+          const qrCode = participant.qrCode || getParticipantQrData(chest);
+          return '<div class="badge-card">'
+            + '<div class="badge-top" style="' + (designImage ? 'background-image: url(\'' + designImage + '\'); background-size: cover; background-position: center; background-repeat: no-repeat;' : 'background: linear-gradient(135deg, #1b7d5e 0%, #15a578 100%);') + '">'
+            + '<div class="badge-chip">#' + chest + '</div>'
+            + '</div>'
+            + '<div class="badge-bottom">'
+            + '<div class="badge-text-block">'
+            + '<div class="badge-name">' + name + '</div>'
+            + '<div class="badge-category">' + category + '</div>'
+            + '<div class="badge-team">' + team + '</div>'
+            + '</div>'
+            + '<div class="badge-qr">' + (qrCode ? '<img src="' + qrCode + '" alt="QR code" style="width:100%;height:100%;object-fit:contain;">' : 'QR') + '</div>'
+            + '</div>'
+            + '</div>';
+        }).join('');
+        return '<div class="sheet">' + cards + '</div>';
+      }).join('');
+      
+      printWindow.document.write('<!DOCTYPE html><html><head>');
+      printWindow.document.write('<meta charset="utf-8">');
+      printWindow.document.write('<title>Badge Sheet</title>');
+      printWindow.document.write('<style>');
+      printWindow.document.write('@page { size: A4 portrait; margin: 10mm 10mm 10mm 10mm; }');
+      printWindow.document.write('html, body { margin: 0; padding: 0; background: #fff; font-family: "Work Sans", Arial, sans-serif; }');
+      printWindow.document.write('body { display: block; width: 210mm; margin: 0 auto; }');
+      printWindow.document.write('.sheet { width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, auto); gap: 3mm; padding: 10mm; box-sizing: border-box; page-break-after: always; }');
+      printWindow.document.write('.badge-card { width: 100%; aspect-ratio: 86 / 54; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.15); background: #fff; display: flex; flex-direction: column; }');
+      printWindow.document.write('.badge-top { flex: 55%; position: relative; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1b7d5e 0%, #15a578 100%); background-size: cover; background-position: center; }');
+      printWindow.document.write('.badge-chip { position: absolute; right: 6px; top: 6px; background: rgba(255,255,255,0.22); border: 1px solid rgba(255,255,255,0.7); color: #fff; border-radius: 999px; padding: 3px 7px; font-size: 8px; font-weight: 700; }');
+      printWindow.document.write('.badge-design-label { color: rgba(255,255,255,0.9); font-size: 14px; font-weight: 500; letter-spacing: 0.02em; text-align: center; }');
+      printWindow.document.write('.badge-bottom { flex: 45%; background: #f1f1f1; color: #333; padding: 5px 8px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; gap: 6px; }');
+      printWindow.document.write('.badge-text-block { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }');
+      printWindow.document.write('.badge-name { font-size: 13px; font-weight: 700; margin: 0; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }');
+      printWindow.document.write('.badge-category, .badge-team { font-size: 8px; color: #666; line-height: 1.1; margin: 0.5px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }');
+      printWindow.document.write('.badge-qr { width: 13mm; height: 13mm; background: #e5e7eb; border: 1px solid #d1d5db; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #555; flex-shrink: 0; }');
+      printWindow.document.write('@media print { body { margin: 0; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .sheet { page-break-after: always; margin: 0; padding: 8mm; } .sheet:last-child { page-break-after: auto; } .badge-card { break-inside: avoid; } }');
+      printWindow.document.write('</style>');
+      printWindow.document.write('</head><body>');
+      printWindow.document.write(allPages);
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      printWindow.focus();
+      setTimeout(function () { printWindow.print(); }, 500);
+    }
+
+    function printBadge() {
+      printBadgeSize('idcard');
+    }
+    
+    // Load saved badge design when modal opens
+    document.addEventListener('shown.bs.modal', function(e) {
+      if (e.target.id === 'badgePopupModal') {
+        loadParticipantChestNumbers();
+        updateBadgePreviewInfo();
+        try {
+          const badgeDesignImage = localStorage.getItem('badgeDesignImage');
+          if (badgeDesignImage) {
+            const img = document.querySelector('#badgePopupModal img[src*="badge-logo"]');
+            if (img) {
+              img.src = badgeDesignImage;
+              img.style.display = 'block';
+            }
+            updateBadgePreviewWithDesign(badgeDesignImage);
+          }
+        } catch (err) {
+          console.warn('Error loading badge design:', err);
+        }
+      }
+    });
+  </script>    
+  </body>
+</html>
+
+

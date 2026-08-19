@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Result Poster</title>
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Work Sans", Arial, sans-serif;
+        background: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+      .poster-wrap {
+        width: 1080px;
+        height: 1080px;
+        background: transparent;
+        border-radius: 0;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        flex-shrink: 0;
+      }
+      .poster-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        opacity: 1;
+        z-index: 0;
+      }
+      .poster-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0);
+      }
+      .poster-content {
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        padding: 24px 32px;
+        color: #1a1a1a;
+        display: flex;
+        flex-direction: column;
+        background: transparent;
+        justify-content: center;
+        align-items: center;
+      }
+      .header-top {
+        display: none;
+      }
+      .brand-left {
+        font-size: 20px;
+        font-weight: 900;
+        color: #0066cc;
+      }
+      .brand-right {
+        font-size: 11px;
+        font-weight: 600;
+        color: #333;
+        text-transform: uppercase;
+      }
+      .main-container {
+        display: flex;
+        gap: 56px;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .left-section {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+      }
+      .right-section {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        justify-content: center;
+      }
+      .result-header {
+        background: linear-gradient(90deg, #00bcd4 0%, #7c4dff 100%);
+        color: white;
+        padding: 16px 40px;
+        border-radius: 32px;
+        text-align: center;
+        font-size: 40px;
+        font-weight: 900;
+        letter-spacing: 3px;
+        box-shadow: 0 10px 32px rgba(0,188,212,0.5);
+        width: fit-content;
+        margin-bottom: 12px;
+      }
+      .program-box {
+        background: linear-gradient(135deg, #0088ff 0%, #4dd0e1 100%);
+        border-radius: 28px;
+        padding: 48px;
+        position: relative;
+        min-height: 200px;
+        width: 420px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        box-shadow: 0 16px 40px rgba(0,136,255,0.5);
+        overflow: hidden;
+      }
+      .program-box::after {
+        content: '';
+        position: absolute;
+        right: -40px;
+        bottom: -40px;
+        width: 200px;
+        height: 200px;
+        background: rgba(0,0,0,0.1);
+        border-radius: 50%;
+      }
+      .program-category {
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        opacity: 0.95;
+        color: rgba(255,255,255,0.95);
+        margin-bottom: 8px;
+      }
+      .program-name {
+        font-size: 62px;
+        font-weight: 900;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        line-height: 1.1;
+      }
+      .winners-list {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .winner-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 18px 20px;
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: 16px;
+        border-left: none;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+      }
+      .winner-item.first { border-left-color: #ffba50; }
+      .winner-item.second { border-left-color: #4fa9ff; }
+      .winner-item.third { border-left-color: #3ad081; }
+      .rank-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 72px;
+        height: 72px;
+        border-radius: 12px;
+        font-size: 22px;
+        font-weight: 900;
+        flex-shrink: 0;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      }
+      .first .rank-badge { background: linear-gradient(135deg, #ffba50, #ff8a00); color: #18202b; }
+      .second .rank-badge { background: linear-gradient(135deg, #4fa9ff, #2f78ff); color: white; }
+      .third .rank-badge { background: linear-gradient(135deg, #3ad081, #1bbd71); color: white; }
+      .winner-info {
+        flex: 1;
+      }
+      .winner-name {
+        font-size: 24px;
+        font-weight: 800;
+        color: #1a1a1a;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin: 0;
+      }
+      .winner-team {
+        font-size: 14px;
+        font-weight: 600;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 4px 0 0 0;
+      }
+      .winner-chest {
+        font-size: 14px;
+        font-weight: 700;
+        color: #999;
+        letter-spacing: 1px;
+      }
+      .footer-section {
+        display: none;
+      }
+      .footer-text {
+        font-size: 11px;
+        font-weight: 600;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .action-bar {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 20px;
+      }
+      .action-btn {
+        border: none;
+        background: rgba(0,88,204,0.95);
+        color: white;
+        padding: 14px 26px;
+        border-radius: 999px;
+        font-weight: 800;
+        font-size: 14px;
+        letter-spacing: 1px;
+        cursor: pointer;
+      }
+      .action-btn.secondary {
+        background: #f0f0f0;
+        color: #1a1a1a;
+        border: 2px solid #ddd;
+      }
+      @media (max-width: 1200px) {
+        .main-container {
+          gap: 24px;
+          align-items: center;
+        }
+        .program-box {
+          width: 280px;
+          min-height: 160px;
+          padding: 24px;
+        }
+        .program-name { font-size: 36px; }
+      }
+      @media (max-width: 760px) {
+        .poster-wrap {
+          width: 1080px;
+          height: 1080px;
+          max-width: 1080px;
+          max-height: 1080px;
+          border-radius: 0;
+          flex-shrink: 0;
+        }
+        .poster-content { padding: 16px 20px; }
+        .main-container { gap: 16px; flex-direction: column; align-items: center; }
+        .program-box { width: 100%; }
+        .program-name { font-size: 32px; }
+        .winner-item { gap: 12px; padding: 10px 12px; }
+        .winner-name { font-size: 14px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div id="poster" class="poster-wrap">
+        <div id="posterBg" class="poster-bg"></div>
+        <div class="poster-overlay"></div>
+
+        <div class="poster-content">
+          <div class="header-top">
+            <div class="brand-left" id="brandLeft">SJM</div>
+            <div class="brand-right" id="brandRight">മരണ കുടുംബ</div>
+          </div>
+
+          <div class="main-container">
+            <div class="left-section">
+              <div id="resultNumber" class="result-header">RESULT 01</div>
+
+              <div class="program-box">
+                <div class="program-category" id="posterCategory">Category</div>
+                <div id="posterProgramName" class="program-name">Program</div>
+              </div>
+            </div>
+
+            <div class="right-section">
+              <div id="winnersList" class="winners-list"></div>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <div class="footer-text" id="footerNote">Event Results • Finalised</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-bar" style="margin-top: 18px;">
+        <button id="downloadPoster" class="action-btn">Download Poster</button>
+        <button id="backToResults" class="action-btn secondary">Back</button>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script>
+      function getParam(name) {
+        var url = new URL(window.location.href);
+        return url.searchParams.get(name) || '';
+      }
+
+      function getPosterBackground() {
+        try {
+          return localStorage.getItem('eventalk_student_poster_background') || '';
+        } catch (e) {
+          return '';
+        }
+      }
+
+      function readResultRows(category, programName) {
+        try {
+          var raw = localStorage.getItem('eventalk_final_results');
+          var map = raw ? JSON.parse(raw) : {};
+          var key = (category || '') + '||' + (programName || '');
+          var rows = map[key] || [];
+          if (rows && rows.length) return rows;
+
+          var entriesMap = localStorage.getItem('eventalk_mark_entries');
+          if (entriesMap) {
+            var entries = JSON.parse(entriesMap);
+            var altRows = entries[key] || [];
+            if (altRows && altRows.length) return altRows;
+          }
+
+          return [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function getParticipantMap() {
+        try {
+          var raw = localStorage.getItem('eventalk_participants');
+          var parts = raw ? JSON.parse(raw) : [];
+          var map = {};
+          parts.forEach(function (p) { if (p && p.chest) map[p.chest] = p; });
+          return map;
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function getSortedRows(rows) {
+        var participantMap = getParticipantMap();
+        var list = rows.map(function (entry) {
+          var p = participantMap[String(entry.chest)] || {};
+          var total = (parseFloat(entry.j1) || 0) + (parseFloat(entry.j2) || 0) + (parseFloat(entry.j3) || 0);
+          return {
+            chest: entry.chest,
+            code: entry.code || '',
+            name: (p.name || '').toUpperCase(),
+            team: (p.team || 'N/A').toUpperCase(),
+            total: total
+          };
+        }).filter(function (row) { return row.chest; });
+
+        list.sort(function (a, b) {
+          if (b.total !== a.total) return b.total - a.total;
+          return String(a.name).localeCompare(String(b.name));
+        });
+
+        return list.slice(0, 3);
+      }
+
+      function renderPoster() {
+        var category = getParam('category');
+        var programName = getParam('program');
+        if (!category && !programName) {
+          var selected = localStorage.getItem('eventalk_selected_program');
+          if (selected) {
+            try {
+              var parsed = JSON.parse(selected);
+              category = parsed.category || category;
+              programName = parsed.name || programName;
+            } catch (e) {}
+          }
+        }
+
+        var rows = getSortedRows(readResultRows(category, programName));
+        var winnersList = document.getElementById('winnersList');
+        winnersList.innerHTML = '';
+
+        if (!rows.length) {
+          var noData = document.createElement('div');
+          noData.className = 'winner-item';
+          noData.style.border = 'none';
+          noData.style.justifyContent = 'center';
+          noData.style.opacity = '0.6';
+          noData.innerHTML = '<div style="text-align:center;color:#999;font-weight:600;">No results available</div>';
+          winnersList.appendChild(noData);
+        } else {
+          var ranking = rows;
+          if (ranking.length < 3) {
+            while (ranking.length < 3) {
+              ranking.push({ chest: 'N/A', name: 'TBD', team: 'TBD', total: 0, code: '' });
+            }
+          }
+
+          ranking.forEach(function (row, index) {
+            var rank = index + 1;
+            var item = document.createElement('div');
+            item.className = 'winner-item ' + (rank === 1 ? 'first' : rank === 2 ? 'second' : 'third');
+            
+            var badgeNum = String(rank).padStart(2, '0');
+            var rankLabel = rank === 1 ? '1st' : rank === 2 ? '2nd' : '3rd';
+            
+            item.innerHTML = '<div class="rank-badge">' + badgeNum + '</div>'
+              + '<div class="winner-info">'
+              + '<div class="winner-name">' + (row.name || 'TBD') + '</div>'
+              + '<div class="winner-team">' + (row.team || 'TEAM') + '</div>'
+              + '<div class="winner-chest">Chest: ' + (row.chest || 'N/A') + ' | Code: ' + (row.code || 'N/A') + '</div>'
+              + '</div>';
+            
+            winnersList.appendChild(item);
+          });
+        }
+
+        document.getElementById('posterCategory').textContent = (category || 'CATEGORY').toUpperCase();
+        document.getElementById('posterProgramName').textContent = (programName || 'PROGRAM').toUpperCase();
+        
+        // Result number based on finalized programs count
+        try {
+          var finals = JSON.parse(localStorage.getItem('eventalk_final_results') || '{}');
+          var resultIndex = Object.keys(finals).indexOf((category || '') + '||' + (programName || '')) + 1;
+          if (resultIndex > 0) {
+            document.getElementById('resultNumber').textContent = 'RESULT ' + String(resultIndex).padStart(2, '0');
+          }
+        } catch (e) {}
+
+        document.getElementById('footerNote').textContent = (category || 'CATEGORY') + ' • ' + (programName || 'PROGRAM') + ' • Results';
+
+        var bg = getPosterBackground();
+        var posterBg = document.getElementById('posterBg');
+        console.log('Poster Background:', bg ? 'Found' : 'Not found', bg ? bg.substring(0, 100) : '');
+        if (bg && posterBg) {
+          posterBg.style.backgroundImage = 'url("' + bg + '")';
+          posterBg.style.backgroundSize = 'cover';
+          posterBg.style.backgroundPosition = 'center';
+          posterBg.style.backgroundRepeat = 'no-repeat';
+          posterBg.style.display = 'block';
+          console.log('Background image applied');
+        } else {
+          console.log('No background found, setting white');
+          if (posterBg) {
+            posterBg.style.background = '#ffffff';
+            posterBg.style.backgroundImage = 'none';
+          }
+        }
+      }
+
+      document.getElementById('backToResults').addEventListener('click', function () {
+        window.history.back();
+      });
+
+      document.getElementById('downloadPoster').addEventListener('click', function () {
+        var posterElement = document.getElementById('poster');
+        html2canvas(posterElement, {
+          backgroundColor: null,
+          scale: 1,
+          width: 1080,
+          height: 1080,
+          useCORS: true
+        }).then(function (canvas) {
+          var link = document.createElement('a');
+          link.download = 'result-poster-' + Date.now() + '.png';
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        });
+      });
+
+      renderPoster();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Admin - Team Points</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+    <style>
+      body { background: radial-gradient(circle at top, #10172f, #04070d 68%); color: #eef2ff; }
+      .ftco-section { padding: 72px 0; }
+      .navbar { background: transparent !important; border-bottom: 1px solid rgba(255,255,255,.08); }
+      .navbar-brand { color: #ffffff !important; letter-spacing: .06em; }
+      .page-header { text-align: center; margin-bottom: 42px; }
+      .page-header .eyebrow { display: inline-flex; align-items: center; justify-content: center; margin-bottom: 18px; padding: 10px 18px; border-radius: 999px; background: rgba(255,255,255,.08); color: #9ab7ff; letter-spacing: .18em; text-transform: uppercase; font-size: .78rem; }
+      .page-header h2 { font-size: 3rem; font-weight: 800; color: #ffffff; margin-bottom: 12px; }
+      .page-header p { color: rgba(255,255,255,.72); font-size: 1rem; max-width: 720px; margin: 0 auto; }
+      .admin-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.10); border-radius: 28px; box-shadow: 0 30px 70px rgba(0,0,0,.22); }
+      .admin-card .card-body { padding: 32px; }
+      .admin-card h3 { color: #ffffff; margin-bottom: 18px; font-size: 1.35rem; }
+      .form-group label { color: rgba(255,255,255,.82); font-weight: 600; }
+      .form-control, .form-control:focus { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); color: #f3f6ff; box-shadow: none; }
+      .form-control::placeholder { color: rgba(255,255,255,.5); }
+      .form-control:focus { background: rgba(255,255,255,.12); border-color: rgba(96,127,255,.6); }
+      .table-responsive { border-radius: 22px; overflow: hidden; }
+      .table { margin-bottom: 0; }
+      .table thead th { color: rgba(255,255,255,.72); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,.12); }
+      .table tbody tr { background: rgba(255,255,255,.04); border-top: 1px solid rgba(255,255,255,.06); }
+      .table tbody td { color: #f2f6ff; vertical-align: middle; }
+      .table tbody td:first-child { font-weight: 700; }
+      .btn-primary, .btn-warning, .btn-secondary { min-width: 110px; }
+      .btn-primary { background: linear-gradient(135deg, #5a8dff, #4058ff); border: none; }
+      .btn-warning { background: linear-gradient(135deg, #ffb86c, #ff7a27); border: none; color: #0f1224; }
+      .btn-secondary { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); color: #f3f6ff; }
+      .btn-secondary:hover { background: rgba(255,255,255,.12); }
+      .action-row { gap: .65rem; flex-wrap: wrap; }
+      .meta-note { color: rgba(255,255,255,.65); font-size: .95rem; margin-top: 0.4rem; }
+      @media (max-width: 991px) { .admin-card .card-body { padding: 26px; } }
+      @media (max-width: 767px) { .page-header h2 { font-size: 2.4rem; } }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beeone Digital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item active dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+              <div class="dropdown-menu dropdown-menu-right" style="background: rgba(15,19,36,0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                <a href="admin.html" class="dropdown-item" style="color: #fff;">Dashboard</a>
+                <a href="registration.html" class="dropdown-item" style="color: #fff;">Registration</a>
+                <a href="calling-list.html" class="dropdown-item" style="color: #fff;">Calling List</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="mark-entry.html" class="dropdown-item" style="color: #fff;">Mark Entry</a>
+                <a href="judge-mark-entry.html" class="dropdown-item" style="color: #fff;">Judge Mark Entry</a>
+                <a href="green-room.html" class="dropdown-item" style="color: #fff;">Green Room</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="results.html" class="dropdown-item" style="color: #fff;">Results</a>
+                <a href="team-badge.html" class="dropdown-item" style="color: #fff;">Team Badge</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="admin-blog.html" class="dropdown-item" style="color: #fff;">Manage Blog</a>
+                <a href="admin-schedule.html" class="dropdown-item" style="color: #fff;">Manage Schedule</a>
+                <a href="admin-team-points.html" class="dropdown-item" style="color: #fff;">Manage Team Points</a>
+                <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="#" id="logoutLink" class="nav-link">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center mb-4">
+          <div class="col-md-8 text-center page-header">
+            <div class="eyebrow">Team Points Admin</div>
+            <h2>Manage Team Points</h2>
+            <p>Add, edit or remove team point entries, and update the public callout text that appears on the team standings page.</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="admin-card">
+              <div class="card-body">
+                <h3>Entry editor</h3>
+                <form id="points-form">
+                  <input type="hidden" id="entry-id" />
+                  <div class="form-group">
+                    <label>Team name</label>
+                    <select class="form-control" id="team-select">
+                      <option value="">-- Select team --</option>
+                      <option value="__custom__">-- Other / Enter manually --</option>
+                    </select>
+                    <input class="form-control mt-2" id="team-custom" placeholder="Enter team name" style="display:none;" />
+                  </div>
+                  <div class="form-group">
+                    <label>Points</label>
+                    <input type="number" class="form-control" id="points-value" value="0" />
+                  </div>
+                  <div class="form-group">
+                    <label for="callout-text">Callout text</label>
+                    <input type="text" class="form-control" id="callout-text" placeholder="after 10 results" value="after 10 results" />
+                    <small class="meta-note">This text appears on the public Team Points page.</small>
+                  </div>
+                  <div class="form-group action-row d-flex">
+                    <button type="button" class="btn btn-warning" id="save-meta-btn">Save callout text</button>
+                    <button type="button" class="btn btn-primary" id="save-btn">Save entry</button>
+                    <button type="button" class="btn btn-info" id="update-btn" style="display:none;">Update</button>
+                    <button type="button" class="btn btn-secondary" id="reset-btn">Reset</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-4 mt-lg-0">
+            <div class="admin-card">
+              <div class="card-body">
+                <h3>Points table</h3>
+                <div class="table-responsive">
+                  <table class="table table-sm" id="admin-points-table">
+                    <thead>
+                      <tr><th>Team</th><th>Points</th><th></th></tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <script>
+    (function(){
+      function uid(){ return 'id_' + Math.random().toString(36).slice(2,9); }
+      function safeGet(){ try{ var raw=localStorage.getItem('eventalk_team_points'); var arr=raw?JSON.parse(raw):[]; return Array.isArray(arr)?arr:[];}catch(e){return [];} }
+      function dispatchStorage(key, oldValue){
+        try {
+          var newValue = localStorage.getItem(key);
+          var storageEvent = null;
+          try {
+            storageEvent = new StorageEvent('storage', {
+              key: key,
+              oldValue: oldValue,
+              newValue: newValue,
+              url: location.href,
+              storageArea: localStorage
+            });
+          } catch (err) {
+            storageEvent = new Event('storage');
+            storageEvent.key = key;
+            storageEvent.oldValue = oldValue;
+            storageEvent.newValue = newValue;
+          }
+          window.dispatchEvent(storageEvent);
+        } catch (err) {
+          try {
+            var fallbackEvent = new Event('storage');
+            fallbackEvent.key = key;
+            fallbackEvent.oldValue = oldValue;
+            fallbackEvent.newValue = localStorage.getItem(key);
+            window.dispatchEvent(fallbackEvent);
+          } catch (e) {}
+        }
+      }
+      function saveAll(arr){ var prev = localStorage.getItem('eventalk_team_points'); localStorage.setItem('eventalk_team_points', JSON.stringify(arr)); dispatchStorage('eventalk_team_points', prev); }
+      function safeGetMeta(){ try{ var raw=localStorage.getItem('eventalk_team_points_meta'); return raw?JSON.parse(raw):{}; }catch(e){return {};} }
+      function saveMeta(meta){ var prev = localStorage.getItem('eventalk_team_points_meta'); localStorage.setItem('eventalk_team_points_meta', JSON.stringify(meta)); dispatchStorage('eventalk_team_points_meta', prev); }
+      function renderList(){ var tbody=document.querySelector('#admin-points-table tbody'); var arr=safeGet(); tbody.innerHTML=''; if(!arr || arr.length===0){ tbody.innerHTML = '<tr><td colspan="3" class="text-muted">No point entries found.</td></tr>'; return; } arr = arr.slice().sort(function(a,b){ return (b.points||0) - (a.points||0); }); arr.forEach(function(r){ var tr=document.createElement('tr'); tr.innerHTML='<td>'+escapeHtml(r.teamName||r.team||'')+'</td><td>'+(r.points||0)+'</td><td><button class="btn btn-sm btn-link edit">Edit</button> <button class="btn btn-sm btn-link text-danger del">Delete</button></td>'; tr.querySelector('.edit').addEventListener('click', function(){ populateForm(r); setFormMode(true); }); tr.querySelector('.del').addEventListener('click', function(){ if(!confirm('Delete this entry?')) return; var newArr = safeGet().filter(function(x){ return x.id !== r.id; }); saveAll(newArr); renderList(); }); tbody.appendChild(tr);} ); }
+      function escapeHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+      function setFormMode(editing){ var saveBtn=document.getElementById('save-btn'); var updateBtn=document.getElementById('update-btn'); if(!saveBtn||!updateBtn) return; if(editing){ saveBtn.style.display='none'; updateBtn.style.display='inline-block'; } else { saveBtn.style.display='inline-block'; updateBtn.style.display='none'; } }
+      function populateTeamSelect(){
+        try{
+          var sel = document.getElementById('team-select'); if(!sel) return;
+          // remove existing options except the first and custom sentinel
+          var keep = ['','__custom__'];
+          var opts = Array.from(sel.querySelectorAll('option')).filter(function(o){ return keep.indexOf(o.value) === -1; });
+          opts.forEach(function(o){ o.remove(); });
+          var raw = localStorage.getItem('eventalk_teams'); var arr = raw?JSON.parse(raw):[]; if(!Array.isArray(arr)) arr = [];
+          arr.forEach(function(name){ if(typeof name !== 'string') return; var option = document.createElement('option'); option.value = name; option.textContent = name; sel.insertBefore(option, sel.querySelector('option[value="__custom__"]'));
+          });
+        }catch(e){}
+      }
+      function populateForm(item){ document.getElementById('entry-id').value = item.id || ''; var name = item.teamName||item.team||''; var sel = document.getElementById('team-select'); var custom = document.getElementById('team-custom'); if(sel){ var opt = Array.from(sel.options).some(function(o){ return o.value === name; }); if(opt){ sel.value = name; custom.style.display='none'; custom.value=''; } else { sel.value='__custom__'; custom.style.display='block'; custom.value = name; } } if(document.getElementById('points-value')) document.getElementById('points-value').value = item.points||0; setFormMode(true); }
+      function clearForm(){ document.getElementById('entry-id').value=''; var sel=document.getElementById('team-select'); if(sel) sel.value=''; var custom=document.getElementById('team-custom'); if(custom){ custom.value=''; custom.style.display='none'; } document.getElementById('points-value').value=0; setFormMode(false); }
+      (function(handler){
+        function runIfReady(){
+          var domReady = document.readyState === 'interactive' || document.readyState === 'complete';
+          var hydrated = !!window._localstorageHydrated;
+          if(domReady && hydrated){ handler(); return; }
+          function domHandler(){ domReady = true; if(hydrated){ cleanup(); handler(); } }
+          function hydHandler(){ hydrated = true; if(domReady){ cleanup(); handler(); } }
+          function cleanup(){ document.removeEventListener('DOMContentLoaded', domHandler); window.removeEventListener('localstorage-hydrated', hydHandler); }
+          document.addEventListener('DOMContentLoaded', domHandler);
+          window.addEventListener('localstorage-hydrated', hydHandler);
+        }
+        runIfReady();
+      })(function(){
+        populateTeamSelect(); renderList(); setFormMode(false);
+        window.addEventListener('storage', function(e){
+          if (e.key === 'eventalk_teams') {
+            populateTeamSelect();
+          }
+          if (e.key === 'eventalk_team_points') {
+            renderList();
+          }
+          if (e.key === 'eventalk_team_points_meta') {
+            var meta = safeGetMeta();
+            var calloutInput = document.getElementById('callout-text');
+            if(calloutInput){ calloutInput.value = meta.calloutText || ''; }
+          }
+        });
+        // show/hide custom input when select changes
+        var sel = document.getElementById('team-select'); if(sel){ sel.addEventListener('change', function(){ var custom = document.getElementById('team-custom'); if(sel.value === '__custom__'){ custom.style.display='block'; custom.focus(); } else { custom.style.display='none'; custom.value=''; } }); }
+
+        var meta = safeGetMeta(); if(meta.calloutText){ var calloutInput = document.getElementById('callout-text'); if(calloutInput){ calloutInput.value = meta.calloutText; } }
+
+        // Save (create or update if entry-id present)
+        document.getElementById('save-btn').addEventListener('click', function(e){
+          var idField = document.getElementById('entry-id').value;
+          var sel = document.getElementById('team-select');
+          var team = '';
+          if(sel){ if(sel.value === '__custom__'){ team = (document.getElementById('team-custom').value||'').trim(); } else team = sel.value; }
+          var points = parseInt(document.getElementById('points-value').value,10)||0;
+          if(!team){ alert('Please enter or select a team name.'); return; }
+          var arr = safeGet();
+          if(idField){
+            for(var i=0;i<arr.length;i++){ if(arr[i].id===idField){ arr[i].teamName = team; arr[i].points = points; break; } }
+          } else {
+            var foundIdx = -1; for(var j=0;j<arr.length;j++){ if(String(arr[j].teamName||arr[j].team||'').toLowerCase() === team.toLowerCase()){ foundIdx = j; break; } }
+            if(foundIdx !== -1){ arr[foundIdx].teamName = team; arr[foundIdx].points = points; }
+            else { arr.push({ id: uid(), teamName: team, points: points }); }
+          }
+          saveAll(arr); populateTeamSelect(); renderList(); clearForm();
+        });
+
+        document.getElementById('save-meta-btn').addEventListener('click', function(){
+          var text = (document.getElementById('callout-text').value||'').trim();
+          if(!text){ alert('Please enter callout text.'); return; }
+          saveMeta({ calloutText: text });
+          alert('Callout text saved.');
+        });
+
+        // Update (explicit update of selected entry)
+        document.getElementById('update-btn').addEventListener('click', function(e){
+          var idField = document.getElementById('entry-id').value;
+          var sel = document.getElementById('team-select');
+          var team = '';
+          if(sel){ if(sel.value === '__custom__'){ team = (document.getElementById('team-custom').value||'').trim(); } else team = sel.value; }
+          var points = parseInt(document.getElementById('points-value').value,10)||0;
+          if(!idField){ alert('No entry selected to update. Use Edit from the list first.'); return; }
+          if(!team){ alert('Please enter or select a team name.'); return; }
+          var arr = safeGet();
+          var updated = false;
+          for(var i=0;i<arr.length;i++){
+            if(arr[i].id === idField){ arr[i].teamName = team; arr[i].points = points; updated = true; break; }
+          }
+          if(!updated) { alert('Selected entry not found.'); return; }
+          saveAll(arr); populateTeamSelect(); renderList(); clearForm();
+        });
+
+        document.getElementById('reset-btn').addEventListener('click', clearForm);
+      });
+    })();
+  </script>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
+

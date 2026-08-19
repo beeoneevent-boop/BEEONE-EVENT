@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Admin Blog - Eventalk</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beeone Digital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item active dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+              <div class="dropdown-menu dropdown-menu-right" style="background: rgba(15,19,36,0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                <a href="admin.html" class="dropdown-item" style="color: #fff;">Dashboard</a>
+                <a href="registration.html" class="dropdown-item" style="color: #fff;">Registration</a>
+                <a href="calling-list.html" class="dropdown-item" style="color: #fff;">Calling List</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="mark-entry.html" class="dropdown-item" style="color: #fff;">Mark Entry</a>
+                <a href="judge-mark-entry.html" class="dropdown-item" style="color: #fff;">Judge Mark Entry</a>
+                <a href="green-room.html" class="dropdown-item" style="color: #fff;">Green Room</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="results.html" class="dropdown-item" style="color: #fff;">Results</a>
+                <a href="team-badge.html" class="dropdown-item" style="color: #fff;">Team Badge</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="admin-blog.html" class="dropdown-item" style="color: #fff;">Manage Blog</a>
+                <a href="admin-schedule.html" class="dropdown-item" style="color: #fff;">Manage Schedule</a>
+                <a href="admin-team-points.html" class="dropdown-item" style="color: #fff;">Manage Team Points</a>
+                <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+              </div>
+            </li>
+            <li class="nav-item"><a href="#" id="logoutLink" class="nav-link">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <section class="ftco-section services-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">Blog Admin</span>
+            <h2 class="mb-4"><span>Manage</span> Blog Content</h2>
+          </div>
+        </div>
+        <div class="row justify-content-center mb-4">
+          <div class="col-md-10">
+            <div class="card shadow-sm border-0 p-4">
+              <div class="mb-3"><strong>Blog post details</strong> — save a new post or edit an existing one.</div>
+              <div id="blog-alert" class="alert alert-success d-none" role="alert"></div>
+              <form id="blog-form" class="row">
+                <input type="hidden" id="blog-id">
+                <div class="form-group col-md-6">
+                  <label for="blog-title">Title</label>
+                  <input id="blog-title" class="form-control" type="text" placeholder="Post title">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="blog-author">Author</label>
+                  <input id="blog-author" class="form-control" type="text" placeholder="Author name">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="blog-date">Date</label>
+                  <input id="blog-date" class="form-control" type="date">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="blog-category">Category</label>
+                  <input id="blog-category" class="form-control" type="text" placeholder="Category">
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="blog-image">Image URL</label>
+                  <input id="blog-image" class="form-control" type="text" placeholder="https://...">
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="blog-excerpt">Excerpt</label>
+                  <textarea id="blog-excerpt" class="form-control" rows="3" placeholder="Short summary"></textarea>
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="blog-content">Content</label>
+                  <textarea id="blog-content" class="form-control" rows="6" placeholder="Full blog content"></textarea>
+                </div>
+                <div class="col-md-12 text-right">
+                  <button type="button" id="blog-reset" class="btn btn-secondary mr-2">Reset</button>
+                  <button type="submit" class="btn btn-primary">Save Post</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <div class="card shadow-sm border-0 p-4">
+              <h3 class="mb-4">Saved Blog Posts</h3>
+              <div id="blog-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Beeone Digital</h2>
+              <p>Manage your blog posts with the admin interface.</p>
+              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Quick Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="admin.html" class="py-2 d-block">Admin Dashboard</a></li>
+                <li><a href="registration.html" class="py-2 d-block">Registration</a></li>
+                <li><a href="blog.html" class="py-2 d-block">Public Blog</a></li>
+                <li><a href="admin-blog.html" class="py-2 d-block">Blog Admin</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+             <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Contact</h2>
+              <div class="block-23 mb-3">
+                <ul>
+                  <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                  <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by Colorlib</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/jquery.timepicker.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="js/google-map.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+      (function(){
+        var STORAGE_KEY = 'eventalk_blogs';
+        function safeParse(){
+          try{ var raw = localStorage.getItem(STORAGE_KEY); var posts = raw ? JSON.parse(raw) : []; return Array.isArray(posts) ? posts : []; } catch(e){ return []; }
+        }
+        function savePosts(posts){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(posts)); } catch(e){} }
+        function escapeHtml(str){ return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+        function showAlert(message, type){ var alertEl = document.getElementById('blog-alert'); if(!alertEl) return; alertEl.textContent = message; alertEl.className = 'alert alert-' + type; alertEl.classList.remove('d-none'); window.setTimeout(function(){ alertEl.classList.add('d-none'); }, 2500); }
+        function clearForm(){ document.getElementById('blog-form').reset(); document.getElementById('blog-id').value = ''; }
+        function renderList(){ var posts = safeParse(); var list = document.getElementById('blog-list'); if(!list) return; if(posts.length === 0){ list.innerHTML = '<div class="alert alert-info">No blog posts saved yet. Use the form above to add a post.</div>'; return; }
+          var html = '<div class="table-responsive"><table class="table table-striped"><thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Author</th><th>Actions</th></tr></thead><tbody>';
+          posts.slice().reverse().forEach(function(post){ html += '<tr>'
+            + '<td>' + escapeHtml(post.title) + '</td>'
+            + '<td>' + escapeHtml(post.category) + '</td>'
+            + '<td>' + escapeHtml(post.date) + '</td>'
+            + '<td>' + escapeHtml(post.author) + '</td>'
+            + '<td>'
+            + '<button class="btn btn-sm btn-outline-primary edit-post mr-1" data-id="' + escapeHtml(post.id) + '">Edit</button>'
+            + '<button class="btn btn-sm btn-outline-danger delete-post" data-id="' + escapeHtml(post.id) + '">Delete</button>'
+            + '<a class="btn btn-sm btn-outline-secondary ml-1" href="blog-single.html?id=' + encodeURIComponent(post.id) + '">View</a>'
+            + '</td></tr>'; });
+          html += '</tbody></table></div>';
+          list.innerHTML = html;
+        }
+        function populateForm(post){ document.getElementById('blog-id').value = post.id || ''; document.getElementById('blog-title').value = post.title || ''; document.getElementById('blog-author').value = post.author || ''; document.getElementById('blog-date').value = post.date || ''; document.getElementById('blog-category').value = post.category || ''; document.getElementById('blog-image').value = post.image || ''; document.getElementById('blog-excerpt').value = post.excerpt || ''; document.getElementById('blog-content').value = post.content || ''; }
+        function getFormData(){ return {
+          id: document.getElementById('blog-id').value || '',
+          title: document.getElementById('blog-title').value.trim(),
+          author: document.getElementById('blog-author').value.trim(),
+          date: document.getElementById('blog-date').value,
+          category: document.getElementById('blog-category').value.trim(),
+          image: document.getElementById('blog-image').value.trim(),
+          excerpt: document.getElementById('blog-excerpt').value.trim(),
+          content: document.getElementById('blog-content').value.trim()
+        }; }
+        function handleSave(e){ e.preventDefault(); var post = getFormData(); if(!post.title || !post.content){ showAlert('Title and content are required.', 'warning'); return; }
+          var posts = safeParse(); if(post.id){ var idx = posts.findIndex(function(item){ return item.id === post.id; }); if(idx !== -1){ posts[idx] = post; } else { posts.push(post); } } else { post.id = 'blog-' + Date.now(); posts.push(post); }
+          savePosts(posts); renderList(); clearForm(); showAlert('Blog post saved successfully.', 'success'); }
+        (function(handler){
+          function runIfReady(){
+            var domReady = document.readyState === 'interactive' || document.readyState === 'complete';
+            var hydrated = !!window._localstorageHydrated;
+            if(domReady && hydrated){ handler(); return; }
+            function domHandler(){ domReady = true; if(hydrated){ cleanup(); handler(); } }
+            function hydHandler(){ hydrated = true; if(domReady){ cleanup(); handler(); } }
+            function cleanup(){ document.removeEventListener('DOMContentLoaded', domHandler); window.removeEventListener('localstorage-hydrated', hydHandler); }
+            document.addEventListener('DOMContentLoaded', domHandler);
+            window.addEventListener('localstorage-hydrated', hydHandler);
+          }
+          runIfReady();
+        })(function(){ renderList(); document.getElementById('blog-form').addEventListener('submit', handleSave); document.getElementById('blog-reset').addEventListener('click', function(){ clearForm(); }); document.getElementById('blog-list').addEventListener('click', function(event){ var edit = event.target.closest('.edit-post'); if(edit){ var id = edit.getAttribute('data-id'); var posts = safeParse(); var post = posts.find(function(item){ return item.id === id; }); if(post) populateForm(post); return; }
+            var del = event.target.closest('.delete-post'); if(del){ if(!confirm('Delete this blog post?')) return; var id = del.getAttribute('data-id'); var posts = safeParse().filter(function(item){ return item.id !== id; }); savePosts(posts); renderList(); showAlert('Blog post deleted.', 'success'); return; } }); });
+      })();
+    </script>
+  </body>
+</html>
+
+

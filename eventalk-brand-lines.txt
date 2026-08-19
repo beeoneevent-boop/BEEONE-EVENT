@@ -1,0 +1,134 @@
+﻿C:\Users\Acer\Downloads\eventalk-master\eventalk-master\about.html:4:<title>Eventalk - Free Bootstrap 4 Template by Colorlib</title>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\about.html:77:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-blog.html:4:<title>Admin Blog - Eventalk</title>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-blog.html:112:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-blog.html:174:var STORAGE_KEY = 'eventalk_blogs';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-schedule.html:68:<p class="card-text text-light">Create days and sessions. Saved to <code class="text-white">localStorage:eventalk_schedule</code>.</p>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-schedule.html:84:var STORAGE_KEY = 'eventalk_schedule';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-schedule.html:157:document.getElementById('btn-export').addEventListener('click', function(){ var data = JSON.stringify(safeParse(),null,2); var blob = new Blob([data],{type:'application/json'}); var url = URL.createObjectURL(blob); var a=document.createElement('a'); a.href=url; a.download='eventalk_schedule.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url); });
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-schedule.html:178:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-team-points.html:131:function safeGet(){ try{ var raw=localStorage.getItem('eventalk_team_points'); var arr=raw?JSON.parse(raw):[]; return Array.isArray(arr)?arr:[];}catch(e){return [];} }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-team-points.html:161:function saveAll(arr){ var prev = localStorage.getItem('eventalk_team_points'); localStorage.setItem('eventalk_team_points', JSON.stringify(arr)); dispatchStorage('eventalk_team_points', prev); }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-team-points.html:162:function safeGetMeta(){ try{ var raw=localStorage.getItem('eventalk_team_points_meta'); return raw?JSON.parse(raw):{}; }catch(e){return {};} }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-team-points.html:163:function saveMeta(meta){ var prev = localStorage.getItem('eventalk_team_points_meta'); localStorage.setItem('eventalk_team_points_meta', JSON.stringify(meta)); dispatchStorage('eventalk_team_points_meta', prev); }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-team-points.html:174:var raw = localStorage.getItem('eventalk_teams'); var arr = raw?JSON.parse(raw):[]; if(!Array.isArray(arr)) arr = [];
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-team-points.html:196:if (e.key === 'eventalk_teams') {
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-team-points.html:199:if (e.key === 'eventalk_team_points') {
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin-team-points.html:202:if (e.key === 'eventalk_team_points_meta') {
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin.html:4:<title>Admin Dashboard - Eventalk</title>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin.html:268:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin.html:365:var parts = safeParseArray('eventalk_participants');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin.html:366:var programs = safeParseArray('eventalk_programs');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin.html:367:var teams = safeParseArray('eventalk_teams');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin.html:368:var cats = safeParseArray('eventalk_categories');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin.html:369:var finals = safeParseObject('eventalk_final_results');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\admin.html:370:var marks = safeParseObject('eventalk_mark_entries');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\backup.html:84:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\backup.html:140:function getEventalkBackupData() {
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\backup.html:144:if (key && key.indexOf('eventalk_') === 0) {
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\backup.html:156:var backup = getEventalkBackupData();
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\backup.html:162:anchor.download = 'eventalk-backup-' + new Date().toISOString().slice(0,19).replace(/[:T]/g,'-') + '.json';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\blog-single.html:4:<title>Eventalk - Free Bootstrap 4 Template by Colorlib</title>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\blog-single.html:305:function safeParse(){ try{ var raw = localStorage.getItem('eventalk_blogs'); var data = raw ? JSON.parse(raw) : []; return Array.isArray(data) ? data : []; } catch(e){ return []; } }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\blog.html:4:<title>Eventalk - Free Bootstrap 4 Template by Colorlib</title>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\blog.html:72:try{ var raw = localStorage.getItem('eventalk_blogs'); var data = raw ? JSON.parse(raw) : []; return Array.isArray(data) ? data : []; } catch(e){ return []; }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\calling-list.html:151:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\calling-list.html:262:try { var raw = localStorage.getItem('eventalk_programs'); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\calling-list.html:265:try { var raw = localStorage.getItem('eventalk_categories'); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\calling-list.html:268:try { var raw = localStorage.getItem('eventalk_event_title'); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\calling-list.html:271:try { var raw = localStorage.getItem('eventalk_participants'); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\calling-list.html:274:try { var raw = localStorage.getItem('eventalk_competitions'); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\calling-list.html:277:try { var raw = localStorage.getItem('eventalk_mark_entries'); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\certificate.html:82:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\competitions.html:109:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\competitions.html:187:var STORAGE_KEY_COMPETITIONS = 'eventalk_competitions';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\competitions.html:188:var STORAGE_KEY_PARTICIPANTS = 'eventalk_participants';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\competitions.html:219:var cats = loadOptionsFromStorage('eventalk_categories');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\competitions.html:225:var teams = loadOptionsFromStorage('eventalk_teams');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\competitions.html:231:var programs = loadOptionsFromStorage('eventalk_programs');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\competitions.html:251:var participants = loadOptionsFromStorage('eventalk_participants');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\competitions.html:469:localStorage.setItem('eventalk_selected_program', JSON.stringify({ category: category || '', name: program }));
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\edit-home-speakers.html:22:<p class="text-muted">Manage the speakers shown on the public Speakers page. Changes are saved to localStorage under <strong>eventalk_speakers</strong>.</p>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\edit-home-speakers.html:37:const STORAGE_KEY = 'eventalk_speakers';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\edit-home-speakers.html:85:const data = JSON.stringify(safeParse(), null, 2); const blob = new Blob([data], {type:'application/json'}); const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='eventalk_speakers.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\event-title.html:136:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\event-title.html:193:var storageKey = 'eventalk_event_title';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\export-winners.html:88:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\export-winners.html:146:var raw = localStorage.getItem('eventalk_final_results');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\export-winners.html:155:var raw = localStorage.getItem('eventalk_participants');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\export-winners.html:171:var raw = localStorage.getItem('eventalk_selected_program');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\export-winners.html:180:var raw = localStorage.getItem('eventalk_event_title');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\export-winners.html:189:var raw = localStorage.getItem('eventalk_mark_entries');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\import-online-data.html:88:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\import-online-data.html:162:if (key && key.indexOf('eventalk_') === 0) {
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\import-online-data.html:177:showImportMessage('No valid eventalk data found to import.', true);
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\import-online-data.html:179:showImportMessage('Imported ' + count + ' eventalk data item(s). Refresh the page to apply.', false);
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:4:<title>Eventalk </title>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:182:<span class="subheading text-white" id="hero-subheading">Welcome to Eventalk</span>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:295:var raw = localStorage.getItem('eventalk_speakers');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:327:try { var raw = localStorage.getItem('eventalk_final_results'); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:332:var raw = localStorage.getItem('eventalk_selected_program');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:359:var raw = localStorage.getItem('eventalk_participants');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:381:if (participants) participants.textContent = getStorageCount('eventalk_participants');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:382:if (programs) programs.textContent = getStorageCount('eventalk_programs');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:383:if (teams) teams.textContent = getStorageCount('eventalk_teams');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:515:if (e.key === 'eventalk_final_results' || e.key === 'eventalk_selected_program' || e.key === 'eventalk_participants') {
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:576:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:667:applyData(safeParse('eventalk_event_title'));
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:668:window.addEventListener('storage', function(e){ if(e.key==='eventalk_event_title'){ applyData(safeParse('eventalk_event_title')); } });
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\index.html:669:window.addEventListener('localstorage-hydrated', function(){ applyData(safeParse('eventalk_event_title')); });
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\login.html:6:<title>Admin Login - Eventalk</title>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\mark-entry.html:120:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\mark-entry.html:196:var STORAGE_KEY_CATEGORIES = 'eventalk_categories';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\mark-entry.html:197:var STORAGE_KEY_PROGRAMS = 'eventalk_programs';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\mark-entry.html:198:var STORAGE_KEY_ENTRIES = 'eventalk_mark_entries'; // map of key -> array
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\mark-entry.html:233:var raw = localStorage.getItem('eventalk_competitions');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\mark-entry.html:276:localStorage.setItem('eventalk_selected_program', JSON.stringify({ category: cat, name: item }));
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\mark-entry.html:439:var prRaw = localStorage.getItem('eventalk_participants');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\mark-entry.html:510:var raw = localStorage.getItem('eventalk_selected_program');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\mark-entry.html:516:localStorage.removeItem('eventalk_selected_program');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\programs.html:167:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\programs.html:263:var STORAGE_KEY_CATEGORIES = 'eventalk_categories';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\programs.html:264:var STORAGE_KEY_PROGRAMS = 'eventalk_programs';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\programs.html:265:var STORAGE_KEY_DEFAULT_POINTS = 'eventalk_default_points';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\registration.html:118:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\registration.html:192:var STORAGE_KEY_TEAMS = 'eventalk_teams';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\registration.html:193:var STORAGE_KEY_PARTICIPANTS = 'eventalk_participants';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\registration.html:354:var raw = localStorage.getItem('eventalk_categories');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:129:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:201:fetch('/api/content/eventalk_categories').then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }).then(function(d){ try{ localStorage.setItem('eventalk_categories', JSON.stringify(d)); }catch(e){} }).catch(function(){}),
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:202:fetch('/api/content/eventalk_programs').then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }).then(function(d){ try{ localStorage.setItem('eventalk_programs', JSON.stringify(d)); }catch(e){} }).catch(function(){}),
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:203:fetch('/api/content/eventalk_mark_entries').then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }).then(function(d){ try{ localStorage.setItem('eventalk_mark_entries', JSON.stringify(d)); }catch(e){} }).catch(function(){}),
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:204:fetch('/api/content/eventalk_participants').then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }).then(function(d){ try{ localStorage.setItem('eventalk_participants', JSON.stringify(d)); }catch(e){} }).catch(function(){}),
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:205:fetch('/api/content/eventalk_final_results').then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }).then(function(d){ try{ localStorage.setItem('eventalk_final_results', JSON.stringify(d)); }catch(e){} }).catch(function(){})
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:219:var STORAGE_KEY_CATEGORIES = 'eventalk_categories';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:220:var STORAGE_KEY_PROGRAMS = 'eventalk_programs';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:221:var STORAGE_KEY_ENTRIES = 'eventalk_mark_entries';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:275:try { var pr = localStorage.getItem('eventalk_participants'); var parts = pr?JSON.parse(pr):[]; parts.forEach(function(p){ partMap[p.chest]=p; }); } catch(e){}
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:303:try { var raw = localStorage.getItem('eventalk_final_results'); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:309:var partsRaw = localStorage.getItem('eventalk_participants'); var parts = partsRaw ? JSON.parse(partsRaw) : []; var pmap = {};
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:353:var raw = localStorage.getItem('eventalk_selected_program');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:402:localStorage.setItem('eventalk_final_results', JSON.stringify(finals));
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:404:var selected = JSON.parse(localStorage.getItem('eventalk_selected_program') || '{}');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:406:localStorage.removeItem('eventalk_selected_program');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:475:try{ var rows = getEntriesFor(catSelect.value,itemSelect.value); var pr = localStorage.getItem('eventalk_participants'); var parts = pr?JSON.parse(pr):[]; var partMap={}; parts.forEach(function(p){ partMap[p.chest]=p; }); var entries = rows.map(function(r){ var total=(parseFloat(r.j1)||0)+(parseFloat(r.j2)||0)+(parseFloat(r.j3)||0); return {chest:r.chest,code:r.code||'',total:total,name:(partMap[r.chest]||{}).name||'',team:(partMap[r.chest]||{}).team||''}; }).sort(function(a,b){ return b.total-a.total; }).slice(0,3); var csv='Chest,Code,Name,Team,Total\n'; entries.forEach(function(e){ csv+= [e.chest,e.code,e.name,e.team,e.total].join(',') + '\n'; }); var blob = new Blob([csv],{type:'text/csv'}); var url = URL.createObjectURL(blob); var a = document.createElement('a'); a.href=url; a.download='winners.csv'; a.click(); URL.revokeObjectURL(url);}catch(e){alert('Export error');} });
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:489:(function(){ var ef = document.getElementById('edit-finalised'); if(!ef) return; ef.onclick = function(e){ e.preventDefault(); try{ localStorage.setItem('eventalk_selected_program', JSON.stringify({ category: fc.value || '', name: fi.value || '' })); }catch(err){} window.location.href = 'mark-entry.html'; }; })();
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:503:var raw = localStorage.getItem('eventalk_final_results') || '{}';
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:506:localStorage.setItem('eventalk_final_results', JSON.stringify(map));
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\results.html:507:try{ localStorage.setItem('eventalk_selected_program', JSON.stringify({ category: cat, name: item })); }catch(e){}
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\schedule.html:4:<title>Eventalk - Free Bootstrap 4 Template by Colorlib</title>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\schedule.html:84:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\schedule.html:188:var data = safeParse('eventalk_schedule');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\schedule.html:219:fetch('/api/content/eventalk_schedule').then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }).then(function(d){ try{ localStorage.setItem('eventalk_schedule', JSON.stringify(d)); }catch(e){} render(); }).catch(function(){ render(); });
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\schedule.html:221:window.addEventListener('storage', function(e){ if(e.key==='eventalk_schedule'){ render(); } });
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\speakers.html:4:<title>Eventalk - Free Bootstrap 4 Template by Colorlib</title>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\speakers.html:92:fetch('/api/content/eventalk_speakers').then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }).then(function(data){
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\speakers.html:93:try{ localStorage.setItem('eventalk_speakers', JSON.stringify(data)); }catch(e){}
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\speakers.html:95:}).catch(function(){ try{ var raw = localStorage.getItem('eventalk_speakers'); renderList(raw?JSON.parse(raw):[]); }catch(e){ renderList([]); } });
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\speakers.html:97:try{ var raw = localStorage.getItem('eventalk_speakers'); renderList(raw?JSON.parse(raw):[]); }catch(e){ renderList([]); }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\speakers.html:111:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\team-badge.html:82:<h2 class="ftco-heading-2">Eventalk</h2>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\team-points.html:4:<title>Team Points - Eventalk</title>
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\team-points.html:94:function safeParseMeta(){ try{ var raw = localStorage.getItem('eventalk_team_points_meta'); return raw ? JSON.parse(raw) : {}; }catch(e){ return {}; } }
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\team-points.html:95:function render(){ var rows = safeParse('eventalk_team_points');
+C:\Users\Acer\Downloads\eventalk-master\eventalk-master\team-points.html:108:window.addEventListener('storage', function(e){ if(e.key==='eventalk_team_points' || e.key==='eventalk_team_points_meta'){ render(); applyCallout(); } });

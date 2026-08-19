@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Beeone Digital </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+    <style>
+      html, body { background: #0f1324; color: #ffffff; }
+      .navbar { background: transparent !important; }
+      .navbar-brand { color: #ffffff !important; letter-spacing: .08em; }
+      .navbar-brand span { color: #ffb86c !important; }
+      .navbar-dark .navbar-nav .nav-link { color: rgba(255,255,255,.85); }
+      .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus { color: #ffffff; }
+      .navbar-dark .navbar-nav .nav-item.cta a { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18); color: #ffffff; }
+      .navbar-dark .navbar-nav .nav-item.cta a:hover { background: rgba(255,184,108,.95); color: #0f1324; border-color: rgba(255,184,108,.95); }
+      .hero-area { min-height: 100vh; position: relative; overflow: hidden; }
+      .hero-area::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at top left, rgba(255,184,108,0.28), transparent 24%), radial-gradient(circle at top right, rgba(94,114,228,0.26), transparent 20%), radial-gradient(circle at center right, rgba(88,214,141,0.12), transparent 18%); pointer-events: none; }
+      .hero-area::after { content: ''; position: absolute; left: 0; right: 0; bottom: -20px; height: 240px; background: radial-gradient(circle at center bottom, rgba(44,169,211,0.2), transparent 54%); pointer-events: none; }
+      .hero-content { position: relative; z-index: 2; padding: 120px 0 80px; }
+      .hero-content h1 { font-size: 4.4rem; line-height: 1.02; letter-spacing: -1px; margin-bottom: 1rem; color: #ffffff; }
+      .hero-content h1 span { display: block; font-size: 4.8rem; font-weight: 800; background: linear-gradient(120deg, #ffb86c, #f5d76e, #48c6ef); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+      .hero-content p { font-size: 1.1rem; color: rgba(255,255,255,.82); max-width: 620px; }
+      .hero-cta .btn-primary { background: linear-gradient(135deg, hsl(35, 100%, 55%), #ff3864); border: none; box-shadow: 0 18px 45px rgba(255,92,122,.18); padding: 14px 32px; }
+      .hero-cta .btn-primary:hover { background: linear-gradient(135deg, #ff7b1a, #ff2e5f); }
+      .hero-visual { position: relative; min-height: 540px; }
+      .hero-visual .hero-card { position: absolute; width: 100%; max-width: 320px; height: 360px; border-radius: 32px; box-shadow: 0 40px 70px rgba(0,0,0,.18); background: linear-gradient(180deg, rgba(255,255,255,.18) 0%, rgba(255,255,255,.08) 100%); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,.1); }
+      .hero-visual .hero-card.center { left: 50%; top: 8%; transform: translateX(-50%); max-width: 420px; height: 420px; }
+      .hero-visual .hero-card.left { left: 0; top: 20%; width: 260px; height: 300px; }
+      .hero-visual .hero-card.right { right: 0; top: 24%; width: 240px; height: 260px; }
+      .hero-visual .hero-card .card-icon { position: absolute; right: 20px; top: 20px; width: 68px; height: 68px; border-radius: 18px; display: grid; place-items: center; background: rgba(255,255,255,.15); color: #ffffff; font-size: 1.5rem; }
+      .hero-visual .hero-card .card-body { position: absolute; bottom: 25px; left: 25px; right: 25px; color: #ffffff; }
+      .hero-visual .hero-card .card-body h3 { font-size: 1.3rem; margin-bottom: .6rem; }
+      .hero-visual .hero-card .card-body p { font-size: .95rem; color: rgba(255,255,255,.76); line-height: 1.6; }
+      .hero-visual .hero-card.gradient { background: linear-gradient(180deg, #3a3ff5 0%, #1e1842 100%); }
+      .hero-visual .hero-card.green { background: linear-gradient(180deg, #2ecc71 0%, #1d3e2d 100%); }
+      .hero-visual .hero-card.orange { background: linear-gradient(180deg, #f39c12 0%, #663e0d 100%); }
+      .hero-stats { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 18px; }
+      .hero-stats .stat { flex: 1; min-width: 140px; padding: 20px 22px; border-radius: 18px; background: rgba(255,255,255,.05); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.1); }
+      .hero-stats .stat strong { display: block; font-size: 2.4rem; color: #ffffff; }
+      .hero-stats .stat span { display: block; color: rgba(255,255,255,.7); margin-top: 8px; font-size: .95rem; }
+      .homepage-actions .services-row{ display:flex; flex-wrap:wrap; justify-content:center; gap:24px; margin-top:40px; }
+      .homepage-actions .services-item{ flex:0 0 calc(25% - 24px); max-width: calc(25% - 24px); }
+      .homepage-actions .small-action .media{ background:rgba(255,255,255,.06); padding:22px; border-radius:20px; min-height:170px; transition:transform .18s ease, box-shadow .18s ease; border:1px solid rgba(255,255,255,.08); }
+      .homepage-actions .small-action .media:hover{ transform:translateY(-6px); box-shadow:0 18px 45px rgba(0,0,0,0.18); }
+      .homepage-actions .icon i{ width:90px; height:90px; font-size:28px; line-height:90px; border-radius:50%; box-shadow:0 18px 40px rgba(0,0,0,0.14); display:inline-flex; align-items:center; justify-content:center; color:#ffffff; }
+      .homepage-actions .media-body{ margin-top:18px; }
+      .homepage-actions .heading{ font-size:18px; color:#ffffff; font-weight:600; }
+      .hero-area { background: linear-gradient(180deg, rgba(12,18,38,.95) 0%, rgba(12,18,38,.92) 48%, rgba(12,18,38,.98) 100%); }
+      body { background: #060b19; color: #f2f6ff; }
+      .ftco-section { background: transparent !important; color: #edf0ff !important; }
+      .bg-light, .ftco-section.bg-light, .homepage-actions, #finalised-results-section, #finalised-results-section .p-4, .ftco-section.bg-light .container {
+        background: linear-gradient(180deg, rgba(12,18,38,.95) 0%, rgba(12,18,38,.92) 48%, rgba(12,18,38,.98) 100%) !important;
+        border: 1px solid rgba(255,255,255,.08) !important;
+        border-radius: 28px !important;
+        box-shadow: 0 30px 70px rgba(0,0,0,.22) !important;
+        backdrop-filter: blur(20px) !important;
+      }
+      .heading-section .subheading { color: rgba(255,255,255,.72) !important; letter-spacing: .15em; text-transform: uppercase; }
+      .heading-section h2, .heading-section h2 span { color: #ffffff !important; }
+      .hero-stats .stat { background: rgba(255,255,255,.08) !important; }
+      .hero-stats .stat strong, .hero-stats .stat span { color: #ffffff !important; }
+      .form-control, .custom-select {
+        background: rgba(255,255,255,.08) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255,255,255,.18) !important;
+        box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+      }
+      .form-control::placeholder { color: rgba(255,255,255,.5) !important; }
+      .form-control option,
+      .custom-select option {
+        background: #12172c !important;
+        color: #ffffff !important;
+      }
+      .form-control:focus, .custom-select:focus {
+        border-color: rgba(255,255,255,.30) !important;
+        background: rgba(255,255,255,.12) !important;
+        box-shadow: 0 0 0 0.2rem rgba(255,184,108,.18) !important;
+        color: #ffffff !important;
+      }
+      .table {
+        color: #ffffff !important;
+      }
+      .table thead th, .table tbody td {
+        border-color: rgba(255,255,255,.12) !important;
+      }
+      .table .rank-cell {
+        width: 72px;
+        text-align: center;
+      }
+      .rank-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+        font-weight: 700;
+        color: #ffffff;
+        font-size: 1rem;
+      }
+      .rank-1 { background: linear-gradient(135deg,#ffb86c,#ff7b1a); }
+      .rank-2 { background: linear-gradient(135deg,#5c9cff,#2f6fff); }
+      .rank-3 { background: linear-gradient(135deg,#2ecc71,#1d9b5f); }
+      .rank-empty { width: 40px; height: 40px; display: inline-block; }
+      .btn-primary {
+        background: linear-gradient(135deg, #ff9f1a, #ff3864) !important;
+        border: none !important;
+        color: #ffffff !important;
+      }
+      .btn-primary:hover {
+        opacity: .95 !important;
+      }
+      .ftco-footer {
+        background: transparent !important;
+      }
+      .ftco-footer .ftco-footer-widget h2,
+      .ftco-footer .ftco-footer-widget p,
+      .ftco-footer .ftco-footer-widget a {
+        color: rgba(255,255,255,.85) !important;
+      }
+      .ftco-footer .ftco-footer-widget a:hover {
+        color: #ffffff !important;
+      }
+      @media(max-width:991px){ .homepage-actions .services-item{ flex:0 0 calc(50% - 20px); max-width: calc(50% - 20px); } }
+      @media(max-width:575px){ .hero-content h1 { font-size: 2.8rem; } .hero-content h1 span { font-size: 3.2rem; } .hero-visual { min-height: 360px; } .hero-visual .hero-card { position: static; transform: none; width: 100%; max-width: none; height: auto; margin-bottom: 20px; } .homepage-actions .services-item{ flex:0 0 100%; max-width:100%; } }
+    </style>
+  </head>
+  <body>
+    
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-transparent ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index.html">Beeone Digital</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	          <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
+	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+	          <li class="nav-item"><a href="speakers.html" class="nav-link">Speakers</a></li>
+	          <li class="nav-item"><a href="schedule.html" class="nav-link">Schedule</a></li>
+	          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+<li class="nav-item"><a href="team-points.html" class="nav-link">Team Points</a></li>
+
+
+	        </ul>
+	      </div>
+			  </div>
+	  </nav>
+			  <div class="tab-content" id="v-pills-tabContent">
+			  </div>
+      <div class="overlay"></div>
+<div class="container hero-area">
+        <div class="hero-content">
+          <div class="row align-items-center">
+            <div class="col-lg-6">
+              <span class="subheading text-white" id="hero-subheading">Welcome to Beeone Digital</span>
+              <h1 id="program-name" class="mb-4"></h1>
+              <p id="program-place-date" class="mb-4"></p>
+              <div class="hero-cta mb-4">
+                <a href="#finalised-results-section" class="btn btn-primary">View Competition Results</a>
+              </div>
+              <div class="hero-stats">
+                <div class="stat">
+                  <strong id="hero-count-participants">0</strong>
+                  <span>Participants</span>
+                </div>
+                <div class="stat">
+                  <strong id="hero-count-programs">0</strong>
+                  <span>Programs</span>
+                </div>
+                <div class="stat">
+                  <strong id="hero-count-teams">0</strong>
+                  <span>Teams</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+              <div class="hero-visual">
+                <div class="hero-card gradient ftco-animate">
+                  <div class="card-icon"><i class="fa fa-coffee"></i></div>
+                  <div class="card-body">
+                    <h3>Welcome Event</h3>
+                    <p>Full day of talks, workshops and expert panels for developers.</p>
+                  </div>
+                </div>
+                <div class="hero-card left ftco-animate green">
+                  <div class="card-icon"><i class="fa fa-trophy"></i></div>
+                  <div class="card-body">
+                    <h3>Top Winners</h3>
+                    <p>Celebrate the best teams and finalised results in a dynamic ceremony.</p>
+                  </div>
+                </div>
+                <div class="hero-card right ftco-animate orange">
+                  <div class="card-icon"><i class="fa fa-calendar-alt"></i></div>
+                  <div class="card-body">
+                    <h3>Live Schedule</h3>
+                    <p>Track sessions, keynote talks and networking breaks throughout the event.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- services and fun-facts removed -->
+
+    <section class="ftco-section homepage-actions">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">Navigate</span>
+            <h2 class="mb-4"><span>Quick</span> Access</h2>
+          </div>
+        </div>
+        <div class="services-row">
+          <div class="services-item ftco-animate">
+            <a href="#finalised-results-section" class="media block-6 services d-block text-center small-action">
+              <div class="icon"><i class="fa fa-trophy" style="background: linear-gradient(135deg,#2ecc71,#27ae60);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Results</h3></div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="speakers.html" class="media block-6 services d-block text-center small-action">
+              <div class="icon"><i class="fa fa-microphone" style="background: linear-gradient(135deg,#34495e,#2c3e50);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Speaker</h3></div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="blog.html" class="media block-6 services d-block text-center small-action">
+              <div class="icon"><i class="fa fa-blog" style="background: linear-gradient(135deg,#1abc9c,#16a085);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Blog</h3></div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="team-points.html" class="media block-6 services d-block text-center small-action">
+              <div class="icon"><i class="fa fa-users" style="background: linear-gradient(135deg,#4cd964,#2ecc71);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Team Points</h3></div>
+            </a>
+          </div>
+          <div class="services-item ftco-animate">
+            <a href="schedule.html" class="media block-6 services d-block text-center small-action">
+              <div class="icon"><i class="fa fa-calendar-alt" style="background: linear-gradient(135deg,#f1c40f,#f39c12);"></i></div>
+              <div class="media-body"><h3 class="heading mb-3">Schedule</h3></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ftco-section">
+    	<div class="container">
+    		<div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+          	<span class="subheading">Speaker</span>
+            <h2 class="mb-4"><span>Our</span> Speakers</h2>
+          </div>
+        </div>
+        <div class="row">
+          	<div class="col-md-12 ftco-animate">
+        		<div class="carousel-testimony owl-carousel" id="home-speakers-carousel">
+        		</div>
+        	</div>
+        </div>
+        <script>
+						(function(){
+							try{
+								// render speakers (unchanged)
+								var raw = localStorage.getItem('eventalk_speakers');
+								var list = raw?JSON.parse(raw):null;
+								var container = document.getElementById('home-speakers-carousel');
+								function addItem(s){
+									var item = document.createElement('div'); item.className='item';
+									var img = s.image? s.image : 'images/speaker-1.jpg';
+									var html = '<div class="speaker">'
+                                    + '<img src="'+img+'" class="img-fluid" alt="speaker" loading="lazy">'
+										+ '<div class="text text-center py-3">'
+										+ '<h3>'+(s.name||'')+'</h3>'
+										+ '<span class="position">'+(s.position||'')+'</span>'
+										+ '<ul class="ftco-social mt-3">'
+										+ (s.twitter?'<li class="ftco-animate"><a href="'+s.twitter+'"><span class="icon-twitter"></span></a></li>':'')
+										+ (s.facebook?'<li class="ftco-animate"><a href="'+s.facebook+'"><span class="icon-facebook"></span></a></li>':'')
+										+ (s.instagram?'<li class="ftco-animate"><a href="'+s.instagram+'"><span class="icon-instagram"></span></a></li>':'')
+										+ '</ul></div></div>';
+									item.innerHTML = html;
+									container.appendChild(item);
+								}
+								if(Array.isArray(list) && list.length>0){ list.forEach(addItem); }
+								else{
+									var seed = [
+
+									];
+									seed.forEach(addItem);
+								}
+							}catch(e){ console.error(e); }
+							})();
+
+      function getFinalResultsMap() {
+        try { var raw = localStorage.getItem('eventalk_final_results'); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+      }
+
+      function getSelectedFinalisedProgram() {
+        try {
+          var raw = localStorage.getItem('eventalk_selected_program');
+          if (raw) {
+            var obj = JSON.parse(raw);
+            if (obj && obj.category && obj.name) return obj;
+          }
+        } catch (e) {}
+        return null;
+      }
+
+      function getFinalisedProgramGroups() {
+        var finals = getFinalResultsMap();
+        var groups = {};
+        Object.keys(finals).forEach(function(key) {
+          var parts = key.split('||');
+          var category = parts[0] || '';
+          var name = parts[1] || '';
+          if (!category || !name) return;
+          groups[category] = groups[category] || [];
+          if (groups[category].indexOf(name) === -1) {
+            groups[category].push(name);
+          }
+        });
+        return groups;
+      }
+
+      function getParticipantsMap() {
+        try {
+          var raw = localStorage.getItem('eventalk_participants');
+          var participants = raw ? JSON.parse(raw) : [];
+          var map = {};
+          participants.forEach(function(p){ if (p && p.chest) map[p.chest] = p; });
+          return map;
+        } catch (e) { return {}; }
+      }
+
+      function getStorageCount(key) {
+        try {
+          var raw = localStorage.getItem(key);
+          var arr = raw ? JSON.parse(raw) : [];
+          return Array.isArray(arr) ? arr.length : 0;
+        } catch (e) {
+          return 0;
+        }
+      }
+
+      function updateHeroCounts() {
+        var participants = document.getElementById('hero-count-participants');
+        var programs = document.getElementById('hero-count-programs');
+        var teams = document.getElementById('hero-count-teams');
+        if (participants) participants.textContent = getStorageCount('eventalk_participants');
+        if (programs) programs.textContent = getStorageCount('eventalk_programs');
+        if (teams) teams.textContent = getStorageCount('eventalk_teams');
+      }
+
+      function getSortedFinalisedRows(rows) {
+        var participantMap = getParticipantsMap();
+        return (rows||[]).map(function(r){
+          var total = (parseFloat(r.j1)||0) + (parseFloat(r.j2)||0) + (parseFloat(r.j3)||0);
+          var participant = participantMap[r.chest] || {};
+          return {
+            chest: r.chest || '',
+            code: r.code || '',
+            name: participant.name || '',
+            team: participant.team || '',
+            total: total
+          };
+        }).sort(function(a,b){ return b.total - a.total; });
+      }
+
+      function populateFinalisedSelectors() {
+        var groups = getFinalisedProgramGroups();
+        var categoryEl = document.getElementById('finalised-results-category');
+        var programEl = document.getElementById('finalised-results-program');
+        if (!categoryEl || !programEl) return;
+        categoryEl.innerHTML = '<option value="">Select category</option>';
+        Object.keys(groups).sort().forEach(function(category) {
+          categoryEl.innerHTML += '<option value="' + category + '">' + category + '</option>';
+        });
+        programEl.innerHTML = '<option value="">Select program name</option>';
+      }
+
+      function populateProgramOptions(category) {
+        var groups = getFinalisedProgramGroups();
+        var programEl = document.getElementById('finalised-results-program');
+        if (!programEl) return;
+        programEl.innerHTML = '<option value="">Select program name</option>';
+        if (!category || !groups[category]) return;
+        groups[category].sort().forEach(function(name) {
+          programEl.innerHTML += '<option value="' + name + '">' + name + '</option>';
+        });
+      }
+
+      function buildFinalisedResultsHtml(selectedCategory, selectedName) {
+        var finals = getFinalResultsMap();
+        var keys = Object.keys(finals);
+        var headerEl = document.getElementById('finalised-results-header');
+        var contentEl = document.getElementById('finalised-results-content');
+        var emptyEl = document.getElementById('finalised-results-empty');
+        if (!headerEl || !contentEl || !emptyEl) return;
+
+        if (!keys.length) {
+          headerEl.textContent = 'No finalized results are available yet.';
+          contentEl.innerHTML = '';
+          emptyEl.style.display = 'block';
+          return;
+        }
+
+        var selected = { category: selectedCategory || '', name: selectedName || '' };
+        var selectedKey = selected.category && selected.name ? selected.category + '||' + selected.name : '';
+        if (!selectedKey || !finals[selectedKey]) {
+          headerEl.textContent = 'Please select a category and program, then click View Result.';
+          contentEl.innerHTML = '';
+          emptyEl.style.display = 'block';
+          return;
+        }
+
+        var rows = getSortedFinalisedRows(finals[selectedKey]);
+        headerEl.textContent = 'Finalised results for ' + selected.category + ' / ' + selected.name;
+        if (!rows.length) {
+          contentEl.innerHTML = '<div class="text-center text-muted">Finalised program found, but no result rows are available.</div>';
+          emptyEl.style.display = 'none';
+          return;
+        }
+
+        emptyEl.style.display = 'none';
+        var html = '<table class="table table-sm table-bordered mb-0">'
+          + '<thead><tr><th></th><th>Chest</th><th>Name</th><th>Team</th></tr></thead><tbody>';
+
+        rows.forEach(function(row, index){
+          var rankHtml = '<span class="rank-empty"></span>';
+          if (index === 0) rankHtml = '<span class="rank-badge rank-1">1st</span>';
+          else if (index === 1) rankHtml = '<span class="rank-badge rank-2">2nd</span>';
+          else if (index === 2) rankHtml = '<span class="rank-badge rank-3">3rd</span>';
+          html += '<tr>'
+            + '<td class="rank-cell">' + rankHtml + '</td>'
+            + '<td>' + (row.chest || '') + '</td>'
+            + '<td>' + (row.name || '') + '</td>'
+            + '<td>' + (row.team || '') + '</td>'
+          + '</tr>';
+        });
+        html += '</tbody></table>';
+        contentEl.innerHTML = html;
+      }
+
+      function displayFinalisedResult() {
+        var categoryEl = document.getElementById('finalised-results-category');
+        var programEl = document.getElementById('finalised-results-program');
+        var category = categoryEl ? categoryEl.value : '';
+        var program = programEl ? programEl.value : '';
+        if (!category || !program) {
+          var headerEl = document.getElementById('finalised-results-header');
+          var contentEl = document.getElementById('finalised-results-content');
+          var emptyEl = document.getElementById('finalised-results-empty');
+          if (headerEl) headerEl.textContent = 'Please select both category and program name before viewing results.';
+          if (contentEl) contentEl.innerHTML = '';
+          if (emptyEl) emptyEl.style.display = 'block';
+          return;
+        }
+        buildFinalisedResultsHtml(category, program);
+      }
+
+      function downloadFinalisedPoster() {
+        var categoryEl = document.getElementById('finalised-results-category');
+        var programEl = document.getElementById('finalised-results-program');
+        var category = categoryEl ? categoryEl.value : '';
+        var program = programEl ? programEl.value : '';
+        
+        if (!category || !program) {
+          alert('Please select both category and program name before downloading the poster.');
+          return;
+        }
+        
+        var finals = getFinalResultsMap();
+        var selectedKey = category + '||' + program;
+        if (!finals[selectedKey]) {
+          alert('No results found for the selected category and program.');
+          return;
+        }
+        
+        // Open the modern poster design from student-result-poster.html
+        var posterUrl = 'student-result-poster.html?category=' + encodeURIComponent(category) + '&program=' + encodeURIComponent(program);
+        window.open(posterUrl, '_blank');
+      }
+
+      function updateHomepageFinalisedResults() {
+        populateFinalisedSelectors();
+        buildFinalisedResultsHtml();
+      }
+
+      window.addEventListener('load', function() {
+        updateHomepageFinalisedResults();
+        updateHeroCounts();
+        var categoryEl = document.getElementById('finalised-results-category');
+        var programEl = document.getElementById('finalised-results-program');
+        var viewBtn = document.getElementById('finalised-results-view');
+        var downloadBtn = document.getElementById('finalised-results-download-poster');
+        if (categoryEl) {
+          categoryEl.addEventListener('change', function() {
+            populateProgramOptions(categoryEl.value);
+          });
+        }
+        if (viewBtn) {
+          viewBtn.addEventListener('click', displayFinalisedResult);
+        }
+        if (downloadBtn) {
+          downloadBtn.addEventListener('click', downloadFinalisedPoster);
+        }
+      });
+
+      window.addEventListener('storage', function(e){
+        if (e.key === 'eventalk_final_results' || e.key === 'eventalk_selected_program' || e.key === 'eventalk_participants') {
+          updateHomepageFinalisedResults();
+        }
+      });
+
+						</script>
+    </section>
+
+    <section class="ftco-section bg-light" id="finalised-results-section">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">Finalised</span>
+            <h2 class="mb-4"><span>Competition</span> Results</h2>
+          </div>
+        </div>
+        <div class="row justify-content-center mb-4">
+          <div class="col-md-10">
+            <div class="row">
+              <div class="col-md-5 mb-3">
+                <select id="finalised-results-category" class="form-control">
+                  <option value="">Select category</option>
+                </select>
+              </div>
+              <div class="col-md-5 mb-3">
+                <select id="finalised-results-program" class="form-control">
+                  <option value="">Select program name</option>
+                </select>
+              </div>
+              <div class="col-md-1 mb-3">
+                <button id="finalised-results-view" class="btn btn-primary btn-block">View</button>
+              </div>
+              <div class="col-md-1 mb-3">
+                <button id="finalised-results-download-poster" class="btn btn-warning btn-block" title="Download poster with saved background">
+                  <i class="fa fa-download"></i> Poster
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <div class="ftco-animate">
+              <div class="p-4 border rounded bg-white">
+                <div id="finalised-results-header" class="mb-3 text-center text-secondary">Select a category and program, then click View.</div>
+                <div id="finalised-results-content" class="table-responsive"></div>
+                <div id="finalised-results-empty" class="text-center text-muted">No finalized results are shown yet.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+		
+
+
+
+    <!-- Blog section removed per request -->
+		
+    <!-- Gallery section removed per request -->
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Beeone Digital</h2>
+              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+              <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Useful Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="#" class="py-2 d-block">Speakers</a></li>
+                <li><a href="#" class="py-2 d-block">Shcedule</a></li>
+                <li><a href="#" class="py-2 d-block">Events</a></li>
+                <li><a href="#" class="py-2 d-block">Blog</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+             <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Privacy</h2>
+              <ul class="list-unstyled">
+                <li><a href="#" class="py-2 d-block">Career</a></li>
+                <li><a href="#" class="py-2 d-block">About Us</a></li>
+                <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+                <li><a href="#" class="py-2 d-block">Services</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+            	<h2 class="ftco-heading-2">Have a Questions?</h2>
+            	<div class="block-23 mb-3">
+	              <ul>
+	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+
+            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function(){
+      function safeParse(key){ try{ return JSON.parse(localStorage.getItem(key))||null }catch(e){return null} }
+      var nameEl = document.getElementById('program-name');
+      var placeDateEl = document.getElementById('program-place-date');
+      var heroSubheadingEl = document.getElementById('hero-subheading');
+      function applyData(data){
+        if(!data) return;
+        if(heroSubheadingEl && data.programSubheading) heroSubheadingEl.textContent = data.programSubheading;
+        if(nameEl && data.programName) nameEl.innerHTML = data.programName.replace(/\n/g,'<br>');
+        if(placeDateEl){ var pd = ''; if(data.programDate) pd += data.programDate; if(data.programPlace) pd += (pd?'. ':'') + data.programPlace; if(pd) placeDateEl.textContent = pd; }
+      }
+      // initial attempt
+      applyData(safeParse('eventalk_event_title'));
+      window.addEventListener('storage', function(e){ if(e.key==='eventalk_event_title'){ applyData(safeParse('eventalk_event_title')); } });
+      window.addEventListener('localstorage-hydrated', function(){ applyData(safeParse('eventalk_event_title')); });
+    })();
+	</script>
+
+  <script>
+    (function(){
+      if (!window.fetch) return;
+      fetch('/api/content/homepage').then(function(r){ if(!r.ok) throw new Error('no'); return r.json(); }).then(function(data){
+        if(!data) return;
+        try{
+          if(data.programSubheading){ var sub=document.getElementById('hero-subheading'); if(sub) sub.textContent = data.programSubheading; }
+          if(data.programName){ var el=document.getElementById('program-name'); if(el) el.innerHTML = data.programName.replace(/\n/g,'<br>'); }
+          if(data.programPlaceDate){ var el2=document.getElementById('program-place-date'); if(el2) el2.textContent = data.programPlaceDate; }
+          if(data.counts){ var p=document.getElementById('hero-count-participants'); if(p) p.textContent = data.counts.participants||0; var pr=document.getElementById('hero-count-programs'); if(pr) pr.textContent = data.counts.programs||0; var t=document.getElementById('hero-count-teams'); if(t) t.textContent = data.counts.teams||0; }
+          if(Array.isArray(data.services)){
+            var container = document.querySelector('.services-row');
+            if(container){ container.innerHTML = ''; data.services.forEach(function(s){ var div=document.createElement('div'); div.className='services-item ftco-animate'; div.innerHTML = '<a href="'+(s.href||'#')+'" class="media block-6 services d-block text-center small-action'><div class="icon"><i class="'+(s.iconClass||'')+'" style="'+(s.iconStyle||'')+'"></i></div><div class="media-body"><h3 class="heading mb-3">'+(s.title||'')+'</h3></div></a>'; container.appendChild(div); }); }
+        }catch(e){ console.error(e); }
+      }).catch(function(){ /* ignore */ });
+    })();
+  </script>
+    
+  </body>
+</html>
+

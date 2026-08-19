@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Mark Entry - Admin</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/localstorage-sync.js"></script>
+    <script src="js/admin-auth.js"></script>
+    
+    <style>
+      .schedule-admin-card { box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; }
+      .schedule-admin-card-body { padding: 25px; }
+      .form-control { border-radius: 5px; border: 1px solid #ddd; }
+      .form-control:focus { border-color: #007bff; box-shadow: 0 0 5px rgba(0,123,255,0.3); }
+      .j-input { font-weight: 600; text-align: center; }
+      .j-input:focus { background: #f0f7ff; }
+      .table-responsive { margin-top: 20px; }
+      #entries-table { margin: 0; }
+      #entries-table th { background: #007bff; color: white; font-weight: 700; }
+      #entries-table td { vertical-align: middle; }
+      #entries-table tbody tr:hover { background: #f5f5f5; }
+      .btn-delete { font-size: 11px; padding: 4px 8px; }
+    </style>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Beeone Digital</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Admin</a>
+              <div class="dropdown-menu dropdown-menu-right" style="background: rgba(15,19,36,0.98); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;">
+                <a href="admin.html" class="dropdown-item" style="color: #fff;">Dashboard</a>
+                <a href="registration.html" class="dropdown-item" style="color: #fff;">Registration</a>
+                <a href="calling-list.html" class="dropdown-item" style="color: #fff;">Calling List</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="mark-entry.html" class="dropdown-item" style="color: #fff;">Mark Entry</a>
+                <a href="judge-mark-entry.html" class="dropdown-item" style="color: #fff;">Judge Mark Entry</a>
+                <a href="green-room.html" class="dropdown-item" style="color: #fff;">Green Room</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="results.html" class="dropdown-item" style="color: #fff;">Results</a>
+                <a href="team-badge.html" class="dropdown-item" style="color: #fff;">Team Badge</a>
+                <div class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></div>
+                <a href="admin-blog.html" class="dropdown-item" style="color: #fff;">Manage Blog</a>
+                <a href="admin-schedule.html" class="dropdown-item" style="color: #fff;">Manage Schedule</a>
+                <a href="admin-team-points.html" class="dropdown-item" style="color: #fff;">Manage Team Points</a>
+                <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+                <a href="edit-home-speakers.html" class="dropdown-item" style="color: #fff;">Edit Speakers</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- END nav -->
+
+    <section class="ftco-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+          <div class="col-md-7 text-center heading-section ftco-animate">
+            <span class="subheading">Admin Section</span>
+            <h2 class="mb-4"><span>Mark</span> Entry</h2>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <div class="card schedule-admin-card">
+              <div class="card-body schedule-admin-card-body">
+                <h3 class="card-title">Mark Entry</h3>
+                <p class="card-text">Use this page to add program results for a selected category and item.</p>
+                <div class="form-row align-items-center mb-3">
+                  <div class="col-auto">
+                    <label class="sr-only" for="me-category">Select category</label>
+                    <select id="me-category" class="form-control">
+                      <option value="" disabled selected>Select category</option>
+                    </select>
+                  </div>
+                  <div class="col-auto">
+                    <label class="sr-only" for="me-item">Select item</label>
+                    <select id="me-item" class="form-control">
+                      <option value="" disabled selected>Select item</option>
+                    </select>
+                  </div>
+                  <div class="col-auto">
+                    <div class="btn-group" role="group">
+                      <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add Result <span class="caret ml-2"></span>
+                      </button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" id="btn-add-result-link">Add New Result</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-auto ml-auto">
+                    <div class="btn-group" role="group">
+                      <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions <span class="caret ml-2"></span>
+                      </button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" id="btn-view-link">View</a>
+                        <a class="dropdown-item" href="#" id="btn-save-all-link">Save All</a>
+                        <a class="dropdown-item" href="#" id="btn-print-link">Print</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Green Room Verification Details -->
+                <div id="green-room-details" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #17a2b8; display: none;">
+                  <h6 style="color: #003366; font-weight: 700; margin-bottom: 12px;">✓ Green Room Verification Status</h6>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-bottom: 10px;">
+                    <div style="background: white; padding: 10px; border-radius: 5px; border-left: 4px solid #007bff;">
+                      <div style="font-size: 11px; color: #666;">Registered</div>
+                      <div style="font-size: 18px; font-weight: 700; color: #007bff;" id="mark-registered">0</div>
+                    </div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; border-left: 4px solid #28a745;">
+                      <div style="font-size: 11px; color: #666;">Verified</div>
+                      <div style="font-size: 18px; font-weight: 700; color: #28a745;" id="mark-verified">0</div>
+                    </div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; border-left: 4px solid #17a2b8;">
+                      <div style="font-size: 11px; color: #666;">Code Letters</div>
+                      <div style="font-size: 18px; font-weight: 700; color: #17a2b8;" id="mark-with-code">0</div>
+                    </div>
+                    <div style="background: white; padding: 10px; border-radius: 5px; border-left: 4px solid #ff9800;">
+                      <div style="font-size: 11px; color: #666;">Verification Rate</div>
+                      <div style="font-size: 18px; font-weight: 700; color: #ff9800;" id="mark-verify-rate">0%</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="table-responsive">
+                  <table class="table table-sm table-bordered" id="entries-table">
+                    <thead class="thead-light">
+                      <tr>
+                        <th style="width:80px">Chest No</th>
+                        <th>CodeLetter</th>
+                        <th>Judge1</th>
+                        <th>Judge2</th>
+                        <th>Judge3</th>
+                        <th>Remarks</th>
+                        <th style="width:80px">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+
+                <a href="admin.html" class="btn btn-primary mt-2">Back to Dashboard</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Beeone Digital</h2>
+              <p>Manage your event with a single dashboard interface.</p>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Useful Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="mark-entry.html" class="py-2 d-block">Mark Entry</a></li>
+                <li><a href="admin.html" class="py-2 d-block">Admin</a></li>
+                <li><a href="results.html" class="py-2 d-block">Results</a></li>
+                <li><a href="certificate.html" class="py-2 d-block">Certificate</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Contact</h2>
+              <div class="block-23 mb-3">
+                <ul>
+                  <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+                  <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+                  <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by Colorlib</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/jquery-migrate-3.0.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.easing.1.3.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.stellar.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/aos.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/bootstrap-datepicker.js"></script>
+  <script src="js/jquery.timepicker.min.js"></script>
+  <script src="js/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="js/google-map.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function(handler){
+      function runIfReady(){
+        var domReady = document.readyState === 'interactive' || document.readyState === 'complete';
+        var hydrated = !!window._localstorageHydrated;
+        if(domReady && hydrated){ handler(); return; }
+        function domHandler(){ domReady = true; if(hydrated){ cleanup(); handler(); } }
+        function hydHandler(){ hydrated = true; if(domReady){ cleanup(); handler(); } }
+        function cleanup(){ document.removeEventListener('DOMContentLoaded', domHandler); window.removeEventListener('localstorage-hydrated', hydHandler); }
+        document.addEventListener('DOMContentLoaded', domHandler);
+        window.addEventListener('localstorage-hydrated', hydHandler);
+      }
+      runIfReady();
+    })(function () {
+      var catSelect = document.getElementById('me-category');
+      var itemSelect = document.getElementById('me-item');
+      var addBtn = document.getElementById('btn-add-result-link');
+      var viewBtn = document.getElementById('btn-view-link');
+      var printBtn = document.getElementById('btn-print-link');
+      var tbody = document.querySelector('#entries-table tbody');
+
+      var STORAGE_KEY_CATEGORIES = 'eventalk_categories';
+      var STORAGE_KEY_PROGRAMS = 'eventalk_programs';
+      var STORAGE_KEY_ENTRIES = 'eventalk_mark_entries'; // map of key -> array
+      var saveAllBtn = document.getElementById('btn-save-all-link');
+
+      function loadCategories() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY_CATEGORIES);
+          var cats = raw ? JSON.parse(raw) : [];
+          // clear
+          catSelect.innerHTML = '<option value="" disabled selected>Select category</option>';
+          cats.forEach(function (c) {
+            var o = document.createElement('option'); o.value = c; o.textContent = c; catSelect.appendChild(o);
+          });
+        } catch (e) { }
+      }
+
+      function loadItemsForCategory(cat) {
+        itemSelect.innerHTML = '<option value="" disabled selected>Select item</option>';
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY_PROGRAMS);
+          var programs = raw ? JSON.parse(raw) : [];
+          programs.filter(function (p) { return p.category === cat; }).forEach(function (p) {
+            var o = document.createElement('option'); o.value = p.name; o.textContent = p.name; itemSelect.appendChild(o);
+          });
+          // if exactly one program exists for this category, auto-select it and load entries
+          if (itemSelect.options.length === 2) {
+            itemSelect.selectedIndex = 1;
+            loadEntries(cat, itemSelect.value);
+          }
+        } catch (e) { }
+      }
+
+      function storageKeyFor(cat, item) { return (cat || '') + '||' + (item || ''); }
+
+      function isProgramFinalised(category, item) {
+        try {
+          var raw = localStorage.getItem('eventalk_final_results') || '{}';
+          var finals = JSON.parse(raw);
+          var key = (category || '') + '||' + (item || '');
+          return !!(finals && finals[key]);
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function getGreenRoomCodeLetterMap(item) {
+        try {
+          var raw = localStorage.getItem('eventalk_green_room_checkins') || '{}';
+          var greenRoomData = JSON.parse(raw);
+          var records = Array.isArray(greenRoomData[item]) ? greenRoomData[item] : [];
+          var map = {};
+          records.forEach(function(record) {
+            if (!record || !record.chest) return;
+            var chest = String(record.chest);
+            var code = record.codeLetter || record.code || '';
+            if (code && code.trim()) {
+              map[chest] = code.trim();
+            }
+          });
+          return map;
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function fetchCompetitions() {
+        try {
+          var raw = localStorage.getItem('eventalk_competitions');
+          var comps = raw ? JSON.parse(raw) : [];
+          return Array.isArray(comps) ? comps : [];
+        } catch (e) { return []; }
+      }
+
+      function loadCandidatesForProgram(cat, item) {
+        // Load participants from category
+        var participantMap = {};
+        try {
+          var raw = localStorage.getItem('eventalk_participants');
+          var participants = raw ? JSON.parse(raw) : [];
+          participants.forEach(function(p) {
+            if (p.category === cat) {
+              participantMap[p.chest] = p;
+            }
+          });
+        } catch (e) { }
+
+        // Load green room verification data (ONLY VERIFIED students)
+        var verifiedStudents = {};
+        var codeLetterMap = getGreenRoomCodeLetterMap(item);
+        try {
+          var raw = localStorage.getItem('eventalk_green_room_checkins');
+          var greenRoomData = raw ? JSON.parse(raw) : {};
+          var programRecords = greenRoomData[item] || [];
+          if (Array.isArray(programRecords)) {
+            programRecords.forEach(function(record) {
+              if (record && record.chest && record.verifiedAt) {
+                verifiedStudents[record.chest] = true;
+              }
+            });
+          }
+        } catch (e) { }
+
+        // Build candidate list with only verified students
+        var candidates = [];
+        Object.keys(participantMap).forEach(function(chest) {
+          if (verifiedStudents[chest]) {
+            candidates.push({
+              chest: chest,
+              code: codeLetterMap[chest] || codeLetterMap[String(chest)] || '',
+              j1: '',
+              j2: '',
+              j3: ''
+            });
+          }
+        });
+
+        return candidates;
+      }
+
+      function loadEntries(cat, item) {
+        tbody.innerHTML = '';
+        if (!cat || !item) return;
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY_ENTRIES);
+          var map = raw ? JSON.parse(raw) : {};
+          var key = storageKeyFor(cat, item);
+          var saved = map[key] || [];
+          if (saved.length > 0) {
+            var codeLetterMap = getGreenRoomCodeLetterMap(item);
+            saved.forEach(function (e) {
+              if (e && e.chest) {
+                e.code = e.code || codeLetterMap[String(e.chest)] || '';
+              }
+              appendEditableRow(e);
+            });
+            saveSelectedProgram(cat, item);
+            return;
+          }
+
+          var candidates = loadCandidatesForProgram(cat, item);
+          if (candidates.length === 0) return;
+          candidates.forEach(function (candidate) { appendEditableRow(candidate); });
+          saveSelectedProgram(cat, item);
+        } catch (e) { console.error('loadEntries error', e); }
+      }
+
+      function saveSelectedProgram(cat, item) {
+        if (!cat || !item) return;
+        try {
+          localStorage.setItem('eventalk_selected_program', JSON.stringify({ category: cat, name: item }));
+        } catch (e) { }
+      }
+
+      function appendEditableRow(e, idx) {
+        var tr = document.createElement('tr');
+        tr.setAttribute('data-chest', (e.chest || ''));
+        var finalized = isProgramFinalised(catSelect.value, itemSelect.value);
+        var codeLetter = e.code || getGreenRoomCodeLetterMap(itemSelect.value)[String(e.chest)] || '';
+        if (e && e.chest && !e.code && codeLetter) {
+          e.code = codeLetter;
+        }
+        tr.innerHTML = '<td style="font-weight:700;">' + (e.chest || '') + '</td>'
+          + '<td style="text-align:center; font-weight:600; background:#f0f0f0;">' + (codeLetter || 'N/A') + '</td>'
+          + '<td><input class="form-control form-control-sm j-input j1" type="number" value="' + (e.j1 || '') + '" placeholder="Mark" ' + (finalized ? 'disabled' : '') + '></td>'
+          + '<td><input class="form-control form-control-sm j-input j2" type="number" value="' + (e.j2 || '') + '" placeholder="Mark" ' + (finalized ? 'disabled' : '') + '></td>'
+          + '<td><input class="form-control form-control-sm j-input j3" type="number" value="' + (e.j3 || '') + '" placeholder="Mark" ' + (finalized ? 'disabled' : '') + '></td>'
+          + '<td><input class="form-control form-control-sm j-input remarks" type="text" value="' + (e.remarks || '') + '" placeholder="Remarks" style="text-align:left;" ' + (finalized ? 'disabled' : '') + '></td>'
+          + '<td><button class="btn btn-sm btn-danger btn-delete" ' + (finalized ? 'disabled' : '') + '>Delete</button></td>';
+        tbody.appendChild(tr);
+        
+        // Add event listeners for real-time saving
+        var inputs = tr.querySelectorAll('.j-input');
+        inputs.forEach(function(input) {
+          if (finalized) {
+            input.setAttribute('readonly', 'readonly');
+            return;
+          }
+          input.addEventListener('change', function() {
+            autoSaveMarks();
+          });
+          input.addEventListener('blur', function() {
+            autoSaveMarks();
+          });
+        });
+
+        var deleteBtn = tr.querySelector('.btn-delete');
+        if (deleteBtn && !finalized) {
+          deleteBtn.addEventListener('click', function () {
+            tr.remove();
+          });
+        }
+      }
+
+      // Auto-save marks function
+      function autoSaveMarks() {
+        var cat = catSelect.value;
+        var item = itemSelect.value;
+        if (!cat || !item) return;
+        if (isProgramFinalised(cat, item)) return;
+
+        try {
+          var rows = Array.from(tbody.querySelectorAll('tr'));
+          var codeLetterMap = getGreenRoomCodeLetterMap(item);
+          var entries = rows.map(function (tr) {
+            var chest = tr.getAttribute('data-chest');
+            return {
+              chest: chest,
+              code: codeLetterMap[String(chest)] || '',
+              j1: tr.querySelector('.j1') ? tr.querySelector('.j1').value.trim() : '',
+              j2: tr.querySelector('.j2') ? tr.querySelector('.j2').value.trim() : '',
+              j3: tr.querySelector('.j3') ? tr.querySelector('.j3').value.trim() : '',
+              remarks: tr.querySelector('.remarks') ? tr.querySelector('.remarks').value.trim() : ''
+            };
+          });
+
+          var raw = localStorage.getItem(STORAGE_KEY_ENTRIES);
+          var map = raw ? JSON.parse(raw) : {};
+          var key = storageKeyFor(cat, item);
+          map[key] = entries;
+          localStorage.setItem(STORAGE_KEY_ENTRIES, JSON.stringify(map));
+
+          // SYNC: Also save to judge-mark-entry.html storage (eventalk_judge_marks)
+          try {
+            var judgeMarksRaw = localStorage.getItem('eventalk_judge_marks') || '{}';
+            var judgeMarks = JSON.parse(judgeMarksRaw);
+            judgeMarks[key] = {};
+            entries.forEach(function(entry) {
+              if (entry.j1 || entry.j2 || entry.j3) {
+                judgeMarks[key][entry.chest] = {
+                  j1: entry.j1,
+                  j2: entry.j2,
+                  j3: entry.j3,
+                  remarks: entry.remarks
+                };
+              }
+            });
+            localStorage.setItem('eventalk_judge_marks', JSON.stringify(judgeMarks));
+          } catch(syncErr) { console.error('Sync error:', syncErr); }
+        } catch (e) { console.error('autoSaveMarks error', e); }
+      }
+
+
+      function findRowByChest(chest) {
+        if (!chest) return null;
+        var rows = Array.from(tbody.querySelectorAll('tr'));
+        for (var i = 0; i < rows.length; i++) {
+          if (rows[i].getAttribute('data-chest') === chest.toString()) return rows[i];
+        }
+        return null;
+      }
+
+      function saveEntry(cat, item, entry) {
+        if (isProgramFinalised(cat, item)) {
+          alert('This program is finalised. Mark and code letter entries are locked.');
+          return;
+        }
+        try {
+          var normalizedEntry = Object.assign({}, entry, {
+            code: (entry && entry.chest) ? (getGreenRoomCodeLetterMap(item)[String(entry.chest)] || '') : ''
+          });
+          var raw = localStorage.getItem(STORAGE_KEY_ENTRIES);
+          var map = raw ? JSON.parse(raw) : {};
+          var key = storageKeyFor(cat, item);
+          map[key] = map[key] || [];
+          map[key].push(normalizedEntry);
+          localStorage.setItem(STORAGE_KEY_ENTRIES, JSON.stringify(map));
+          loadEntries(cat, item);
+        } catch (e) { }
+      }
+
+      function deleteEntryAtIndex(index) {
+        var cat = catSelect.value; var item = itemSelect.value;
+        if (!cat || !item) return;
+        if (isProgramFinalised(cat, item)) {
+          alert('This program is finalised. Mark and code letter entries are locked.');
+          return;
+        }
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY_ENTRIES);
+          var map = raw ? JSON.parse(raw) : {};
+          var key = storageKeyFor(cat, item);
+          if (!map[key]) return;
+          map[key].splice(index, 1);
+          localStorage.setItem(STORAGE_KEY_ENTRIES, JSON.stringify(map));
+          loadEntries(cat, item);
+        } catch (e) { }
+      }
+
+      // modal creation
+      var modalHtml = '\n<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-hidden="true">\n  <div class="modal-dialog" role="document">\n    <div class="modal-content">\n      <div class="modal-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">\n        <h5 class="modal-title">Add Program Result</h5>\n        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white; opacity: 0.8;">\n          <span aria-hidden="true">&times;</span>\n        </button>\n      </div>\n      <div class="modal-body">\n        <div class="form-group"><label>Chest No</label><input id="m-chest" class="form-control" type="number" placeholder="Enter chest number"></div>\n        <div class="form-row">\n          <div class="form-group col-md-4"><label>Judge 1</label><input id="m-j1" class="form-control" type="number" placeholder="Mark"></div>\n          <div class="form-group col-md-4"><label>Judge 2</label><input id="m-j2" class="form-control" type="number" placeholder="Mark"></div>\n          <div class="form-group col-md-4"><label>Judge 3</label><input id="m-j3" class="form-control" type="number" placeholder="Mark"></div>\n        </div>\n        <small style="color: #666;"><i class="fa fa-info-circle"></i> Code letter is automatically fetched from Green Room.</small>\n      </div>\n      <div class="modal-footer">\n        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>\n        <button id="m-save" type="button" class="btn btn-primary">Save Result</button>\n      </div>\n    </div>\n  </div>\n</div>\n';
+      document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+      // preview/print modal (A4 size styles included)
+      var previewHtml = '\n<style id="preview-a4-style">\n  /* Modal sized to A4 */\n  #previewModal .modal-dialog {\n    max-width: none;\n    width: 210mm;\n    height: 297mm;\n    margin: 0 auto;\n  }\n  #previewModal .modal-content {\n    height: 100%;\n    border-radius: 0;\n  }\n  #previewModal .modal-body {\n    padding: 12mm;\n    box-sizing: border-box;\n    height: calc(100% - 120px);\n    overflow: auto;\n  }\n  #preview-content {\n    width: 100%;\n  }\n  @media print {\n    #previewModal .modal-dialog { width: 210mm; height: 297mm; }\n    #previewModal .modal-content { box-shadow: none; border: none; }\n  }\n</style>\n<div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-hidden="true">\n  <div class="modal-dialog" role="document">\n    <div class="modal-content">\n      <div class="modal-header">\n        <h5 class="modal-title">Preview - Competition result</h5>\n        <button type="button" class="close" data-dismiss="modal" aria-label="Close">\n          <span aria-hidden="true">&times;</span>\n        </button>\n      </div>\n      <div class="modal-body">\n        <div id="preview-content" style="padding:0"></div>\n      </div>\n      <div class="modal-footer">\n        <button id="preview-print" type="button" class="btn btn-primary">Print PDF</button>\n        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>\n      </div>\n    </div>\n  </div>\n</div>\n';
+      document.body.insertAdjacentHTML('beforeend', previewHtml);
+
+      // Update green room verification details
+      function updateGreenRoomDetails(programName) {
+        try {
+          var greenRoomCheckins = JSON.parse(localStorage.getItem('eventalk_green_room_checkins') || '{}');
+          var competitions = JSON.parse(localStorage.getItem('eventalk_competitions') || '[]');
+          
+          // Get students registered for this program
+          var registeredChests = {};
+          competitions.forEach(function(comp) {
+            if (comp.programs && Array.isArray(comp.programs) && comp.programs.indexOf(programName) !== -1 && comp.chest) {
+              registeredChests[comp.chest] = true;
+            }
+          });
+          
+          var registered = Object.keys(registeredChests).length;
+          var programRecords = greenRoomCheckins[programName] || [];
+          
+          if (!Array.isArray(programRecords)) {
+            programRecords = [];
+          }
+          
+          var verified = programRecords.filter(function(r) { return r.verifiedAt; }).length;
+          var withCode = programRecords.filter(function(r) { return r.codeLetter && r.codeLetter.trim(); }).length;
+          var verifyRate = registered > 0 ? Math.round((verified / registered) * 100) : 0;
+          
+          document.getElementById('green-room-details').style.display = registered > 0 ? 'block' : 'none';
+          document.getElementById('mark-registered').textContent = registered;
+          document.getElementById('mark-verified').textContent = verified;
+          document.getElementById('mark-with-code').textContent = withCode;
+          document.getElementById('mark-verify-rate').textContent = verifyRate + '%';
+        } catch(e) {
+          console.log('Green room data not available:', e);
+          document.getElementById('green-room-details').style.display = 'none';
+        }
+      }
+
+      // Refresh all green room details
+      function refreshGreenRoomDetails() {
+        if (catSelect.value && itemSelect.value) {
+          updateGreenRoomDetails(itemSelect.value);
+        }
+      }
+
+      // Auto-refresh every 10 seconds
+      setInterval(function() {
+        refreshGreenRoomDetails();
+      }, 10000);
+
+      // events
+      catSelect.addEventListener('change', function () {
+        loadItemsForCategory(catSelect.value);
+        // clear current table until a program is selected
+        tbody.innerHTML = '';
+      });
+      itemSelect.addEventListener('change', function () { 
+        loadEntries(catSelect.value, itemSelect.value);
+        updateGreenRoomDetails(itemSelect.value);
+      });
+
+      addBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (!catSelect.value || !itemSelect.value) { alert('Select category and item first.'); return; }
+        if (isProgramFinalised(catSelect.value, itemSelect.value)) {
+          alert('This program is finalised. Mark and code letter entries are locked.');
+          return;
+        }
+        $('#resultModal').modal('show');
+      });
+
+      document.body.addEventListener('click', function (ev) {
+        if (ev.target && ev.target.id === 'm-save') {
+          var chest = document.getElementById('m-chest').value.trim();
+          var j1 = document.getElementById('m-j1').value.trim();
+          var j2 = document.getElementById('m-j2').value.trim();
+          var j3 = document.getElementById('m-j3').value.trim();
+          if (!chest) { alert('Enter chest number.'); return; }
+          var entry = { chest: chest, code: '', j1: j1, j2: j2, j3: j3 };
+          saveEntry(catSelect.value, itemSelect.value, entry);
+          $('#resultModal').modal('hide');
+          // clear modal fields
+          document.getElementById('m-chest').value = '';
+          document.getElementById('m-j1').value = '';
+          document.getElementById('m-j2').value = '';
+          document.getElementById('m-j3').value = '';
+        }
+      });
+
+      viewBtn.addEventListener('click', function (e) { e.preventDefault(); if (!catSelect.value || !itemSelect.value) { alert('Select category and program (item) first.'); return; } loadEntries(catSelect.value, itemSelect.value); saveSelectedProgram(catSelect.value, itemSelect.value); });
+      printBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        // build preview content from current table and show modal
+        if (!catSelect.value || !itemSelect.value) { alert('Select category and program (item) first.'); return; }
+        saveSelectedProgram(catSelect.value, itemSelect.value);
+        buildPreviewContent(catSelect.value, itemSelect.value);
+        $('#previewModal').modal('show');
+      });
+
+      // print action from preview modal
+      document.body.addEventListener('click', function (ev) {
+        if (ev.target && ev.target.id === 'preview-print') {
+          var content = document.getElementById('preview-content').innerHTML;
+          var w = window.open('', '_blank');
+          var css = '<link rel="stylesheet" href="css/bootstrap.min.css">' +
+                    '<link rel="stylesheet" href="css/style.css">' +
+                    '<style>@page{ size: A4; margin: 10mm; } body{padding:10mm;margin:0 auto; width:190mm; font-family:Arial,Helvetica,sans-serif; color:#222 } .result-table{width:100%;border-collapse:collapse} .result-table th, .result-table td{padding:8px;border-bottom:1px solid #ddd} .header-row{text-align:center;margin-bottom:20px} .stage{font-size:14px;margin-bottom:6px;color:#666} .title{font-size:18px;font-weight:700;letter-spacing:1px}</style>';
+          w.document.open();
+          w.document.write('<html><head><title>Competition result</title>' + css + '</head><body>' + content + '</body></html>');
+          w.document.close();
+          w.focus();
+          // give the new window a moment to render styles
+          setTimeout(function () { w.print(); /* w.close(); */ }, 250);
+        }
+      });
+
+      if (saveAllBtn) {
+        saveAllBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          var cat = catSelect.value, item = itemSelect.value;
+          if (!cat || !item) { alert('Select category and item first.'); return; }
+          if (isProgramFinalised(cat, item)) {
+            alert('This program is finalised. Mark and code letter entries are locked.');
+            return;
+          }
+          var rows = Array.from(tbody.querySelectorAll('tr'));
+          var codeLetterMap = getGreenRoomCodeLetterMap(item);
+          var entries = rows.map(function (tr) {
+            var chest = tr.getAttribute('data-chest');
+            return {
+              chest: chest,
+              code: codeLetterMap[String(chest)] || '',
+              j1: tr.querySelector('.j1') ? tr.querySelector('.j1').value.trim() : '',
+              j2: tr.querySelector('.j2') ? tr.querySelector('.j2').value.trim() : '',
+              j3: tr.querySelector('.j3') ? tr.querySelector('.j3').value.trim() : '',
+              remarks: tr.querySelector('.remarks') ? tr.querySelector('.remarks').value.trim() : ''
+            };
+          });
+          try {
+            var raw = localStorage.getItem(STORAGE_KEY_ENTRIES);
+            var map = raw ? JSON.parse(raw) : {};
+            var key = storageKeyFor(cat, item);
+            map[key] = entries;
+            localStorage.setItem(STORAGE_KEY_ENTRIES, JSON.stringify(map));
+
+            // SYNC: Also save to judge-mark-entry.html storage (eventalk_judge_marks)
+            try {
+              var judgeMarksRaw = localStorage.getItem('eventalk_judge_marks') || '{}';
+              var judgeMarks = JSON.parse(judgeMarksRaw);
+              judgeMarks[key] = {};
+              entries.forEach(function(entry) {
+                if (entry.j1 || entry.j2 || entry.j3) {
+                  judgeMarks[key][entry.chest] = {
+                    j1: entry.j1,
+                    j2: entry.j2,
+                    j3: entry.j3,
+                    remarks: entry.remarks
+                  };
+                }
+              });
+              localStorage.setItem('eventalk_judge_marks', JSON.stringify(judgeMarks));
+              alert('✅ Saved ' + entries.length + ' entries.\n📤 Data synced to Judge Mark Entry system.');
+            } catch(syncErr) { 
+              console.error('Sync error:', syncErr);
+              alert('✅ Saved ' + entries.length + ' entries.');
+            }
+
+            saveSelectedProgram(cat, item);
+          } catch (e) { alert('Error saving entries.'); }
+        });
+      }
+
+      function buildPreviewContent(cat, item) {
+        var rows = Array.from(tbody.querySelectorAll('tr'));
+        var entries = rows.map(function (tr) {
+          return {
+            chest: tr.getAttribute('data-chest'),
+            code: tr.cells[1].textContent.trim(),  // Get code letter from table display
+            j1: tr.querySelector('.j1') ? parseFloat(tr.querySelector('.j1').value) || 0 : 0,
+            j2: tr.querySelector('.j2') ? parseFloat(tr.querySelector('.j2').value) || 0 : 0,
+            j3: tr.querySelector('.j3') ? parseFloat(tr.querySelector('.j3').value) || 0 : 0,
+            remarks: tr.querySelector('.remarks') ? tr.querySelector('.remarks').value.trim() : ''
+          };
+        });
+        // enrich with participant name/team from storage
+        var partMap = {};
+        try {
+          var prRaw = localStorage.getItem('eventalk_participants');
+          var parts = prRaw ? JSON.parse(prRaw) : [];
+          parts.forEach(function (p) { partMap[p.chest] = p; });
+        } catch (e) { }
+
+        var enriched = entries.map(function (e) {
+          var p = partMap[e.chest] || {};
+          var total = (parseFloat(e.j1) || 0) + (parseFloat(e.j2) || 0) + (parseFloat(e.j3) || 0);
+          return { chest: e.chest, code: e.code, name: p.name || '', team: p.team || '', total: total, remarks: e.remarks || '' };
+        });
+
+        // sort by total descending for ranking
+        var sorted = enriched.slice().sort(function (a,b){ return b.total - a.total; });
+        // assign prizes and points for top 3
+        var prizeMap = {};
+        sorted.forEach(function (s, idx) {
+          if (idx === 0) { prizeMap[s.chest] = { prize: '🥇 1st Place', points: 5 }; }
+          else if (idx === 1) { prizeMap[s.chest] = { prize: '🥈 2nd Place', points: 3 }; }
+          else if (idx === 2) { prizeMap[s.chest] = { prize: '🥉 3rd Place', points: 1 }; }
+          else { prizeMap[s.chest] = { prize: '', points: 0 }; }
+        });
+
+        // build HTML with standard layout
+        var html = '';
+        html += '<div style="text-align:left;margin-bottom:6px;font-size:14px">Stage No:</div>';
+        html += '<div style="text-align:center;">';
+        html += '<div style="font-weight:700;text-decoration:underline;font-size:18px;letter-spacing:1px;">' + (cat || '').toUpperCase() + '</div>';
+        html += '<div style="font-weight:700;text-decoration:underline;font-size:18px;margin-top:6px;">' + (item || '').toUpperCase() + '</div>';
+        html += '</div>';
+        html += '<table class="result-table" style="width:100%;margin-top:18px;font-family:Arial,Helvetica,sans-serif">';
+        html += '<thead><tr>'
+          + '<th style="width:80px;text-align:left;padding:8px">Chest No</th>'
+          + '<th style="width:60px;padding:8px">Code</th>'
+          + '<th style="text-align:left;padding:8px">Name of participant</th>'
+          + '<th style="width:160px;padding:8px">Team</th>'
+          + '<th style="width:90px;padding:8px">Prize</th>'
+          + '<th style="width:60px;padding:8px">Grade</th>'
+          + '<th style="width:60px;text-align:right;padding:8px">Point</th>'
+          + '<th style="width:120px;padding:8px">Remarks</th>'
+          + '</tr></thead>';
+        html += '<tbody>';
+
+        sorted.forEach(function (row) {
+          var pr = prizeMap[row.chest] || { prize: '', points: 0 };
+          html += '<tr>';
+          html += '<td style="padding:8px;font-weight:700">' + (row.chest || '') + '</td>';
+          html += '<td style="padding:8px;text-align:center;font-weight:600">' + (row.code || '') + '</td>';
+          html += '<td style="padding:8px;font-weight:700">' + (row.name || '') + '</td>';
+          html += '<td style="padding:8px">' + (row.team || '') + '</td>';
+          html += '<td style="padding:8px">' + (pr.prize || '') + '</td>';
+          html += '<td style="padding:8px;text-align:center">' + '' + '</td>';
+          html += '<td style="padding:8px;text-align:right;font-weight:700">' + (pr.points || 0) + '</td>';
+          html += '<td style="padding:8px;font-size:11px">' + (row.remarks || '') + '</td>';
+          html += '</tr>';
+        });
+
+        html += '</tbody></table>';
+
+        // footer with page number centered
+        html += '<div style="margin-top:30px;text-align:center">Page 1 of 1</div>';
+
+        document.getElementById('preview-content').innerHTML = html;
+      }
+
+      // init
+      loadCategories();
+      // try to pre-select program from URL params or from competitions page
+      (function tryRestoreSelection() {
+        var params = new URLSearchParams(window.location.search);
+        var selCat = params.get('cat');
+        var selItem = params.get('item');
+        if (!selCat || !selItem) {
+          try {
+            var raw = localStorage.getItem('eventalk_selected_program');
+            if (raw) {
+              var obj = JSON.parse(raw);
+              selCat = selCat || obj.category;
+              selItem = selItem || obj.name;
+              // clear the stored selection so it doesn't persist
+              localStorage.removeItem('eventalk_selected_program');
+            }
+          } catch (e) { }
+        }
+        // if we have a selection, attempt to set selects and load entries
+        if (selCat) {
+          // find option matching selCat (case-insensitive)
+          var optIndex = Array.from(catSelect.options).findIndex(function (o) { return o.value && o.value.toLowerCase() === selCat.toLowerCase(); });
+          if (optIndex > 0) {
+            catSelect.selectedIndex = optIndex;
+            loadItemsForCategory(catSelect.value);
+            if (selItem) {
+              // wait a tick for items to be populated
+              setTimeout(function () {
+                var itemOpt = Array.from(itemSelect.options).find(function (o) { return o.value && o.value.toLowerCase() === selItem.toLowerCase(); });
+                if (itemOpt) {
+                  itemSelect.value = itemOpt.value;
+                  loadEntries(catSelect.value, itemSelect.value);
+                }
+              }, 50);
+            }
+            return;
+          }
+        }
+
+        // fallback: if a category exists, auto-select first
+        if (catSelect.options.length > 1) { catSelect.selectedIndex = 1; loadItemsForCategory(catSelect.value); }
+      })();
+    });
+  </script>
+  </body>
+</html>
+
+
