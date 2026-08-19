@@ -1,0 +1,132 @@
+/* Mobile-first responsive overrides for core layouts */
+:root{
+  --hero-h1-mobile: 2.4rem;
+  --hero-h1-span-mobile: 2.6rem;
+}
+
+/* Base (mobile) */
+.hero-content h1 { font-size: var(--hero-h1-mobile); line-height: 1.05; }
+.hero-content h1 span { font-size: var(--hero-h1-span-mobile); display:block; }
+.hero-content p { font-size: 1rem; }
+.hero-visual { display: none; }
+.hero-stats { gap: 12px; }
+.hero-stats .stat { flex: 1 1 100%; }
+.homepage-actions .services-row { display:flex; flex-direction:column; gap:16px; }
+.homepage-actions .services-item { flex: 0 0 100%; max-width: 100%; }
+.homepage-actions .small-action .media{ padding:16px; }
+.navbar-brand { font-size: 1.15rem; }
+
+/* Schedule: stack date and sessions on small screens */
+.schedule-row{ display:block; margin-bottom:18px; }
+.schedule-date{ margin-bottom:12px; }
+.schedule-sessions .schedule-session-card{ margin-bottom:12px; }
+
+@media (max-width: 575.98px){
+  .schedule-hero{
+    padding: 52px 0 64px;
+  }
+  .schedule-hero > .container{
+    width: 100%;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .schedule-row{
+    gap: 14px;
+    padding: 18px;
+    border-radius: 30px;
+  }
+  .schedule-date{
+    margin-bottom: 0;
+    padding: 38px 26px;
+    border-radius: 24px;
+  }
+  .schedule-date strong{
+    font-size: 20px;
+    margin-bottom: 22px;
+  }
+  .schedule-date span{
+    font-size: 16px;
+  }
+  .schedule-sessions{
+    width: 100%;
+    gap: 12px;
+  }
+  .schedule-session-card{
+    flex-direction: row;
+    gap: 12px;
+    padding: 28px 18px 24px;
+    border-radius: 26px;
+  }
+  .schedule-session-time{
+    width: 100%;
+    min-width: 0;
+    text-align: center;
+    font-size: 14px;
+  }
+  .schedule-session-details{
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 8px;
+  }
+  .schedule-session-details span{
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .schedule-session-title{
+    font-size: 17px;
+    line-height: 1.15;
+  }
+  .schedule-session-speaker,
+  .schedule-session-desc{
+    font-size: 14px;
+    line-height: 1.2;
+    text-align: center;
+  }
+}
+
+/* Tablet and up */
+@media (min-width: 576px){
+  :root{ --hero-h1-mobile: 3.2rem; --hero-h1-span-mobile: 3.6rem; }
+  .hero-visual { display: block; }
+  .homepage-actions .services-row{ flex-direction:row; }
+  .homepage-actions .services-item{ flex:0 0 calc(50% - 12px); max-width: calc(50% - 12px); }
+  .hero-stats .stat { flex: 1 1 45%; }
+  .schedule-row{ display:flex; gap:16px; align-items:flex-start; }
+  .schedule-date{ flex:0 0 160px; }
+  .schedule-sessions{ flex:1 1 auto; }
+}
+
+/* Desktop */
+@media (min-width: 992px){
+  :root{ --hero-h1-mobile: 4.4rem; --hero-h1-span-mobile: 4.8rem; }
+  .homepage-actions .services-item{ flex:0 0 calc(25% - 18px); max-width: calc(25% - 18px); }
+  .hero-stats .stat { min-width: 140px; }
+}
+
+/* Utilities */
+.text-center-sm { text-align:center; }
+
+/* Images: make all images fluid and lazy-loading friendly */
+img { max-width: 100%; height: auto; display: block; }
+img.img-fluid { width: 100%; height: auto; }
+
+/* Navbar tweaks for small screens */
+.navbar { padding: .6rem 1rem; }
+.navbar-toggler { border: 1px solid rgba(255,255,255,0.08); }
+
+/* Forms and tables: full width on small devices */
+.form-control, .custom-select { width: 100%; box-sizing: border-box; }
+.table-responsive { overflow-x:auto; }
+
+/* Improve hero visuals for medium screens */
+@media (min-width: 768px) and (max-width: 991px){
+  .hero-visual { min-height: 420px; }
+  .hero-visual .hero-card { max-width: 300px; margin: 0 auto 18px; position: relative; transform: none; }
+  .hero-visual .hero-card.center { max-width: 360px; }
+}
+
+/* Accessibility helpers */
+.sr-only-focusable:active, .sr-only-focusable:focus { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
+
